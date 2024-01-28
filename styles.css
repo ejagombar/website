@@ -52,6 +52,60 @@ header {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add shadow */
 }
 
+.wideNav {
+    /* display: none; */
+}
+
+.mobileNav {
+    display: none;
+    background-color: var(--accent);
+    color: var(--foreground);
+    padding: 0px 10px;
+    margin-bottom: 10px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    max-width: var(--width);
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add shadow */
+}
+
+.mobileNav a {
+    display: none;
+}
+
+@media screen and (max-width: 550px) {
+    .mobileNav {
+        display: block;
+    }
+
+    .wideNav {
+        display: none;
+    }
+
+    .mobileNav a {
+        display: block;
+        padding: 10px 0px;
+    }
+}
+
+.longName {
+}
+.shortName {
+    display: none; /* Hide the heading with this class */
+}
+
+@media screen and (max-width: 620px) {
+    .shortName {
+        display: inline;
+    }
+    .longName {
+        display: none; /* Hide the heading with this class */
+    }
+}
+
 h1 {
     font-size: 1.5em;
 }
@@ -121,6 +175,7 @@ nav a {
     display: block;
     width: 20px; /* Adjust the height for the desired spacing */
 }
+
 /*-------------------------------------------------------------- */
 
 .aboutBox {
