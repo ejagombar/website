@@ -8,6 +8,14 @@ body {
     font-family: 'Fira Code';
     font-style: normal;
     background-color: #313131;
+
+    background-image: linear-gradient(#343434 1.1px, transparent 1.1px),
+        linear-gradient(to right, #343434 1.1px, #313131 1.1px);
+    background-size: 32px 32px;
+
+    /* opacity: 1; */
+    /* background-image: radial-gradient(#383838 1.6px, #313131 1.6px); */
+    /* background-size: 32px 32px; */
 }
 
 header {
