@@ -20,11 +20,16 @@
                 <a href="about.html">About</a>
                 <a href="portfolio.html">Portfolio</a>
             </nav>
-            <input href="javascript:void(0);" class="icon" onclick="myFunction()" id="menu-toggle" type="checkbox" />
+            <input
+                href="javascript:void(0);"
+                class="icon"
+                onclick="myFunction()"
+                id="menu-toggle"
+                type="checkbox"
+            />
             <label class="menu-button-container" for="menu-toggle">
                 <div class="menu-button"></div>
             </label>
-            </a>
         </header>
 
         <nav class="mobileNav" id="myLinks">
@@ -102,14 +107,21 @@
             </div>
         </div>
         <script>
-            function myFunction() {
+            function myFunction2() {
                 var x = document.getElementById('myLinks')
-                if (x.style.display === 'block') {
+                if (window.innerWidth > 490) {
                     x.style.display = 'none'
-                } else {
-                    x.style.display = 'block'
                 }
             }
+            function myFunction() {
+                var x = document.getElementById('myLinks')
+                if (x.style.display === 'flex') {
+                    x.style.display = 'none'
+                } else {
+                    x.style.display = 'flex'
+                }
+            }
+            window.addEventListener('resize', myFunction2)
         </script>
     </body>
 </html>
