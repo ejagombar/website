@@ -5,6 +5,8 @@
     --content1: #313131;
     --content2: #343434;
     --highlight: #157dfb;
+    --width: 800px;
+    --min-width: 600px;
 }
 
 /* --------------------------------------------- */
@@ -37,10 +39,11 @@ header {
     color: var(--foreground);
     text-align: center;
     padding: 0px 10px;
+    margin: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 700px;
+    width: var(--width);
     text-align: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add shadow */
 }
@@ -71,13 +74,13 @@ nav a {
 .profileBox {
     background-color: var(--background);
     color: var(--foreground);
-    margin: 20px;
+    margin: 10px;
     padding: 10px 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 700px;
+    width: var(--width);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow */
 }
 
@@ -131,13 +134,13 @@ nav a {
 .aboutBox {
     background-color: var(--background);
     color: var(--foreground);
-    margin: 20px;
+    margin: 10px;
     padding: 10px 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 700px;
+    width: var(--width);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow */
 }
 
@@ -150,14 +153,14 @@ nav a {
 .projectBox {
     background-color: var(--background);
     color: var(--foreground);
-    margin: 20px;
+    margin: 10px;
     padding: 0px 10px;
 
     display: flex;
     flex-direction: column;
     justify-content: left;
     align-items: left;
-    width: 700px;
+    width: var(--width);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow */
 }
 
@@ -174,7 +177,7 @@ nav a {
     flex-direction: column;
     justify-content: left;
     align-items: left;
-    width: 700px;
+    width: var(--width);
 }
 
 .projectLabelBox {
