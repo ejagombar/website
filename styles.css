@@ -42,6 +42,7 @@ header {
     color: var(--foreground);
     text-align: center;
     padding: 0px 10px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -158,14 +159,13 @@ nav a {
 .projectBox {
     background-color: var(--background);
     color: var(--foreground);
-    margin: 10px;
-    padding: 0px 10px;
-
+    margin: 10px 0px;
+    padding: 10px 10px;
     display: flex;
     flex-direction: column;
     justify-content: left;
     align-items: left;
-    width: var(--width);
+    max-width: var(--width);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow */
 }
 
@@ -182,7 +182,9 @@ nav a {
     flex-direction: column;
     justify-content: left;
     align-items: left;
-    width: var(--width);
+    /* width: var(--width); */
+    width: 100%;
+    max-width: var(--width);
 }
 
 .projectLabelBox {
