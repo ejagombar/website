@@ -52,12 +52,69 @@ header {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add shadow */
 }
 
-.wideNav {
-    /* display: none; */
+#menu-toggle {
+    display: none;
+}
+
+.menu-button::before,
+.menu-button::after {
+    display: block;
+    background-color: #fff;
+    height: 3px;
+    margin: 10px;
+    width: 30px;
+    transition: transform 600ms cubic-bezier(0.23, 1, 0.32, 1);
+    border-radius: 4px;
+
+    transform: translate(0px, 10px);
+}
+
+.menu-button::before {
+    content: '';
+    margin-top: -8px;
+}
+
+.menu-button::after {
+    content: '';
+    margin-top: 8px;
+}
+
+@media screen and (min-width: 490px) {
+    .menu-button {
+        display: none;
+    }
+
+    .menu-button-container {
+        display: none;
+    }
+
+    #menu-toggle {
+        display: none;
+    }
+}
+
+/* -------------------------------------------------------------- */
+
+.longName {
+}
+.shortName {
+    display: none;
+}
+
+@media screen and (max-width: 550px) {
+    .shortName {
+        display: inline;
+    }
+    .longName {
+        display: none;
+    }
+}
+
+.wideNav a {
+    padding: 10px 20px;
 }
 
 .mobileNav {
-    display: none;
     background-color: var(--accent);
     color: var(--foreground);
     padding: 0px 10px;
@@ -72,37 +129,39 @@ header {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add shadow */
 }
 
-.mobileNav a {
+.mobileNav #myLinks {
     display: none;
 }
 
-@media screen and (max-width: 550px) {
-    .mobileNav {
-        display: block;
-    }
+.mobileNavItem {
+    padding: 10px 0px;
+}
 
+@media screen and (max-width: 490px) {
     .wideNav {
         display: none;
     }
 
-    .mobileNav a {
-        display: block;
-        padding: 10px 0px;
-    }
-}
+    #menu-toggle:checked + .menu-button-container .menu-button::after {
+        margin-top: -13px;
 
-.longName {
-}
-.shortName {
-    display: none; /* Hide the heading with this class */
-}
-
-@media screen and (max-width: 620px) {
-    .shortName {
-        display: inline;
+        transform: rotate(-135deg);
     }
+
+    #menu-toggle:checked + .menu-button-container .menu-button::before {
+        margin-top: 10px;
+        transform: rotate(135deg);
+    }
+
+    #menu-toggle:checked + .menu-button-container .menu-button {
+        background: rgba(255, 255, 255, 0);
+    }
+
     .longName {
-        display: none; /* Hide the heading with this class */
+        display: block;
+    }
+    .shortName {
+        display: none;
     }
 }
 
