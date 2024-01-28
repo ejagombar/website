@@ -11,9 +11,12 @@
 
 /* --------------------------------------------- */
 
+* {
+    box-sizing: border-box;
+}
+
 body {
-    margin: 0;
-    padding: 0;
+    margin: 10;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -39,11 +42,11 @@ header {
     color: var(--foreground);
     text-align: center;
     padding: 0px 10px;
-    margin: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: var(--width);
+    max-width: var(--width);
+    width: 100%;
     text-align: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add shadow */
 }
@@ -74,13 +77,14 @@ nav a {
 .profileBox {
     background-color: var(--background);
     color: var(--foreground);
-    margin: 10px;
+    margin: 10px 0px;
     padding: 10px 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: var(--width);
+    max-width: var(--width);
+    width: 100%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow */
 }
 
@@ -88,14 +92,14 @@ nav a {
     border-radius: 50%;
 }
 
-#profileLayout1 {
+.profileLayout1 {
     display: flex;
     flex-direction: row;
     justify-content: center;
     padding: 20px 0px;
 }
 
-#profileLayout2 {
+.profileLayout2 {
     display: flex;
     flex-direction: column;
     align-items: left;
@@ -118,7 +122,21 @@ nav a {
 }
 /*-------------------------------------------------------------- */
 
-#aboutLayout {
+.aboutBox {
+    background-color: var(--background);
+    color: var(--foreground);
+    margin: 10px 0px;
+    padding: 10px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: var(--width);
+    wdith: 100%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow */
+}
+
+.aboutLayout {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -129,19 +147,6 @@ nav a {
 .profile-icons-spacer {
     display: block;
     height: 20px; /* Adjust the height for the desired spacing */
-}
-
-.aboutBox {
-    background-color: var(--background);
-    color: var(--foreground);
-    margin: 10px;
-    padding: 10px 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: var(--width);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow */
 }
 
 .aboutParagraph {
