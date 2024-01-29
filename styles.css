@@ -401,4 +401,8 @@ nav a {
         margin-left: 0px;
         padding-top: 10px;
     }
+
+    .projectBox {
+        width: 100%;
+    }
 }
