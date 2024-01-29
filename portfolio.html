@@ -9,16 +9,34 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Ed Agombar</title>
+        <script src="index.js"></script>
     </head>
     <body>
         <header>
-            <h1>Edward Agombar</h1>
-            <nav>
-                <a href="home.html">Home</a>
-                <a href="about.html#">About</a>
-                <a href="#">Portfolio</a>
+            <h1 class="longName">Edward Agombar</h1>
+            <h1 class="shortName">Ed Agombar</h1>
+            <nav class="wideNav">
+                <a href="#">Home</a>
+                <a href="about.html">About</a>
+                <a href="portfolio.html">Portfolio</a>
             </nav>
+            <input
+                href="javascript:void(0);"
+                class="icon"
+                onclick="myFunction()"
+                id="menu-toggle"
+                type="checkbox"
+            />
+            <label class="menu-button-container" for="menu-toggle">
+                <div class="menu-button"></div>
+            </label>
         </header>
+
+        <nav class="mobileNav" id="myLinks">
+            <a class="mobileNavItem" href="home.html">Home</a>
+            <a class="mobileNavItem" href="about.html">About</a>
+            <a class="mobileNavItem" href="portfolio.html">Portfolio</a>
+        </nav>
 
         <div class="projectBox">
             <h2>Spanner - Spotify Analysis</h2>

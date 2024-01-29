@@ -229,7 +229,7 @@ nav a {
     fill: var(--foreground);
 }
 
-.link-icons-spacer {
+.linkIconSpacer {
     display: block;
     width: 20px; /* Adjust the height for the desired spacing */
 }

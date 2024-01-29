@@ -8,17 +8,36 @@
         />
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <script src="index.js"></script>
         <title>Ed Agombar</title>
     </head>
     <body>
         <header>
-            <h1>Edward Agombar</h1>
-            <nav>
-                <a href="home.html">Home</a>
-                <a href="#">About</a>
+            <h1 class="longName">Edward Agombar</h1>
+            <h1 class="shortName">Ed Agombar</h1>
+            <nav class="wideNav">
+                <a href="#">Home</a>
+                <a href="about.html">About</a>
                 <a href="portfolio.html">Portfolio</a>
             </nav>
+            <input
+                href="javascript:void(0);"
+                class="icon"
+                onclick="myFunction()"
+                id="menu-toggle"
+                type="checkbox"
+            />
+            <label class="menu-button-container" for="menu-toggle">
+                <div class="menu-button"></div>
+            </label>
         </header>
+
+        <nav class="mobileNav" id="myLinks">
+            <a class="mobileNavItem" href="home.html">Home</a>
+            <a class="mobileNavItem" href="about.html">About</a>
+            <a class="mobileNavItem" href="portfolio.html">Portfolio</a>
+        </nav>
 
         <div class="aboutBox">
             <div class="profileLayout1">
@@ -47,7 +66,7 @@
                                 />
                             </svg>
                         </a>
-                        <div class="link-icons-spacer"></div>
+                        <div class="linkIconSpacer"></div>
 
                         <a href="">
                             <svg
@@ -63,7 +82,7 @@
                                 />
                             </svg>
                         </a>
-                        <div class="link-icons-spacer"></div>
+                        <div class="linkIconSpacer"></div>
 
                         <a href="">
                             <svg
@@ -71,6 +90,7 @@
                                 width="28"
                                 height="28"
                                 viewBox="0 0 16 16"
+                                ab
                                 fill="currentColor"
                                 xmlns="http://www.w3.org/2000/svg"
                             >
