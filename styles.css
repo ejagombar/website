@@ -339,7 +339,13 @@ nav a {
 /*     justify-content: space-between; */
 /* } */
 
-.projectTextBox {
+.projectText {
+    padding: 0px 0px;
+    margin: 0px;
+    max-width: calc(var(--width) - 250px);
+}
+
+.projectBody {
     padding: 0px 10px;
     display: flex;
     flex-direction: column;
@@ -352,7 +358,6 @@ nav a {
     align-self: flex-start;
     flex-wrap: wrap;
     min-width: min-content;
-    width: 400px;
     gap: 5px;
 }
 
@@ -382,4 +387,18 @@ nav a {
     padding: 8px 0px;
     color: var(--highlight);
     text-decoration: none;
+}
+
+@media screen and (max-width: 680px) {
+    .projectDivider {
+        display: flex;
+        align-items: top;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .projectLabelBox {
+        margin-left: 0px;
+        padding-top: 10px;
+    }
 }
