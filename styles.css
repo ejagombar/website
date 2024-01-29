@@ -9,8 +9,6 @@
     --min-width: 600px;
 }
 
-/* --------------------------------------------- */
-
 * {
     box-sizing: border-box;
 }
@@ -37,6 +35,9 @@ body {
     /* background-size: 32px 32px; */
 }
 
+/* ------------------------Header Section-----------------------*/
+/* ------------------------------------------------------------ */
+
 header {
     background-color: var(--accent);
     color: var(--foreground);
@@ -49,6 +50,10 @@ header {
     width: 100%;
     text-align: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add shadow */
+}
+
+.shortName {
+    display: none;
 }
 
 #menu-toggle {
@@ -75,14 +80,6 @@ header {
 .menu-button::after {
     content: '';
     margin-top: 8px;
-}
-
-/* -------------------------------------------------------------- */
-
-.longName {
-}
-.shortName {
-    display: none;
 }
 
 @media screen and (max-width: 550px) {
@@ -118,7 +115,6 @@ header {
     text-decoration: none;
     padding: 0px 20px;
     padding: 10px 0px;
-
     transition:
         transform 0.3s ease,
         filter 0.3s ease;
@@ -206,6 +202,9 @@ nav {
     width: 100%;
 }
 
+/* --------------------------Home Page------------------------- */
+/*-------------------------------------------------------------- */
+
 .profileBox {
     background-color: var(--background);
     color: var(--foreground);
@@ -217,7 +216,7 @@ nav {
     align-items: center;
     max-width: var(--width);
     width: 100%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .profilePicture {
@@ -277,9 +276,10 @@ nav {
 
 .linkIconSpacer {
     display: block;
-    width: 20px; /* Adjust the height for the desired spacing */
+    width: 20px;
 }
 
+/* --------------------------About Page------------------------- */
 /*-------------------------------------------------------------- */
 
 .aboutBox {
@@ -293,7 +293,7 @@ nav {
     align-items: center;
     max-width: var(--width);
     wdith: 100%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .aboutLayout {
@@ -306,7 +306,7 @@ nav {
 
 .profile-icons-spacer {
     display: block;
-    height: 20px; /* Adjust the height for the desired spacing */
+    height: 20px;
 }
 
 .aboutParagraph {
@@ -342,6 +342,7 @@ nav {
     }
 }
 
+/* ------------------------Portfolio Page----------------------- */
 /*-------------------------------------------------------------- */
 
 .projectBox {
@@ -354,7 +355,7 @@ nav {
     justify-content: left;
     align-items: left;
     max-width: var(--width);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Add shadow */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
 .projectDivider {
@@ -363,13 +364,6 @@ nav {
     flex-direction: row;
     justify-content: space-between;
 }
-
-/* .projectDivider { */
-/*     display: flex; */
-/*     align-items: top; */
-/*     flex-direction: column; */
-/*     justify-content: space-between; */
-/* } */
 
 .projectText {
     padding: 0px 0px;
@@ -404,11 +398,11 @@ nav {
     margin: 0px;
     transition:
         transform 0.3s ease,
-        filter 0.3s ease; /* Add transitions for both transform and filter */
+        filter 0.3s ease;
 }
 
 .label:hover {
-    transform: scale(1.05); /* Expand by 10% on hover */
+    transform: scale(1.05);
     filter: brightness(1.1);
 }
 
@@ -433,8 +427,8 @@ nav {
 }
 
 .projectLink:hover {
-    transform: translateX(4px); /* Expand by 10% and move up by 10px on hover */
-    filter: brightness(1.2); /* Increase brightness by 20% on hover */
+    transform: translateX(4px);
+    filter: brightness(1.2);
 }
 
 @media screen and (max-width: 680px) {
