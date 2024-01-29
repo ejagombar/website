@@ -95,10 +95,6 @@ header {
     }
 }
 
-.wideNav a {
-    padding: 10px 20px;
-}
-
 .mobileNav {
     background-color: var(--accent);
     color: var(--foreground);
@@ -119,6 +115,12 @@ header {
 
 .mobileNavItem {
     padding: 10px 0px;
+}
+
+.mobileNavItem:hover {
+    transform: scale(1.05); /* Expand by 10% on hover */
+    filter: brightness(1.1);
+    width: 100%;
 }
 
 #menu-toggle {
@@ -179,12 +181,22 @@ nav {
     justify-content: center;
 }
 
-nav a {
+.wideNavItem {
     color: var(--foreground);
     text-decoration: none;
     padding: 0px 20px;
     display: flex;
     align-items: center;
+
+    transition:
+        transform 0.3s ease,
+        filter 0.3s ease;
+}
+
+.wideNavItem:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+    width: 100%;
 }
 
 .profileBox {
@@ -370,6 +382,14 @@ nav a {
     align-items: center;
     padding: 8px 12px;
     margin: 0px;
+    transition:
+        transform 0.3s ease,
+        filter 0.3s ease; /* Add transitions for both transform and filter */
+}
+
+.label:hover {
+    transform: scale(1.05); /* Expand by 10% on hover */
+    filter: brightness(1.1);
 }
 
 .projectLinkBox {
@@ -387,6 +407,14 @@ nav a {
     padding: 8px 0px;
     color: var(--highlight);
     text-decoration: none;
+    transition:
+        transform 0.3s ease,
+        filter 0.3s ease;
+}
+
+.projectLink:hover {
+    transform: translateX(4px); /* Expand by 10% and move up by 10px on hover */
+    filter: brightness(1.2); /* Increase brightness by 20% on hover */
 }
 
 @media screen and (max-width: 680px) {
