@@ -42,7 +42,6 @@ header {
     color: var(--foreground);
     text-align: center;
     padding: 0px 10px;
-    margin-bottom: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -99,6 +98,7 @@ header {
     background-color: var(--accent);
     color: var(--foreground);
     padding: 0px 10px;
+    margin-top: 10px;
     align-items: center;
     display: flex;
     flex-direction: column;
@@ -114,7 +114,14 @@ header {
 }
 
 .mobileNavItem {
+    color: var(--foreground);
+    text-decoration: none;
+    padding: 0px 20px;
     padding: 10px 0px;
+
+    transition:
+        transform 0.3s ease,
+        filter 0.3s ease;
 }
 
 .mobileNavItem:hover {
@@ -253,6 +260,19 @@ nav {
 .link-icons {
     colour: var(--foreground);
     fill: var(--foreground);
+
+    transition:
+        transform 0.3s ease,
+        filter 0.3s ease;
+}
+
+.link-icons:hover {
+    transform: scale(1.1);
+    filter: brightness(1.1);
+}
+
+.wideNavItem:hover {
+    width: 100%;
 }
 
 .linkIconSpacer {
