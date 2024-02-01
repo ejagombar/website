@@ -1,10 +1,11 @@
 :root {
-    --foreground: #ecedee;
-    --background: #2a2a2a;
-    --accent: #252525;
-    --content1: #313131;
-    --content2: #343434;
+    --foreground: #071c02;
+    --background: #f9f9f9;
+    --accent: #d6d6d6;
+    --content1: #f9f9f9;
+    --content2: #d6d6d6;
     --highlight: #157dfb;
+    --radius: 30px;
     --width: 800px;
     --min-width: 600px;
 }
@@ -23,23 +24,23 @@ body {
     font-style: normal;
     background-color: var(--content1);
 
-    background-image: linear-gradient(var(--content2) 1.1px, transparent 1.1px),
-        linear-gradient(to right, var(--content2) 1.1px, var(--content1) 1.1px);
-    background-size: 32px 32px;
-
-    /* opacity: 1; */
-    /* background-image: radial-gradient( */
-    /*     var(--accent) 1.6px, */
-    /*     var(--content1) 1.6px */
-    /* ); */
+    /* background-image: linear-gradient(var(--content2) 1.1px, transparent 1.1px), */
+    /*     linear-gradient(to right, var(--content2) 1.1px, var(--content1) 1.1px); */
     /* background-size: 32px 32px; */
+
+    opacity: 1;
+    background-image: radial-gradient(
+        var(--accent) 1.6px,
+        var(--content1) 1.6px
+    );
+    background-size: 32px 32px;
 }
 
 /* ------------------------Header Section-----------------------*/
 /* ------------------------------------------------------------ */
 
 header {
-    background-color: var(--accent);
+    background-color: var(--background);
     color: var(--foreground);
     text-align: center;
     padding: 0px 10px;
@@ -50,11 +51,18 @@ header {
     width: 100%;
     text-align: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add shadow */
+    border-radius: var(--radius);
 }
 
 .shortName {
     display: none;
+    margin-left: 10px;
 }
+
+.longName {
+    margin-left: 10px;
+}
+
 
 #menu-toggle {
     display: none;
@@ -63,12 +71,13 @@ header {
 .menu-button::before,
 .menu-button::after {
     display: block;
-    background-color: #fff;
+
+    background-color: var(--foreground);
     height: 3px;
     margin: 10px;
     width: 30px;
     transition: transform 600ms cubic-bezier(0.23, 1, 0.32, 1);
-    border-radius: 4px;
+        border-radius: 4px;
     transform: translate(0px, 10px);
 }
 
@@ -92,7 +101,7 @@ header {
 }
 
 .mobileNav {
-    background-color: var(--accent);
+    background-color: var(--background);
     color: var(--foreground);
     padding: 0px 10px;
     margin-top: 10px;
@@ -104,6 +113,7 @@ header {
     width: 100%;
     text-align: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add shadow */
+    border-radius: var(--radius);
 }
 
 .mobileNav #myLinks {
@@ -152,11 +162,13 @@ header {
 
     #menu-toggle:checked + .menu-button-container .menu-button::after {
         margin-top: -13px;
+        background-color: var(--foreground);
         transform: rotate(-135deg);
     }
 
     #menu-toggle:checked + .menu-button-container .menu-button::before {
         margin-top: 10px;
+        background-color: var(--foreground);
         transform: rotate(135deg);
     }
 
@@ -190,11 +202,13 @@ nav {
     padding: 0px 20px;
     display: flex;
     align-items: center;
+    border-radius: var(--radius);
 
     transition:
         transform 0.3s ease,
         filter 0.3s ease;
 }
+
 
 .wideNavItem:hover {
     transform: scale(1.05);
@@ -217,6 +231,7 @@ nav {
     max-width: var(--width);
     width: 100%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius);
 }
 
 .profilePicture {
@@ -294,6 +309,7 @@ nav {
     max-width: var(--width);
     wdith: 100%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius);
 }
 
 .aboutLayout {
@@ -356,6 +372,7 @@ nav {
     align-items: left;
     max-width: var(--width);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: var(--radius);
 }
 
 .projectDivider {
@@ -399,6 +416,7 @@ nav {
     transition:
         transform 0.3s ease,
         filter 0.3s ease;
+    border-radius: 30px;
 }
 
 .label:hover {
