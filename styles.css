@@ -408,13 +408,16 @@ nav {
 }
 
 .label {
-    background-color: var(--accent);
+    background-color: var(--background);
+    border: 3px solid var(--accent);
+    border-radius: 10px; /* 10px border radius for rounded corners */
     box-sizing: border-box;
     min-width: min-content;
     min-height: min-content;
     justify-content: center;
     align-items: center;
-    padding: 8px 12px;
+    /* padding: 8px 12px; */
+    padding: 5px 9px;
     margin: 0px;
     transition:
         transform 0.3s ease,
