@@ -32,6 +32,81 @@
     </nav>
 
     <div class="projectBox">
+        <h2>WikiMapper (Current)</h2>
+        <div class="projectBody">
+            <div class="projectDivider">
+                <p class="projectText">
+                    The WikiMapper project aims to take a ~100GB XML Wikipedia dump file and transform it into a graph
+                    database that can be explored visually.
+                    <br></br>
+                    So far, a multithreaded parser has been developed that extracts each page and the links associated
+                    with it, and writes them to a CSV file is parallel. These CSV files can then be used to quickly
+                    generate a Neo4j database using the Neo4j-admin tool.
+                    <br></br>
+                    Now that the database can be created, a method is needed to visualise this data. Due to the sheer
+                    size of the database (over 300 million links), the default Neo4j visualiser will not cut it. A
+                    program is being developed using OpenGL to visualise the data. On top of this, in order to
+                    efficiently access the data from the Noe4j database, I am implementing the Bolt protocol in C++ to
+                    access data from the database.
+
+                </p>
+                <div class="projectLabelBox">
+                    <p class="label">C++</p>
+                    <p class="label">XML Parsing</p>
+                    <p class="label">Bolt Protocol</p>
+                    <p class="label">Neo4j</p>
+                    <p class="label">CMake</p>
+                    <p class="label">Parallelisation</p>
+                    <p class="label">OpenGL</p>
+                    <p class="label">GProf</p>
+                </div>
+            </div>
+
+            <div class="projectLinkBox">
+                <a class="projectLink" href="https://github.com/ejagombar/WikiMapper" target="_blank">
+                    Github Repo
+                    <svg width="28" height="1.5em" fill="currentColor" viewBox="0 0 16 16"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M10.604 1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.06-1.06l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1zM3.75 2A1.75 1.75 0 0 0 2 3.75v8.5c0 .966.784 1.75 1.75 1.75h8.5A1.75 1.75 0 0 0 14 12.25v-3.5a.75.75 0 0 0-1.5 0v3.5a.25.25 0 0 1-.25.25h-8.5a.25.25 0 0 1-.25-.25v-8.5a.25.25 0 0 1 .25-.25h3.5a.75.75 0 0 0 0-1.5h-3.5z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="projectBox">
+        <h2>Home Server</h2>
+        <div class="projectBody">
+            <div class="projectDivider">
+                <p class="projectText">
+                    After completing an intership in a cloud infrastructure department, I decided to build my own home
+                    server. I wanted to learn more about cloud infrastructure, as well as having a place
+                    to host my own projects. Initially, I set up a Kubernetes cluster to learn more about it. However, I
+                    eventually settled on using Proxmox to manage to containers and VMs.
+                </p>
+                <div class="projectLabelBox">
+                    <p class="label">Linux</p>
+                    <p class="label">Kubernetes</p>
+                    <p class="label">Networking</p>
+                    <p class="label">Cloud</p>
+                    <p class="label">Proxmox</p>
+                </div>
+            </div>
+
+            <div class="projectLinkBox">
+                <a class="projectLink" href="https://github.com/ejagombar/Home-Server" target="_blank">Github Repo
+                    <svg width="28" height="1.5em" fill="currentColor" viewBox="0 0 16 16"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M10.604 1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.06-1.06l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1zM3.75 2A1.75 1.75 0 0 0 2 3.75v8.5c0 .966.784 1.75 1.75 1.75h8.5A1.75 1.75 0 0 0 14 12.25v-3.5a.75.75 0 0 0-1.5 0v3.5a.25.25 0 0 1-.25.25h-8.5a.25.25 0 0 1-.25-.25v-8.5a.25.25 0 0 1 .25-.25h3.5a.75.75 0 0 0 0-1.5h-3.5z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="projectBox">
         <h2>Spanner</h2>
         <div class="projectBody">
             <div class="projectDivider">
@@ -86,10 +161,11 @@
         <div class="projectBody">
             <div class="projectDivider">
                 <p class="projectText">
-                    For my masters project, I proposed a gesture controlled robotic hand. I have designed and 3d printed
-                    a hand with 6 degrees of motion, being controlled via a microcontroller. The microcontroller
-                    recieves data from a Raspberry Pi, which position data via UDP from a desktop application over the
-                    internet. The desktop application tracks the user's hand using a webcam and the MediaPipe library.
+                    For my masters project, I developed a gesture controlled robotic hand. I designed and 3d printed
+                    a hand with 6 degrees of motion, controlled via a microcontroller. The microcontroller
+                    recieves data from a Raspberry Pi, which recieves position data via UDP from a desktop application
+                    that I developed in QT over the internet. The desktop application utilises computer vision to track
+                    the user's hand with a webcam and the MediaPipe library.
                 </p>
                 <div class="projectLabelBox">
                     <p class="label">MediaPipe</p>
@@ -103,7 +179,8 @@
                 </div>
             </div>
             <div class="projectLinkBox">
-                <a class="projectLink" href="https://github.com/ejagombar/Gesture-Controlled-Hand">Github Repo
+                <a class="projectLink" href="https://github.com/ejagombar/Gesture-Controlled-Hand"
+                    target="_blank">Github Repo
                     <svg width="28" height="1.5em" fill="currentColor" viewBox="0 0 16 16"
                         xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -111,7 +188,8 @@
                     </svg>
                 </a>
 
-                <a class="projectLink" href="https://www.youtube.com/watch?v=kY19f_uoSKw">Video Demonstration
+                <a class="projectLink" href="https://www.youtube.com/watch?v=kY19f_uoSKw" target="_blank">Video
+                    Demonstration
                     <svg width="28" height="1.5em" fill="currentColor" viewBox="0 0 16 16"
                         xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -128,11 +206,12 @@
         <div class="projectBody">
             <div class="projectDivider">
                 <p class="projectText">
-                    At the Nottingham 24 hour Hackathon - HackNotts84, I led a team to Intel's 1st prize, building a
-                    table football robot and competing against over 40 teams from 25 Unis across the UK. <br /> <br />
-                    This was acheived using computer vision and parts of a 3D printer. We were able to track the
-                    location of the ball in real time using a webcam and OpenCV and send Gcode commands to the robot
-                    control board in order to intercept and kick the ball towards the goal. </p>
+                    At the Nottingham 24 hour Hackathon - HackNotts84, I led a team to win Intel's 1st place prize,
+                    building a table football robot and competing against over 40 teams from 25 Unis across the UK.
+                    <br /> <br /> This was acheived using computer vision and parts of a 3D printer. We were able to
+                    track the location of the ball in real time using a webcam and OpenCV and send Gcode commands to the
+                    robot control board in order to intercept and kick the ball towards the goal.
+                </p>
                 <div class="projectLabelBox">
                     <p class="label">Hackathon</p>
                     <p class="label">Intel</p>
@@ -143,7 +222,7 @@
             </div>
 
             <div class="projectLinkBox">
-                <a class="projectLink" href="https://devpost.com/software/roboball">Read Devpost
+                <a class="projectLink" href="https://devpost.com/software/roboball" target="_blank">Read Devpost
                     <svg width="28" height="1.5em" fill="currentColor" viewBox="0 0 16 16"
                         xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -154,35 +233,6 @@
         </div>
     </div>
 
-    <div class="projectBox">
-        <h2>Home Server - K3s Cluster</h2>
-        <div class="projectBody">
-            <div class="projectDivider">
-                <p class="projectText">
-                    After completing an intership in a cloud infrastructure department, I decided to build my own home
-                    server. I wanted to learn more about Kubernetes and cloud infrastructure, as well as having a place
-                    to host my own projects. This project is still very much work in progress.
-                </p>
-                <div class="projectLabelBox">
-                    <p class="label">Linux</p>
-                    <p class="label">Kubernetes</p>
-                    <p class="label">Networking</p>
-                    <p class="label">Cloud</p>
-                    <p class="label">Proxmox</p>
-                </div>
-            </div>
-
-            <div class="projectLinkBox">
-                <a class="projectLink" href="https://github.com/ejagombar/Home-Server">Github Repo
-                    <svg width="28" height="1.5em" fill="currentColor" viewBox="0 0 16 16"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M10.604 1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.06-1.06l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1zM3.75 2A1.75 1.75 0 0 0 2 3.75v8.5c0 .966.784 1.75 1.75 1.75h8.5A1.75 1.75 0 0 0 14 12.25v-3.5a.75.75 0 0 0-1.5 0v3.5a.25.25 0 0 1-.25.25h-8.5a.25.25 0 0 1-.25-.25v-8.5a.25.25 0 0 1 .25-.25h3.5a.75.75 0 0 0 0-1.5h-3.5z" />
-                    </svg>
-                </a>
-            </div>
-        </div>
-    </div>
 
 </body>
 
