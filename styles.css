@@ -29,16 +29,15 @@ body {
     /* background-size: 32px 32px; */
 
     opacity: 1;
-    background-image: radial-gradient(
-        var(--accent) 1.6px,
-        var(--content1) 1.6px
-    );
+    background-image: radial-gradient(var(--accent) 1.6px,
+            var(--content1) 1.6px);
     background-size: 32px 32px;
 }
 
 html {
-  overflow-y: scroll;
+    overflow-y: scroll;
 }
+
 /* ------------------------Header Section-----------------------*/
 /* ------------------------------------------------------------ */
 
@@ -53,7 +52,8 @@ header {
     max-width: var(--width);
     width: 100%;
     text-align: center;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add shadow */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    /* Add shadow */
     border-radius: var(--radius);
 }
 
@@ -80,7 +80,7 @@ header {
     margin: 10px;
     width: 30px;
     transition: transform 600ms cubic-bezier(0.23, 1, 0.32, 1);
-        border-radius: 4px;
+    border-radius: 4px;
     transform: translate(0px, 10px);
 }
 
@@ -98,6 +98,7 @@ header {
     .shortName {
         display: inline;
     }
+
     .longName {
         display: none;
     }
@@ -115,7 +116,8 @@ header {
     max-width: var(--width);
     width: 100%;
     text-align: center;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Add shadow */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    /* Add shadow */
     border-radius: var(--radius);
 }
 
@@ -134,7 +136,8 @@ header {
 }
 
 .mobileNavItem:hover {
-    transform: scale(1.05); /* Expand by 10% on hover */
+    transform: scale(1.05);
+    /* Expand by 10% on hover */
     filter: brightness(1.1);
     width: 100%;
 }
@@ -159,17 +162,18 @@ header {
     .menu-button-container {
         display: block;
     }
+
     .wideNav {
         display: none;
     }
 
-    #menu-toggle:checked + .menu-button-container .menu-button::after {
+    #menu-toggle:checked+.menu-button-container .menu-button::after {
         margin-top: -13px;
         background-color: var(--foreground);
         transform: rotate(-135deg);
     }
 
-    #menu-toggle:checked + .menu-button-container .menu-button::before {
+    #menu-toggle:checked+.menu-button-container .menu-button::before {
         margin-top: 10px;
         background-color: var(--foreground);
         transform: rotate(135deg);
@@ -275,7 +279,7 @@ nav {
 }
 
 .link-icons {
-    colour: var(--foreground);
+    color: var(--foreground);
     fill: var(--foreground);
 
     transition:
@@ -297,68 +301,22 @@ nav {
     width: 20px;
 }
 
-/* --------------------------About Page------------------------- */
-/*-------------------------------------------------------------- */
-
 .aboutBox {
     background-color: var(--background);
     color: var(--foreground);
-    margin: 10px 0px;
-    padding: 10px 10px;
+    padding: 10px 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     max-width: var(--width);
-    wdith: 100%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: var(--radius);
 }
 
 .aboutLayout {
-    display: flex;
-    flex-direction: column;
     align-items: center;
-    max-width: 300px;
     margin: 10px 20px;
-}
-
-.profile-icons-spacer {
-    display: block;
-    height: 20px;
-}
-
-.aboutParagraph {
-    margin-right: 10px;
-}
-
-.aboutLayout1 {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    padding: 20px 0px;
-}
-
-.aboutLayout2 {
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-    max-width: 280px;
-    margin: 10px 20px;
-}
-
-@media screen and (max-width: 680px) {
-    .aboutLayout1 {
-        flex-direction: column;
-        align-items: center;
-        padding: 20px 0px;
-    }
-
-    .aboutLayout2 {
-        align-items: center;
-        text-align: center;
-        margin: 0px 20px;
-    }
 }
 
 /* ------------------------Portfolio Page----------------------- */
@@ -410,7 +368,8 @@ nav {
 .label {
     background-color: var(--background);
     border: 3px solid var(--accent);
-    border-radius: 10px; /* 10px border radius for rounded corners */
+    border-radius: 10px;
+    /* 10px border radius for rounded corners */
     box-sizing: border-box;
     min-width: min-content;
     min-height: min-content;
