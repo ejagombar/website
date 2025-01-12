@@ -1,3 +1,25 @@
+const cache = {
+    projectDetails: null,
+}
+
+async function loadProjectDetails(projectId) {
+    if (!cache.projectDetails) {
+        try {
+            const response = await fetch('data/projectDetails.json')
+            if (!response.ok) {
+                throw new Error('Network response was not ok')
+            }
+            cache.projectDetails = await response.json()
+        } catch (error) {
+            console.error(
+                'There was a problem with fetching the project details:',
+                error
+            )
+        }
+    }
+    return cache.projectDetails.find((detail) => detail.id === projectId)
+}
+
 export function renderProjects(projects) {
     const container = document.getElementById('projectsContainer')
 
@@ -72,38 +94,21 @@ export function renderProjects(projects) {
             await expandProjectBox(projectBox, project.id)
         })
     })
-}
 
-async function loadProjectDetails(projectId) {
-    try {
-        const response = await fetch('data/projectDetails.json')
-        if (!response.ok) {
-            throw new Error('Network response was not ok')
-        }
-        const detailsData = await response.json()
-        return detailsData.find((detail) => detail.id === projectId)
-    } catch (error) {
-        console.error(
-            'There was a problem with fetching the project details:',
-            error
-        )
-    }
+    loadProjectDetails() // Load project details in the background on this page
 }
 
 async function expandProjectBox(projectBox, projectId) {
     const projectBody = projectBox.querySelector('.projectBody')
     projectBox.classList.add('expanded')
 
-    // Fade out old content
     projectBody.style.opacity = 0
 
-    // Load detailed description
     const details = await loadProjectDetails(projectId)
 
     if (details) {
         setTimeout(() => {
-            // Replace old content with detailed description
-            projectBody.innerHTML = '' // Clear current content
+            projectBody.innerHTML = ''
 
             const detailedDescription = document.createElement('p')
             detailedDescription.classList.add('detailedText')
@@ -113,8 +118,7 @@ async function expandProjectBox(projectBox, projectId) {
             )
             projectBody.appendChild(detailedDescription)
 
-            // Fade in new content
             projectBody.style.opacity = 1
-        }, 300) // Match this duration with the CSS transition duration
+        }, 300)
     }
 }

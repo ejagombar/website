@@ -1,62 +1,9 @@
 import { renderProjects } from './projects.js'
 
-const routes = {
-    404: {
-        template: '404.html',
-        title: '404',
-        description: 'Page not found',
-    },
-    '/': {
-        template: 'pages/home.html',
-        title: 'Home',
-        description: 'This is the home page',
-    },
-    projects: {
-        template: 'pages/projects.html',
-        title: 'Projects',
-        description: 'This is the contact page',
-    },
-}
-
+// ===================================== Data =====================================
 const cache = {
     iconsData: null,
     projectsData: null,
-}
-
-const locationHandler = async () => {
-    let location = window.location.hash.replace('#', '')
-    if (location.length == 0) {
-        location = '/'
-    }
-
-    const route = routes[location] || routes['404']
-
-    const html = await fetch(route.template).then((response) =>
-        response.ok ? response.text() : '<h1>404 Page Not Found</h1>'
-    )
-
-    document.getElementById('content').innerHTML = html
-    document.title = route.title || '404'
-    document
-        .querySelector('meta[name="description"]')
-        .setAttribute('content', route.description || '')
-
-    const gridBackground = document.getElementById('gridBackground')
-    const dotsBackground = document.getElementById('dotsBackground')
-
-    if (location === '/') {
-        gridBackground.classList.add('fade-out')
-        dotsBackground.classList.remove('fade-out')
-        const iconsData = await loadIconsData()
-        renderIcons(iconsData)
-    }
-
-    if (location === 'projects') {
-        gridBackground.classList.remove('fade-out')
-        dotsBackground.classList.add('fade-out')
-        const iconsData = await loadProjectData()
-        renderProjects(iconsData)
-    }
 }
 
 // Cache for fetched data
@@ -96,8 +43,30 @@ async function loadProjectData() {
     return cache.projectsData
 }
 
+// =================================== Routing ====================================
+
+const routes = {
+    404: {
+        template: '404.html',
+        title: '404',
+        description: 'Page not found',
+    },
+    '/': {
+        template: 'pages/home.html',
+        title: 'Home',
+        description: 'This is the home page',
+    },
+    projects: {
+        template: 'pages/projects.html',
+        title: 'Projects',
+        description: 'This is the contact page',
+    },
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const navItems = document.querySelectorAll('nav a')
+
+    loadIconsData() // After doing testing, I found it is best to load these earlier on slow connections.
 
     const route = (event) => {
         event.preventDefault()
@@ -105,7 +74,6 @@ document.addEventListener('DOMContentLoaded', () => {
         locationHandler()
     }
 
-    // Add click event listeners to navigation links
     navItems.forEach((item) => {
         item.addEventListener('click', (event) => {
             event.preventDefault()
@@ -113,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
         })
     })
 
-    // add an event listener to the window that watches for url changes
     window.onpopstate = locationHandler
     window.route = route
     locationHandler()
@@ -121,11 +88,48 @@ document.addEventListener('DOMContentLoaded', () => {
     loadProjectData() // Load project data in the background
 })
 
-// window.addEventListener('resize', myFunction2)
+const locationHandler = async () => {
+    let location = window.location.hash.replace('#', '')
+    if (location.length == 0) {
+        location = '/'
+    }
+
+    const route = routes[location] || routes['404']
+
+    const html = await fetch(route.template).then((response) =>
+        response.ok ? response.text() : '<h1>404 Page Not Found</h1>'
+    )
+
+    document.getElementById('content').innerHTML = html
+    document.title = route.title || '404'
+    document
+        .querySelector('meta[name="description"]')
+        .setAttribute('content', route.description || '')
+
+    const gridBackground = document.getElementById('gridBackground')
+    const dotsBackground = document.getElementById('dotsBackground')
+
+    if (location === '/') {
+        gridBackground.classList.add('fade-out')
+        dotsBackground.classList.remove('fade-out')
+        const iconsData = await loadIconsData()
+        renderIcons(iconsData)
+    }
+
+    if (location === 'projects') {
+        gridBackground.classList.remove('fade-out')
+        dotsBackground.classList.add('fade-out')
+        const iconsData = await loadProjectData()
+        renderProjects(iconsData)
+    }
+}
+
 window.addEventListener('hashchange', locationHandler)
 
+// ================================== Home Page====================================
+
 function renderIcons(iconsData) {
-    const container = document.getElementById('link-icons-container') // Make sure you have an element with this ID
+    const container = document.getElementById('link-icons-container')
     container.innerHTML = '' // Clear the container
 
     iconsData.forEach((icon) => {
