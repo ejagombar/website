@@ -234,6 +234,16 @@ nav {
     max-width: var(--width);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: var(--radius);
+    /* transition: max-height 1s ease-in-out, padding 0.5s ease-in-out; */
+    transition: height 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+}
+
+.projectBox.expanded {
+    height: auto;
+    /* Adjust based on content */
+    transform: scale(1.05);
+    /* Optional: Add slight scaling for effect */
 }
 
 .projectDivider {
@@ -253,6 +263,8 @@ nav {
     padding: 0px 10px;
     display: flex;
     flex-direction: column;
+    overflow: hidden;
+    transition: opacity 0.3s ease;
 }
 
 .projectLabelBox {
