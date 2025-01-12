@@ -23,15 +23,31 @@ body {
     font-family: 'Fira Code', Helvetica, sans-serif;
     font-style: normal;
     background-color: var(--content1);
+}
 
-    /* background-image: linear-gradient(var(--content2) 1.1px, transparent 1.1px), */
-    /*     linear-gradient(to right, var(--content2) 1.1px, var(--content1) 1.1px); */
-    /* background-size: 32px 32px; */
-
-    opacity: 1;
-    background-image: radial-gradient(var(--accent) 1.6px,
-            var(--content1) 1.6px);
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(var(--accent) 1.6px, transparent 1.1px),
+        linear-gradient(to right, var(--accent) 1.6px, var(--content1) 1.1px);
     background-size: 32px 32px;
+    z-index: -1;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.background.dots {
+    background-image: radial-gradient(var(--accent) 1.6px, var(--content1) 1.6px);
+    background-size: 32px 32px;
+    background-position: -15.3px -15.3px;
+}
+
+.fade-out {
+    opacity: 0;
 }
 
 html {

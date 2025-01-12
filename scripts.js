@@ -26,6 +26,9 @@ document.addEventListener('DOMContentLoaded', () => {
         projectsData: null,
     }
 
+    const gridBackground = document.getElementById('gridBackground')
+    const dotsBackground = document.getElementById('dotsBackground')
+
     // Mock functions to fetch data
     async function loadIconsData() {
         if (!cache.iconsData) {
@@ -99,11 +102,15 @@ document.addEventListener('DOMContentLoaded', () => {
     async function loadPage(page) {
         contentContainer.innerHTML = pages[page]
         if (page === 'home') {
+            gridBackground.classList.add('fade-out')
+            dotsBackground.classList.remove('fade-out')
             const iconsData = await loadIconsData()
             renderIcons(iconsData)
         }
 
         if (page === 'projects') {
+            gridBackground.classList.remove('fade-out')
+            dotsBackground.classList.add('fade-out')
             const iconsData = await loadProjectData()
             renderProjects(iconsData)
         }
@@ -231,9 +238,9 @@ function renderProjects(projects) {
         projectBox.appendChild(projectBody)
         container.appendChild(projectBox)
 
-        projectBox.addEventListener('click', async () => {
-            await expandProjectBox(projectBox, project.id)
-        })
+        // projectBox.addEventListener('click', async () => {
+        //     await expandProjectBox(projectBox, project.id)
+        // })
     })
 }
 
