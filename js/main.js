@@ -23,12 +23,12 @@ const routes = {
         description: 'Page not found',
     },
     '/': {
-        template: 'home.html',
+        template: 'pages/home.html',
         title: 'Home',
         description: 'This is the home page',
     },
     projects: {
-        template: 'projects.html',
+        template: 'pages/projects.html',
         title: 'Projects',
         description: 'This is the contact page',
     },
