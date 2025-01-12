@@ -66,6 +66,7 @@ const routes = {
 document.addEventListener('DOMContentLoaded', () => {
     const navItems = document.querySelectorAll('nav a')
 
+    updateHeaderText()
     loadIconsData() // After doing testing, I found it is best to load these earlier on slow connections.
 
     const route = (event) => {
@@ -127,6 +128,22 @@ const locationHandler = async () => {
 window.addEventListener('hashchange', locationHandler)
 
 // ================================== Home Page====================================
+
+function updateHeaderText() {
+    const header = document.getElementById('nameHeader')
+
+    if (window.innerWidth <= 300) {
+        header.textContent = 'EA'
+    } else if (window.innerWidth <= 400) {
+        header.textContent = 'Ed A'
+    } else if (window.innerWidth <= 500) {
+        header.textContent = 'Ed Agombar'
+    } else {
+        header.textContent = 'Edward Agombar'
+    }
+}
+
+window.addEventListener('resize', updateHeaderText)
 
 function renderIcons(iconsData) {
     const container = document.getElementById('link-icons-container')

@@ -50,10 +50,6 @@ body {
     opacity: 0;
 }
 
-html {
-    overflow-y: scroll;
-}
-
 /* ------------------------Header Section-----------------------*/
 /* ------------------------------------------------------------ */
 
@@ -71,36 +67,7 @@ header {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     /* Add shadow */
     border-radius: var(--radius);
-}
-
-.shortName {
-    display: none;
-    margin-left: 10px;
-}
-
-.longName {
-    margin-left: 10px;
-}
-
-
-.menu-button::before {
-    content: '';
-    margin-top: -8px;
-}
-
-.menu-button::after {
-    content: '';
-    margin-top: 8px;
-}
-
-@media screen and (max-width: 550px) {
-    .shortName {
-        display: inline;
-    }
-
-    .longName {
-        display: none;
-    }
+    /* Example: Minimum width of 320px */
 }
 
 
