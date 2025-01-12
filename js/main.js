@@ -16,120 +16,130 @@ function myFunction() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    const navItems = document.querySelectorAll('nav a')
-    const contentContainer = document.getElementById('content')
+const routes = {
+    404: {
+        template: '404.html',
+        title: '404',
+        description: 'Page not found',
+    },
+    '/': {
+        template: 'home.html',
+        title: 'Home',
+        description: 'This is the home page',
+    },
+    projects: {
+        template: 'projects.html',
+        title: 'Projects',
+        description: 'This is the contact page',
+    },
+}
 
-    // Cache for fetched data
-    const cache = {
-        iconsData: null,
-        projectsData: null,
+const cache = {
+    iconsData: null,
+    projectsData: null,
+}
+
+const locationHandler = async () => {
+    let location = window.location.hash.replace('#', '')
+    if (location.length == 0) {
+        location = '/'
     }
+
+    const route = routes[location] || routes['404']
+
+    const html = await fetch(route.template).then((response) =>
+        response.ok ? response.text() : '<h1>404 Page Not Found</h1>'
+    )
+
+    document.getElementById('content').innerHTML = html
+    document.title = route.title || '404'
+    document
+        .querySelector('meta[name="description"]')
+        .setAttribute('content', route.description || '')
 
     const gridBackground = document.getElementById('gridBackground')
     const dotsBackground = document.getElementById('dotsBackground')
 
-    // Mock functions to fetch data
-    async function loadIconsData() {
-        if (!cache.iconsData) {
-            try {
-                const response = await fetch('data/icons.json')
-                if (!response.ok) {
-                    throw new Error('Network response was not ok')
-                }
-                cache.iconsData = await response.json()
-            } catch (error) {
-                console.error(
-                    'There was a problem with fetching the icons data:',
-                    error
-                )
+    if (location === '/') {
+        gridBackground.classList.add('fade-out')
+        dotsBackground.classList.remove('fade-out')
+        const iconsData = await loadIconsData()
+        renderIcons(iconsData)
+    }
+
+    if (location === 'projects') {
+        gridBackground.classList.remove('fade-out')
+        dotsBackground.classList.add('fade-out')
+        const iconsData = await loadProjectData()
+        renderProjects(iconsData)
+    }
+}
+
+// Cache for fetched data
+async function loadIconsData() {
+    if (!cache.iconsData) {
+        try {
+            const response = await fetch('assets/icons.json')
+            if (!response.ok) {
+                throw new Error('Network response was not ok')
             }
+            cache.iconsData = await response.json()
+        } catch (error) {
+            console.error(
+                'There was a problem with fetching the icons data:',
+                error
+            )
         }
-        return cache.iconsData
     }
+    return cache.iconsData
+}
 
-    async function loadProjectData() {
-        if (!cache.projectsData) {
-            try {
-                const response = await fetch('data/projects.json')
-                if (!response.ok) {
-                    throw new Error('Network response was not ok')
-                }
-                cache.projectsData = await response.json()
-            } catch (error) {
-                console.error(
-                    'There was a problem with fetching the project data:',
-                    error
-                )
+async function loadProjectData() {
+    if (!cache.projectsData) {
+        try {
+            const response = await fetch('data/projects.json')
+            if (!response.ok) {
+                throw new Error('Network response was not ok')
             }
+            cache.projectsData = await response.json()
+        } catch (error) {
+            console.error(
+                'There was a problem with fetching the project data:',
+                error
+            )
         }
-        return cache.projectsData
     }
+    return cache.projectsData
+}
 
-    // Define pages with placeholders for dynamic content
-    const pages = {
-        home: `
-                <div class="profileBox">
-                    <div class="profileLayout1">
-                        <img class="profilePicture" src="data/profilePic.jpg" width="200px" height="200px" alt="Profile Picture" />
-                        <div class="profileLayout2">
-                            <p>
-                                Hi, I am a recent <b>Electronic and Computer Engineering</b> graduate from the University of Nottingham.
-                            </p>
-                            <div id="link-icons-container" class="link-icons-container" > </div>
-                        </div>
-                    </div>
-                </div>
+document.addEventListener('DOMContentLoaded', () => {
+    const navItems = document.querySelectorAll('nav a')
 
-                <div class="aboutBox">
-                    <p class="aboutParagraph">
-                        Hi, I am an Electronic and Computer Engineer, looking for a job in software engineering. I recently achieved a First class degree in my Master's at the University of Nottingham. <br /><br />
-
-                        In my free time, I enjoy working on software projects and building stuff. Some recent examples can be found under the portfolio page. I like to try new things and explore new areas, such as my current project, WikiMapper, where I am processing Wikipedia XML dumps with C++ to create a visual graph database. <br /><br />
-
-                        Now that I have graduated, I want to focus on backend development, improving my knowledge of Linux, C++, and computer architecture. <br /><br />
-
-                        In my free time, I enjoy Mounting Biking, Climbing, Guitar, Cooking, and building things.
-                    </p>
-                </div>
-            `,
-        projects: `
-                <div id="projectsContainer"> </div>
-                `,
-    }
-
-    // Load the requested page content
-    async function loadPage(page) {
-        contentContainer.innerHTML = pages[page]
-        if (page === 'home') {
-            gridBackground.classList.add('fade-out')
-            dotsBackground.classList.remove('fade-out')
-            const iconsData = await loadIconsData()
-            renderIcons(iconsData)
-        }
-
-        if (page === 'projects') {
-            gridBackground.classList.remove('fade-out')
-            dotsBackground.classList.add('fade-out')
-            const iconsData = await loadProjectData()
-            renderProjects(iconsData)
-        }
+    const route = (event) => {
+        event.preventDefault()
+        window.history.pushState({}, '', event.target.href)
+        locationHandler()
     }
 
     // Add click event listeners to navigation links
     navItems.forEach((item) => {
         item.addEventListener('click', (event) => {
             event.preventDefault()
-            const page = item.getAttribute('href').replace('#', '')
-            loadPage(page)
+            route(event)
         })
     })
 
-    // Load the default page (home)
-    loadPage('home')
+    // add an event listener to the window that watches for url changes
+    window.onpopstate = locationHandler
+    window.route = route
+    locationHandler()
+
+    // loadPage('home') // Load the default page (home)
+    loadProjectData() // Load project data in the background
 })
 
 window.addEventListener('resize', myFunction2)
+window.addEventListener('hashchange', locationHandler)
 
 function renderIcons(iconsData) {
     const container = document.getElementById('link-icons-container') // Make sure you have an element with this ID
