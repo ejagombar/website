@@ -79,28 +79,7 @@ export function renderProjects(projects) {
         title.style.alignItems = 'center'
         title.style.gap = '8px'
 
-        const projectBody = document.createElement('div')
-        projectBody.classList.add('projectBody')
-
-        const projectDivider = document.createElement('div')
-        projectDivider.classList.add('projectDivider')
-        projectBody.appendChild(projectDivider)
-
-        const description = document.createElement('p')
-        description.classList.add('projectText')
-        description.innerHTML = project.description.replace(/\n/g, '<br>')
-        projectDivider.appendChild(description)
-
-        const labelBox = document.createElement('div')
-        labelBox.classList.add('projectLabelBox')
-        project.labels.forEach((label) => {
-            const labelElement = document.createElement('p')
-            labelElement.classList.add('label')
-            labelElement.textContent = label
-            labelBox.appendChild(labelElement)
-        })
-        projectDivider.appendChild(labelBox)
-
+        const projectBody = generateProjectBody(project)
         projectBox.appendChild(projectBody)
         container.appendChild(projectBox)
 
@@ -117,6 +96,35 @@ export function renderProjects(projects) {
     loadProjectDetails()
 }
 
+function generateProjectBody(project) {
+    const projectBody = document.createElement('div')
+    projectBody.classList.add('projectBody')
+
+    const projectDivider = document.createElement('div')
+    projectDivider.classList.add('projectDivider')
+    projectBody.appendChild(projectDivider)
+
+    const description = document.createElement('p')
+    description.classList.add('projectText')
+    description.innerHTML = project.description.replace(/\n/g, '<br>')
+    projectDivider.appendChild(description)
+
+    const labelBox = document.createElement('div')
+    labelBox.classList.add('projectLabelBox')
+    project.labels.forEach((label) => {
+        const labelElement = document.createElement('p')
+        labelElement.classList.add('label')
+        labelElement.textContent = label
+        labelBox.appendChild(labelElement)
+    })
+    projectDivider.appendChild(labelBox)
+
+    // Store the original content as a data attribute
+    projectBody.setAttribute('data-original-content', projectBody.innerHTML)
+
+    return projectBody
+}
+
 function handleProjectClick(event, projectBox, projectBody, title) {
     event.preventDefault()
 
@@ -130,42 +138,65 @@ function handleProjectClick(event, projectBox, projectBody, title) {
 
     activeProjectBox = projectBox
 
-    let newContent
-    loadProjectDetails(title).then(
-        function (value) {
-            projectBody.classList.remove('hidden')
-            console.log(value)
-            newContent = value.description
+    projectBox.classList.add('active')
+    projectBox.style.pointerEvents = 'none' // Disable further clicks
 
-            const currentHeight = projectBody.offsetHeight
-            projectBody.style.height = `${currentHeight}px`
+    const originalHeight = projectBody.scrollHeight
 
-            setTimeout(() => {
+    projectBody.classList.remove('visible')
+    projectBody.style.opacity = '0'
+
+    setTimeout(() => {
+        loadProjectDetails(title).then(
+            (value) => {
+                const newContent = value.description
                 projectBody.innerHTML = newContent
-                projectBody.classList.add('visible')
 
                 const newHeight = projectBody.scrollHeight
 
+                projectBody.style.height = `${originalHeight}px`
+                console.log('Active Original Height', originalHeight)
+
+                projectBody.offsetHeight // Force reflow
+
                 requestAnimationFrame(() => {
                     projectBody.style.height = `${newHeight}px`
+                    console.log('Active New Height', newHeight)
                 })
-            }, 300)
-        },
-        function (error) {
-            console.log(error)
-        }
-    )
 
-    projectBox.classList.add('active')
-    projectBox.style.pointerEvents = 'none' // Disable further clicks
+                setTimeout(() => {
+                    projectBody.style.opacity = '1'
+                    projectBody.classList.add('visible')
+                }, 300)
+            },
+            (error) => {
+                console.error('Failed to load project details:', error)
+            }
+        )
+    }, 300)
 }
 
 function resetProjectBox(projectBox) {
     const projectBody = projectBox.querySelector('.projectBody')
 
-    projectBody.classList.remove('visible')
-    projectBody.classList.add('hidden')
-    projectBody.style.height = '0'
+    const currentHeight = projectBody.scrollHeight
+    const originalContent = projectBody.getAttribute('data-original-content')
+    projectBody.style.height = 'auto'
+    projectBody.innerHTML = originalContent
+
+    const restoredHeight = projectBody.scrollHeight
+
+    projectBody.style.height = `${currentHeight}px`
+    console.log('Reset Current Height (Before Transition):', currentHeight)
+
+    requestAnimationFrame(() => {
+        console.log('Reset Restored Height (After Transition):', restoredHeight)
+
+        projectBody.style.height = `${restoredHeight}px`
+
+        projectBody.style.opacity = '1'
+        projectBody.classList.add('visible')
+    })
 
     projectBox.classList.remove('active')
     projectBox.style.pointerEvents = '' // Re-enable clicks

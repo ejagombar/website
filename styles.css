@@ -209,9 +209,29 @@ nav {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: var(--radius);
     overflow-y: hidden;
-    transition: height 0.3s ease;
     cursor: pointer;
 }
+
+.projectBody {
+    padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    display: inline-block;
+    opacity: 1;
+    height: fit-content;
+    transition: height 0.4s ease, opacity 0.4s ease;
+}
+
+
+.projectBody.visible {
+    opacity: 1;
+}
+
+.projectBody.hidden {
+    opacity: 0;
+}
+
 
 .projectIcon {
     transition: transform 0.3s ease;
@@ -234,23 +254,6 @@ nav {
     max-width: calc(var(--width) - 250px);
 }
 
-.projectBody {
-    padding: 0px 10px;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    transition: height 0.5s ease,
-        opacity 0.4s ease;
-}
-
-
-.visible {
-    opacity: 1;
-}
-
-.hidden {
-    opacity: 0;
-}
 
 .projectLabelBox {
     margin-left: 8px;
@@ -273,17 +276,9 @@ nav {
     align-items: center;
     padding: 5px 9px;
     margin: 0px;
-    /* transition: */
-    /*     transform 0.3s ease; */
-    /* transition: border 0.3 ease; */
     border-radius: 30px;
 }
 
-/* .label:hover { */
-/*     /* transform: scale(1.05); */
-*/
-/*     border: 3px solid var(--highlight) */
-/* } */
 
 .projectLinkBox {
     display: flex;
