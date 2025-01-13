@@ -14,6 +14,16 @@
     box-sizing: border-box;
 }
 
+h1 {
+    font-size: 1.5em;
+}
+
+h2 {
+    font-size: 1.5em;
+    padding: 10px;
+    margin: 0px;
+}
+
 body {
     margin: 10;
     display: flex;
@@ -24,6 +34,10 @@ body {
     font-style: normal;
     background-color: var(--content1);
 }
+
+
+/* ------------------------ Background ------------------------ */
+/* ------------------------------------------------------------ */
 
 .background {
     position: fixed;
@@ -50,7 +64,7 @@ body {
     opacity: 0;
 }
 
-/* ------------------------Header Section-----------------------*/
+/* -------------------------- Menu Bar ------------------------*/
 /* ------------------------------------------------------------ */
 
 header {
@@ -65,20 +79,7 @@ header {
     width: 100%;
     text-align: center;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    /* Add shadow */
     border-radius: var(--radius);
-    /* Example: Minimum width of 320px */
-}
-
-
-h1 {
-    font-size: 1.5em;
-}
-
-h2 {
-    font-size: 1.5em;
-    padding: 10px;
-    margin: 0px;
 }
 
 nav {
@@ -86,24 +87,28 @@ nav {
     justify-content: center;
 }
 
+.nameHeader {
+    margin-left: 10px;
+}
+
 .wideNavItem {
     color: var(--foreground);
-    text-decoration: none;
-    padding: 0px 20px;
+    margin: 0px 20px;
     display: flex;
     align-items: center;
     border-radius: var(--radius);
 
-    transition:
-        transform 0.3s ease,
-        filter 0.3s ease;
+    background: linear-gradient(currentColor 0 0) bottom left/ var(--underline-width, 0%) 0.05em no-repeat;
+    display: inline-block;
+    padding: 0 .0em 0.2em;
+    border-radius: 0;
+    text-decoration: none;
+    transition: background-size 0.3s;
 }
 
 
 .wideNavItem:hover {
-    transform: scale(1.05);
-    filter: brightness(1.1);
-    width: 100%;
+    --underline-width: 100%;
 }
 
 /* --------------------------Home Page------------------------- */
@@ -165,19 +170,13 @@ nav {
     color: var(--foreground);
     fill: var(--foreground);
 
-    transition:
-        transform 0.3s ease,
-        filter 0.3s ease;
+    transition: fill 0.3s ease;
 }
 
 .link-icons:hover {
-    transform: scale(1.1);
-    filter: brightness(1.1);
+    fill: var(--highlight);
 }
 
-.wideNavItem:hover {
-    width: 100%;
-}
 
 .linkIconSpacer {
     display: block;
@@ -202,7 +201,7 @@ nav {
     margin: 10px 20px;
 }
 
-/* ------------------------Portfolio Page----------------------- */
+/* ------------------------ Project Page ----------------------- */
 /*-------------------------------------------------------------- */
 
 .projectBox {
@@ -217,16 +216,9 @@ nav {
     max-width: var(--width);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: var(--radius);
-    /* transition: max-height 1s ease-in-out, padding 0.5s ease-in-out; */
-    transition: height 0.3s ease, transform 0.3s ease;
+    overflow-y: hidden;
+    transition: height 0.3s ease;
     cursor: pointer;
-}
-
-.projectBox.expanded {
-    height: auto;
-    /* Adjust based on content */
-    transform: scale(1.05);
-    /* Optional: Add slight scaling for effect */
 }
 
 .projectDivider {
@@ -247,7 +239,20 @@ nav {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    transition: opacity 0.3s ease;
+    transition: height 0.5s ease,
+        opacity 0.5s ease;
+
+}
+
+
+/* Initially visible content */
+.visible {
+    opacity: 1;
+}
+
+/* Hidden content (fade out) */
+.hidden {
+    opacity: 0;
 }
 
 .projectLabelBox {
@@ -264,24 +269,20 @@ nav {
     background-color: var(--background);
     border: 3px solid var(--accent);
     border-radius: 10px;
-    /* 10px border radius for rounded corners */
     box-sizing: border-box;
     min-width: min-content;
     min-height: min-content;
     justify-content: center;
     align-items: center;
-    /* padding: 8px 12px; */
     padding: 5px 9px;
     margin: 0px;
     transition:
-        transform 0.3s ease,
-        filter 0.3s ease;
+        transform 0.3s ease;
     border-radius: 30px;
 }
 
 .label:hover {
     transform: scale(1.05);
-    filter: brightness(1.1);
 }
 
 .projectLinkBox {
@@ -309,21 +310,10 @@ nav {
     filter: brightness(1.2);
 }
 
-@media screen and (max-width: 680px) {
-    .projectDivider {
-        display: flex;
-        align-items: top;
-        flex-direction: column;
-        justify-content: space-between;
-    }
+@media screen and (max-width: 606px) {
 
     .projectLabelBox {
-        margin-left: 0px;
-        padding-top: 10px;
-    }
-
-    .projectBox {
-        width: 100%;
+        display: none;
     }
 }
 
@@ -334,6 +324,8 @@ nav {
     height: 100%;
 }
 
+/* -------------------------- 404 Page ------------------------- */
+/*-------------------------------------------------------------- */
 .centered {
     position: absolute;
     top: 50%;

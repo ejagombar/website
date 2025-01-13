@@ -86,12 +86,48 @@ export function renderProjects(projects) {
         })
         projectBody.appendChild(linkBox)
 
+        const button = document.createElement('button')
+        projectBody.appendChild(button)
+
         projectBox.appendChild(projectBody)
         container.appendChild(projectBox)
 
-        projectBox.addEventListener('click', async () => {
-            console.log('clikd')
-            await expandProjectBox(projectBox, project.id)
+        button.addEventListener('click', () => {
+            const newContent =
+                'ThiThis is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longercontent that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!This is some longer content that will increase the height of the div!s is some longer content that will increase the height of the div!'
+            // Get the current height of the div
+            const currentHeight = projectBody.offsetHeight
+
+            // Fade out the current content
+            const currentContent = projectBody
+            currentContent.classList.remove('visible')
+            currentContent.classList.add('hidden')
+
+            // Set the height to the current height, to allow transition
+            projectBody.style.height = `${currentHeight}px`
+
+            // After fade out completes, update content and animate height change
+            setTimeout(() => {
+                // Step 1: Change the content of the div
+                currentContent.innerHTML = newContent
+
+                // Step 2: Fade in the new content
+                currentContent.classList.remove('hidden')
+                currentContent.classList.add('visible')
+
+                // Step 3: Get the new height of the content
+                const newHeight = projectBody.scrollHeight
+
+                // Step 4: Animate the height change
+                requestAnimationFrame(() => {
+                    projectBody.style.height = `${newHeight}px`
+                })
+            }, 500) // Match the fade-out duration in CSS (0.5s)
+
+            // projectBox.addEventListener('click', async () => {
+            //     console.log('clikd')
+            //     await expandProjectBox(projectBox, project.id)
+            // })
         })
     })
 

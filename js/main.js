@@ -47,7 +47,7 @@ async function loadProjectData() {
 
 const routes = {
     404: {
-        template: '404.html',
+        template: 'pages/404.html',
         title: '404',
         description: 'Page not found',
     },
@@ -98,7 +98,8 @@ const locationHandler = async () => {
     const route = routes[location] || routes['404']
 
     const html = await fetch(route.template).then((response) =>
-        response.ok ? response.text() : '<h1>404 Page Not Found</h1>'
+        // response.ok ? response.text() : '<h1>404 Page Not Found</h1>'
+        response.text()
     )
 
     document.getElementById('content').innerHTML = html
