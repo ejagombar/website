@@ -92,24 +92,18 @@ nav {
 }
 
 .wideNavItem {
-    color: var(--foreground);
     margin: 0px 20px;
     display: flex;
     align-items: center;
-    border-radius: var(--radius);
-
-    background: linear-gradient(currentColor 0 0) bottom left/ var(--underline-width, 0%) 0.05em no-repeat;
-    display: inline-block;
-    padding: 0 .0em 0.2em;
-    border-radius: 0;
+    color: var(--foreground);
     text-decoration: none;
-    transition: background-size 0.3s;
+    transition: transform 0.3s ease;
 }
-
 
 .wideNavItem:hover {
-    --underline-width: 100%;
+    transform: scale(1.08);
 }
+
 
 /* --------------------------Home Page------------------------- */
 /*-------------------------------------------------------------- */
@@ -169,14 +163,12 @@ nav {
 .link-icons {
     color: var(--foreground);
     fill: var(--foreground);
-
-    transition: fill 0.3s ease;
+    transition: transform 0.3s ease;
 }
 
 .link-icons:hover {
-    fill: var(--highlight);
+    transform: scale(1.1);
 }
-
 
 .linkIconSpacer {
     display: block;
@@ -221,6 +213,14 @@ nav {
     cursor: pointer;
 }
 
+.projectIcon {
+    transition: transform 0.3s ease;
+}
+
+.projectBox:hover .projectIcon {
+    transform: translateX(5px);
+}
+
 .projectDivider {
     display: flex;
     align-items: top;
@@ -240,17 +240,14 @@ nav {
     flex-direction: column;
     overflow: hidden;
     transition: height 0.5s ease,
-        opacity 0.5s ease;
-
+        opacity 0.4s ease;
 }
 
 
-/* Initially visible content */
 .visible {
     opacity: 1;
 }
 
-/* Hidden content (fade out) */
 .hidden {
     opacity: 0;
 }
@@ -276,14 +273,17 @@ nav {
     align-items: center;
     padding: 5px 9px;
     margin: 0px;
-    transition:
-        transform 0.3s ease;
+    /* transition: */
+    /*     transform 0.3s ease; */
+    /* transition: border 0.3 ease; */
     border-radius: 30px;
 }
 
-.label:hover {
-    transform: scale(1.05);
-}
+/* .label:hover { */
+/*     /* transform: scale(1.05); */
+*/
+/*     border: 3px solid var(--highlight) */
+/* } */
 
 .projectLinkBox {
     display: flex;
