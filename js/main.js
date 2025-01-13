@@ -1,9 +1,8 @@
-import { renderProjects } from './projects.js'
+import { renderProjects, loadProjectData } from './projects.js'
 
 // ===================================== Data =====================================
 const cache = {
     iconsData: null,
-    projectsData: null,
 }
 
 // Cache for fetched data
@@ -23,24 +22,6 @@ async function loadIconsData() {
         }
     }
     return cache.iconsData
-}
-
-async function loadProjectData() {
-    if (!cache.projectsData) {
-        try {
-            const response = await fetch('data/projects.json')
-            if (!response.ok) {
-                throw new Error('Network response was not ok')
-            }
-            cache.projectsData = await response.json()
-        } catch (error) {
-            console.error(
-                'There was a problem with fetching the project data:',
-                error
-            )
-        }
-    }
-    return cache.projectsData
 }
 
 // =================================== Routing ====================================

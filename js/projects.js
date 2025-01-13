@@ -1,5 +1,26 @@
 const cache = {
     projectDetails: null,
+    projectData: null,
+}
+
+let activeProjectBox = null
+
+export async function loadProjectData() {
+    if (!cache.projectData) {
+        try {
+            const response = await fetch('data/projects.json')
+            if (!response.ok) {
+                throw new Error('Network response was not ok')
+            }
+            cache.projectData = await response.json()
+        } catch (error) {
+            console.error(
+                'There was a problem with fetching the project data:',
+                error
+            )
+        }
+    }
+    return cache.projectData
 }
 
 async function loadProjectDetails(projectTitle) {
@@ -10,6 +31,7 @@ async function loadProjectDetails(projectTitle) {
                 throw new Error('Network response was not ok')
             }
             cache.projectDetails = await response.json()
+            console.log('Loaded project details')
         } catch (error) {
             console.error(
                 'There was a problem with fetching the project details:',
@@ -79,82 +101,72 @@ export function renderProjects(projects) {
         })
         projectDivider.appendChild(labelBox)
 
-        // const linkBox = document.createElement('div')
-        // linkBox.classList.add('projectLinkBox')
-        // project.links.forEach((link) => {
-        //     const linkElement = document.createElement('a')
-        //     linkElement.classList.add('projectLink')
-        //     linkElement.href = link.url
-        //     linkElement.target = '_blank'
-        //     linkElement.textContent = link.label
-        //
-        //     const svgIcon = document.createElementNS(
-        //         'http://www.w3.org/2000/svg',
-        //         'svg'
-        //     )
-        //     svgIcon.setAttribute('width', '28')
-        //     svgIcon.setAttribute('height', '1.5em')
-        //     svgIcon.setAttribute('fill', 'currentColor')
-        //     svgIcon.setAttribute('viewBox', '0 0 16 16')
-        //
-        //     const path = document.createElementNS(
-        //         'http://www.w3.org/2000/svg',
-        //         'path'
-        //     )
-        //     path.setAttribute(
-        //         'd',
-        //         'M10.604 1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.06-1.06l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1zM3.75 2A1.75 1.75 0 0 0 2 3.75v8.5c0 .966.784 1.75 1.75 1.75h8.5A1.75 1.75 0 0 0 14 12.25v-3.5a.75.75 0 0 0-1.5 0v3.5a.25.25 0 0 1-.25.25h-8.5a.25.25 0 0 1-.25-.25v-8.5a.25.25 0 0 1 .25-.25h3.5a.75.75 0 0 0 0-1.5h-3.5z'
-        //     )
-
-        //     svgIcon.appendChild(path)
-        //     linkElement.appendChild(svgIcon)
-        //
-        //     linkBox.appendChild(linkElement)
-        // })
-        // projectBody.appendChild(linkBox)
-
         projectBox.appendChild(projectBody)
         container.appendChild(projectBox)
 
         projectBox.addEventListener('click', (event) =>
-            handleProjectClick(event, projectBody, title.textContent)
+            handleProjectClick(
+                event,
+                projectBox,
+                projectBody,
+                title.textContent
+            )
         )
     })
 
     loadProjectDetails()
 }
 
-function handleProjectClick(event, projectBody, title) {
+function handleProjectClick(event, projectBox, projectBody, title) {
     event.preventDefault()
+
+    if (activeProjectBox === projectBox) {
+        return
+    }
+
+    if (activeProjectBox) {
+        resetProjectBox(activeProjectBox)
+    }
+
+    activeProjectBox = projectBox
 
     let newContent
     loadProjectDetails(title).then(
         function (value) {
+            projectBody.classList.remove('hidden')
             console.log(value)
             newContent = value.description
+
+            const currentHeight = projectBody.offsetHeight
+            projectBody.style.height = `${currentHeight}px`
+
+            setTimeout(() => {
+                projectBody.innerHTML = newContent
+                projectBody.classList.add('visible')
+
+                const newHeight = projectBody.scrollHeight
+
+                requestAnimationFrame(() => {
+                    projectBody.style.height = `${newHeight}px`
+                })
+            }, 300)
         },
         function (error) {
             console.log(error)
         }
     )
-    console.log(newContent)
-    const currentHeight = projectBody.offsetHeight
 
-    const currentContent = projectBody
-    currentContent.classList.remove('visible')
-    currentContent.classList.add('hidden')
+    projectBox.classList.add('active')
+    projectBox.style.pointerEvents = 'none' // Disable further clicks
+}
 
-    projectBody.style.height = `${currentHeight}px`
+function resetProjectBox(projectBox) {
+    const projectBody = projectBox.querySelector('.projectBody')
 
-    setTimeout(() => {
-        currentContent.innerHTML = newContent
-        currentContent.classList.remove('hidden')
-        currentContent.classList.add('visible')
+    projectBody.classList.remove('visible')
+    projectBody.classList.add('hidden')
+    projectBody.style.height = '0'
 
-        const newHeight = projectBody.scrollHeight
-
-        requestAnimationFrame(() => {
-            projectBody.style.height = `${newHeight}px`
-        })
-    }, 300)
+    projectBox.classList.remove('active')
+    projectBox.style.pointerEvents = '' // Re-enable clicks
 }
