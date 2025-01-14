@@ -102,8 +102,8 @@ const locationHandler = async () => {
     if (location === 'projects') {
         gridBackground.classList.remove('fade-out')
         dotsBackground.classList.add('fade-out')
-        const iconsData = await loadProjectData()
-        renderProjects(iconsData)
+        const projectData = await loadProjectData()
+        renderProjects(projectData)
     }
 }
 

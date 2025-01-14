@@ -23,14 +23,44 @@ export async function loadProjectData() {
     return cache.projectData
 }
 
-async function loadProjectDetails(projectTitle) {
+async function constructProjectDetails(projectTitle) {
     if (!cache.projectDetails) {
         try {
             const response = await fetch('data/projectDetails.json')
             if (!response.ok) {
                 throw new Error('Network response was not ok')
             }
+
             cache.projectDetails = await response.json()
+            const data = await loadProjectData()
+
+            cache.projectDetails.forEach((detail, index) => {
+                const detiledBodyContainer = document.createElement('div')
+                const detiledBody = document.createElement('div')
+                detiledBody.innerHTML = detail.description
+
+                const labels = data.find(
+                    (detail2) => detail2.title === detail.title
+                ).labels
+
+                const labelBox = document.createElement('div')
+                labelBox.classList.add('projectLabelBox')
+                labels.forEach((label) => {
+                    const labelElement = document.createElement('p')
+                    labelElement.classList.add('label')
+                    labelElement.textContent = label
+                    labelBox.appendChild(labelElement)
+                })
+
+                detiledBodyContainer.appendChild(labelBox)
+                detiledBodyContainer.appendChild(detiledBody)
+
+                cache.projectDetails[index] = {
+                    ...cache.projectDetails[index],
+                    description: detiledBodyContainer.innerHTML,
+                }
+            })
+
             console.log('Loaded project details')
         } catch (error) {
             console.error(
@@ -103,7 +133,7 @@ export function renderProjects(projects) {
         )
     })
 
-    loadProjectDetails()
+    constructProjectDetails()
 }
 
 function generateProjectBody(project) {
@@ -156,7 +186,7 @@ function handleProjectClick(event, projectBox, projectBody, title) {
     projectBody.style.opacity = '0'
 
     setTimeout(() => {
-        loadProjectDetails(title).then(
+        constructProjectDetails(title).then(
             (value) => {
                 const newContent = value.description
                 projectBody.innerHTML = newContent
@@ -164,13 +194,11 @@ function handleProjectClick(event, projectBox, projectBody, title) {
                 const newHeight = projectBody.scrollHeight
 
                 projectBody.style.height = `${originalHeight}px`
-                console.log('Active Original Height', originalHeight)
 
                 projectBody.offsetHeight // Force reflow
 
                 requestAnimationFrame(() => {
                     projectBody.style.height = `${newHeight}px`
-                    console.log('Active New Height', newHeight)
                 })
 
                 setTimeout(() => {
@@ -198,11 +226,8 @@ function resetProjectBox(projectBox) {
     const restoredHeight = projectBody.scrollHeight
 
     projectBody.style.height = `${currentHeight}px`
-    console.log('Reset Current Height (Before Transition):', currentHeight)
 
     requestAnimationFrame(() => {
-        console.log('Reset Restored Height (After Transition):', restoredHeight)
-
         projectBody.style.height = `${restoredHeight}px`
 
         projectBody.style.opacity = '1'
