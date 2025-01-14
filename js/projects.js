@@ -61,7 +61,7 @@ export function renderProjects(projects) {
         svgIcon.setAttribute('width', '20')
         svgIcon.setAttribute('height', '20')
         svgIcon.setAttribute('fill', 'var(--highlight)')
-        svgIcon.setAttribute('viewBox', '0 0 20 20')
+        svgIcon.setAttribute('viewBox', '0 0 32 32')
 
         const path = document.createElementNS(
             'http://www.w3.org/2000/svg',
@@ -69,10 +69,20 @@ export function renderProjects(projects) {
         )
         path.setAttribute(
             'd',
-            'M10 20A10 10 0 1 0 0 10a10 10 0 0 0 10 10zM8.711 4.3l5.7 5.766L8.7 15.711l-1.4-1.422 4.289-4.242-4.3-4.347z'
+            'M13.71 24.71 12.3 23.3l7.29-7.3-7.3-7.29L13.7 7.3l8 8a1 1 0 0 1 0 1.41z'
+        )
+
+        const path2 = document.createElementNS(
+            'http://www.w3.org/2000/svg',
+            'path'
+        )
+        path2.setAttribute(
+            'd',
+            'M16 32a16 16 0 1 1 16-16 16 16 0 0 1-16 16zm0-30a14 14 0 1 0 14 14A14 14 0 0 0 16 2z'
         )
 
         svgIcon.appendChild(path)
+        svgIcon.appendChild(path2)
         title.appendChild(svgIcon)
 
         title.style.display = 'flex'
@@ -119,7 +129,6 @@ function generateProjectBody(project) {
     })
     projectDivider.appendChild(labelBox)
 
-    // Store the original content as a data attribute
     projectBody.setAttribute('data-original-content', projectBody.innerHTML)
 
     return projectBody
@@ -174,6 +183,8 @@ function handleProjectClick(event, projectBox, projectBody, title) {
             }
         )
     }, 300)
+
+    projectBody.style.height = 'auto'
 }
 
 function resetProjectBox(projectBox) {
@@ -195,9 +206,16 @@ function resetProjectBox(projectBox) {
         projectBody.style.height = `${restoredHeight}px`
 
         projectBody.style.opacity = '1'
-        projectBody.classList.add('visible')
+
+        setTimeout(() => {
+            projectBody.classList.add('visible')
+        }, 100)
     })
 
     projectBox.classList.remove('active')
     projectBox.style.pointerEvents = '' // Re-enable clicks
+
+    setTimeout(() => {
+        projectBody.style.height = 'auto'
+    }, 300)
 }
