@@ -78,10 +78,7 @@ const locationHandler = async () => {
 
     const route = routes[location] || routes['404']
 
-    const html = await fetch(route.template).then((response) =>
-        // response.ok ? response.text() : '<h1>404 Page Not Found</h1>'
-        response.text()
-    )
+    const html = await fetch(route.template).then((response) => response.text())
 
     document.getElementById('content').innerHTML = html
     document.title = route.title || '404'

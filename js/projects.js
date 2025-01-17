@@ -164,6 +164,15 @@ function generateProjectBody(project) {
     return projectBody
 }
 
+// function substituteMarkdownLink(htmlString) {
+//     const markdownLinkRegex = /\[([^\]]+)]\((https?:\/\/[^\)]+)\)/g
+//
+//     const template = `<div class="projectLinkBox"> <a class="projectLink" href="{url}" target="_blank"> {text} <svg width="28" height="1.5em" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"> <path d="M10.604 1h4.146a.25.25 0 0 1 .25.25v4.146a.25.25 0 0 1-.427.177L13.03 4.03 9.28 7.78a.75.75 0 0 1-1.06-1.06l3.75-3.75-1.543-1.543A.25.25 0 0 1 10.604 1zM3.75 2A1.75 1.75 0 0 0 2 3.75v8.5c0 .966.784 1.75 1.75 1.75h8.5A1.75 1.75 0 0 0 14 12.25v-3.5a.75.75 0 0 0-1.5 0v3.5a.25.25 0 0 1-.25.25h-8.5a.25.25 0 0 1-.25-.25v-8.5a.25.25 0 0 1 .25-.25h3.5a.75.75 0 0 0 0-1.5h-3.5z" /> </svg> </a> </div> `
+//
+//     return htmlString.replace(markdownLinkRegex, (_, text, url) => {
+//         return template.replace('{url}', url).replace('{text}', text)
+//     })
+// }
 function handleProjectClick(event, projectBox, projectBody, title) {
     event.preventDefault()
 
