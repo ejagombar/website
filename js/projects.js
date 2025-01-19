@@ -176,6 +176,10 @@ function substituteMarkdownLink(htmlString) {
 }
 
 function handleProjectClick(event, projectBox, projectBody, title) {
+    if (event.target.tagName === 'A') {
+        return
+    }
+
     event.preventDefault()
 
     if (activeProjectBox === projectBox) {
@@ -187,6 +191,8 @@ function handleProjectClick(event, projectBox, projectBody, title) {
     }
 
     activeProjectBox = projectBox
+
+    projectBody.style.transition = 'none'
 
     const originalHeight = projectBody.scrollHeight
 
@@ -207,6 +213,8 @@ function handleProjectClick(event, projectBox, projectBody, title) {
                 projectBody.style.height = `${originalHeight}px`
                 projectBody.offsetHeight // Force reflow
 
+                projectBody.style.transition =
+                    'height 0.4s ease, opacity 0.4s ease'
                 requestAnimationFrame(() => {
                     projectBody.style.height = `${newHeight}px`
                 })
