@@ -24,6 +24,10 @@ h2 {
     margin: 0px;
 }
 
+html {
+    overflow-y: scroll;
+}
+
 body {
     margin: 10;
     display: flex;
@@ -209,6 +213,9 @@ nav {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: var(--radius);
     overflow-y: hidden;
+}
+
+.projectBox.clickable {
     cursor: pointer;
 }
 
@@ -312,8 +319,7 @@ nav {
 }
 
 @media screen and (max-width: 606px) {
-
-    .projectLabelBox {
+    .projectLabelBox.unclicked {
         display: none;
     }
 }
@@ -330,7 +336,6 @@ nav {
 .videoWrapper {
     position: relative;
     padding-bottom: 56.25%;
-    /* 16:9 */
     padding-top: 25px;
     height: 0;
 }
