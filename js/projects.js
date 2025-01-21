@@ -94,6 +94,9 @@ export function renderProjects(projects) {
         svgIcon.setAttribute('height', '20')
         svgIcon.setAttribute('fill', 'var(--highlight)')
         svgIcon.setAttribute('viewBox', '0 0 32 32')
+        svgIcon.style.flexShrink = '0'
+        svgIcon.style.minWidth = '20px'
+        svgIcon.style.minHeight = '20px'
 
         const path = document.createElementNS(
             'http://www.w3.org/2000/svg',
@@ -243,8 +246,7 @@ function resetProjectBox(projectBox) {
     projectBody.innerHTML = originalContent
 
     const restoredHeight = projectBody.scrollHeight
-    projectBody.classList.remove('active')
-    projectBox.classList.add('clickable')
+    projectBox.classList.remove('active')
 
     projectBody.style.height = `${currentHeight}px`
 

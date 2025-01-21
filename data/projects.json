@@ -39,7 +39,7 @@
         ]
     },
     {
-        "title": "Gesture Controlled Robot Hand",
+        "title": "Gesture Robotic Hand",
         "description": "For my master's project, I developed a gesture-controlled robotic hand. I designed and 3D printed a hand with 6 degrees of motion, controlled via a microcontroller. The microcontroller receives data from a Raspberry Pi, which receives position data via UDP from a desktop application that I developed in QT over the internet. The desktop application utilizes computer vision to track the user's hand with a webcam and the MediaPipe library.",
         "labels": [
             "MediaPipe",
@@ -61,12 +61,11 @@
             "OpenCV",
             "GCODE",
             "C++"
-        ],
-        "links": [
-            {
-                "label": "Read Devpost",
-                "url": "https://devpost.com/software/roboball"
-            }
         ]
+    },
+    {
+        "title": "Other Projects",
+        "description": "<p>Other projects that I have been working on recently",
+        "labels": []
     }
 ]
