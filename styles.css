@@ -185,16 +185,25 @@ nav {
     padding: 10px 20px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     max-width: var(--width);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: var(--radius);
 }
 
 .aboutLayout {
-    align-items: center;
     margin: 10px 20px;
+    justify-content: right;
+    align-items: right;
+}
+
+.date {
+    align-items: right;
+    margin: 0px;
+    padding: 0px;
+    color: #c5c5c5;
+    font-weight: bold;
+    justify-content: right;
+    text-align: right;
 }
 
 /* ------------------------ Project Page ----------------------- */
@@ -269,7 +278,7 @@ nav {
 
 
 .projectLabelBox {
-    margin-left: 8px;
+    margin-left: 0px;
     padding: 0;
     display: flex;
     align-self: flex-start;
@@ -297,6 +306,7 @@ nav {
     display: flex;
     align-self: flex-start;
     flex-direction: column;
+    padding-bottom: 8px;
 }
 
 .projectLink {
@@ -312,6 +322,11 @@ nav {
 .projectLink:hover {
     transform: translateX(4px);
     filter: brightness(1.2);
+}
+
+
+.projectLabelBox.unclicked {
+    margin-left: 8px;
 }
 
 @media screen and (max-width: 606px) {

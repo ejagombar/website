@@ -198,6 +198,7 @@ function handleProjectClick(event, projectBox, projectBody, title) {
 
     projectBox.classList.remove('clickable')
     projectBody.classList.remove('visible')
+    projectBox.classList.add('active')
     projectBody.style.opacity = '0'
 
     setTimeout(() => {
@@ -242,6 +243,7 @@ function resetProjectBox(projectBox) {
     projectBody.innerHTML = originalContent
 
     const restoredHeight = projectBody.scrollHeight
+    projectBody.classList.remove('active')
     projectBox.classList.add('clickable')
 
     projectBody.style.height = `${currentHeight}px`

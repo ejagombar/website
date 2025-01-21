@@ -1,39 +1,27 @@
 [
     {
-        "title": "WikiMapper (Current)",
+        "title": "WikiMapper",
         "description": "The WikiMapper project aims to build a 3D interactive graph using ~100GB XML Wikipedia dump file and transform it into a graph database that can be explored visually.\n\nSo far, a multithreaded parser has been developed that extracts each page and the links associated with it, and writes them to a CSV file in parallel. These CSV files can then be used to quickly generate a Neo4j database using the Neo4j-admin tool.\n\nNow that the database can be created, a method is needed to visualize this data. Due to the sheer size of the database (over 300 million links), the default Neo4j visualizer will not suffice. A program is being developed using OpenGL to visualize the data. On top of this, in order to efficiently access the data from the Neo4j database, I am implementing the Bolt protocol in C++ to access data from the database.",
         "labels": [
             "C++",
-            "XML Parsing",
-            "Bolt Protocol",
-            "Neo4j",
-            "CMake",
-            "Parallelisation",
             "OpenGL",
-            "GProf"
-        ],
-        "links": [
-            {
-                "label": "Github Repo",
-                "url": "https://github.com/ejagombar/WikiMapper"
-            }
+            "SIMD",
+            "Imposters",
+            "SAX XML Parser",
+            "Neo4j",
+            "GProf",
+            "Parallelisation"
         ]
     },
     {
-        "title": "Home Server",
+        "title": "HomeLab",
         "description": "After completing an internship in a cloud infrastructure department, I decided to build my own home server. I wanted to learn more about cloud infrastructure, as well as having a place to host my own projects. Initially, I set up a Kubernetes cluster to learn more about it. However, I eventually settled on using Proxmox to manage containers and VMs.",
         "labels": [
             "Linux",
             "Kubernetes",
             "Networking",
-            "Cloud",
-            "Proxmox"
-        ],
-        "links": [
-            {
-                "label": "Github Repo",
-                "url": "https://github.com/ejagombar/Home-Server"
-            }
+            "Proxmox",
+            "Nginx"
         ]
     },
     {
@@ -42,17 +30,12 @@
         "labels": [
             "Go",
             "Typescript",
-            "Oauth",
-            "API Design",
+            "Oauth 2",
             "HTML",
+            "API Design",
             "CSS",
-            "SQL"
-        ],
-        "links": [
-            {
-                "label": "Github Repo",
-                "url": "https://github.com/ejagombar/SpannerBackend"
-            }
+            "SQL",
+            "Nginx"
         ]
     },
     {
@@ -67,16 +50,6 @@
             "C++",
             "Python",
             "UDP"
-        ],
-        "links": [
-            {
-                "label": "Github Repo",
-                "url": "https://github.com/ejagombar/Gesture-Controlled-Hand"
-            },
-            {
-                "label": "Video Demonstration",
-                "url": "https://www.youtube.com/watch?v=uO_aIPs5To0"
-            }
         ]
     },
     {
