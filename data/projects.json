@@ -11,7 +11,8 @@
             "Neo4j",
             "GProf",
             "Parallelisation"
-        ]
+        ],
+        "htmlFile": "wikimapper.html"
     },
     {
         "title": "HomeLab",
@@ -22,7 +23,8 @@
             "Networking",
             "Proxmox",
             "Nginx"
-        ]
+        ],
+        "htmlFile": "homelab.html"
     },
     {
         "title": "Spanner",
@@ -36,7 +38,8 @@
             "CSS",
             "SQL",
             "Nginx"
-        ]
+        ],
+        "htmlFile": "spanner.html"
     },
     {
         "title": "Gesture Robotic Hand",
@@ -50,7 +53,8 @@
             "C++",
             "Python",
             "UDP"
-        ]
+        ],
+        "htmlFile": "gesture-robotic-hand.html"
     },
     {
         "title": "Table Football Robot",
@@ -61,11 +65,13 @@
             "OpenCV",
             "GCODE",
             "C++"
-        ]
+        ],
+        "htmlFile": "table-football-robot.html"
     },
     {
         "title": "Other Projects",
         "description": "<p>Other projects that I have been working on recently",
-        "labels": []
+        "labels": [],
+        "htmlFile": "other-projects.html"
     }
 ]

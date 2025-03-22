@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <p>For my master's project, I developed a gesture-controlled robotic hand. I designed and 3D printed a hand with 6
+        degrees of motion. A microcontroller embedded in the hand is sent data from a Raspberry Pi, which receives
+        finger position data via a UDP server from a desktop application. The desktop application utilizes computer
+        vision to track the user's hand.</p>
+
+    <div class="videoWrapper">
+        <iframe
+            src="https://www.youtube-nocookie.com/embed/uO_aIPs5To0?si=ACphi8zCP0spFiy9&amp;controls=0autoplay=1&mute=1"
+            allowfullscreen></iframe>
+    </div>
+
+    <p>The desktop application was developed in Qt and implemented Google's machine learning MediaPipe library for the
+        hand tracking. This data was translated into servo positions and sent over the internet via my server to the
+        robotic hand. I was able to reduce the total system (including the hand tracking) latency to 320ms.</p>
+</body>
+
+</html>
