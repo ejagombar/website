@@ -2,26 +2,24 @@
 <html>
 
 <body>
-    <p>The WikiMapper project was inspired by the Wikipedia game where you have to traverse from one page of the site to
-        another in as few jumps as possible using the links on the page.</p>
 
-    <p>A simple C++ Wikipedia XML file parser was written to extract the pages (graph nodes) and their associated links
-        (graph edges) into a Neo4j database using the Neo4j-admin tool. This program was parallelised, dropping the
-        execution time to process the 100GB XML file by 70%.</p>
+    <p>WikiMapper is a 3D graph visualisation tool, used to explore the links between Wikipedia Pages. This has been
+        written from scratch in C++, using OpenGL for the graphics.</p>
 
-    <p>The built-in Neo4j tool allows for some basic visualisation, however due to the sheer size of the database (over
-        300 million links) it was only able to represent a very small subsection of the graph.</p>
+    <p> A major emphasis of this project is performance. I have spent a considerable amount of time developing realistic
+        imposter shaders for Spheres and Cylinders, helping to massively reduce the number of vertices required when
+        rendering each frame. </p>
 
-    <p>For this reason I am developing a 3D visualiser in OpenGL, using imposter Cylinders and imposter Spheres to
-        reduce the number of vertices being rendered. Compute shaders have also been implemented to reduce the amount of
-        data being sent to the GPU.</p>
+    <p>WikiLoader, a C++ Wikipedia XML file parser project was developed to extract the data from Wikipedia. The tool
+        exports the pages (graph nodes) and their associated links (graph edges) into a Neo4j database using the
+        Neo4j-admin tool. This program was parallelised, dropping the execution time to process the 100GB XML dump file
+        by 70%.</p>
 
     <img class="resizable-image" src="/assets/wikimapper.png">
 
-    <p>Above is an image of the visualiser that is (hopefully) somewhat recent. The Cylinders and Sphere imposters took
-        a long time to get working properly, but it means that each sphere and cylinder only consits of 4 vertices which
-        is very important when there hundreds of thousands of them.</p>
-
+    <p>The above image is a picture of the software. This project is still a work in progress, and while I am able to
+        load up pages and simulate their positions as a force-directed graph, there are many more features to be added.
+    </p>
     <div class="projectLinkBox">
         <a class="projectLink" href="https://github.com/ejagombar/WikiMapper" target="_blank">
             WikiMapper Repo
