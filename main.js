@@ -44,12 +44,18 @@ const locationHandler = async () => {
     if (location.length == 0) {
         location = '/'
     }
-
     const route = routes[location] || routes['404']
-
     const html = await fetch(route.template).then((response) => response.text())
 
-    document.getElementById('content').innerHTML = html
+    const parser = new DOMParser()
+    const doc = parser.parseFromString(html, 'text/html')
+    const content = document.getElementById('content')
+    content.innerHTML = ''
+
+    Array.from(doc.body.childNodes).forEach((node) => {
+        content.appendChild(document.importNode(node, true))
+    })
+
     document.title = route.title || '404'
     document
         .querySelector('meta[name="description"]')

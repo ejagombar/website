@@ -7,7 +7,7 @@
     --color1: rgba(249, 249, 249, 0.85);
     --highlight: #157dfb;
     --radius: 30px;
-    --width: 800px;
+    --width: 1200px;
     --min-width: 600px;
     --shadow: 0 0 15px rgba(25, 25, 25.0, 0.3);
 }
@@ -31,7 +31,6 @@ html {
 }
 
 body {
-    margin: 10;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -394,8 +393,7 @@ nav {
 .profileLayout2 {
     display: flex;
     flex-direction: column;
-    align-items: left;
-    max-width: 280px;
+    align-items: flex-start;
     margin: 10px 20px;
 }
 
@@ -415,6 +413,8 @@ nav {
 
 .link-icons-container {
     display: flex;
+    align-items: center;
+    gap: 20px;
 }
 
 .link-icons {
@@ -436,11 +436,6 @@ nav {
 
 .email-link .link-icons:hover {
     fill: #583C87;
-}
-
-.linkIconSpacer {
-    display: block;
-    width: 20px;
 }
 
 .aboutBox {
@@ -485,8 +480,8 @@ nav {
     padding: 10px 10px;
     display: flex;
     flex-direction: column;
-    justify-content: left;
-    align-items: left;
+    justify-content: flex-start;
+    align-items: flex-start;
     max-width: var(--width);
     box-shadow: var(--shadow);
     border-radius: var(--radius);
