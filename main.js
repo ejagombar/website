@@ -1,0 +1,79 @@
+// =================================== Routing ====================================
+
+const routes = {
+    404: {
+        template: 'pages/404.html',
+        title: '404',
+        description: 'Page not found',
+    },
+    '/': {
+        template: 'pages/home.html',
+        title: 'Home',
+        description: 'This is the home page',
+    },
+    projects: {
+        template: 'pages/projects.html',
+        title: 'Projects',
+        description: 'This is the contact page',
+    },
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const navItems = document.querySelectorAll('nav a')
+
+    updateHeaderText()
+
+    const route = (event) => {
+        event.preventDefault()
+        window.history.pushState({}, '', event.target.href)
+        locationHandler()
+    }
+
+    navItems.forEach((item) => {
+        item.addEventListener('click', (event) => {
+            event.preventDefault()
+            route(event)
+        })
+    })
+
+    window.onpopstate = locationHandler
+    window.route = route
+    locationHandler()
+})
+
+const locationHandler = async () => {
+    let location = window.location.hash.replace('#', '')
+    if (location.length == 0) {
+        location = '/'
+    }
+
+    const route = routes[location] || routes['404']
+
+    const html = await fetch(route.template).then((response) => response.text())
+
+    document.getElementById('content').innerHTML = html
+    document.title = route.title || '404'
+    document
+        .querySelector('meta[name="description"]')
+        .setAttribute('content', route.description || '')
+}
+
+window.addEventListener('hashchange', locationHandler)
+
+// ================================== Home Page====================================
+
+function updateHeaderText() {
+    const header = document.getElementById('nameHeader')
+
+    if (window.innerWidth <= 320) {
+        header.textContent = 'EA'
+    } else if (window.innerWidth <= 415) {
+        header.textContent = 'Ed A'
+    } else if (window.innerWidth <= 500) {
+        header.textContent = 'Ed Agombar'
+    } else {
+        header.textContent = 'Edward Agombar'
+    }
+}
+
+window.addEventListener('resize', updateHeaderText)
