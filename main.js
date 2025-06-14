@@ -9,12 +9,10 @@ const routes = {
     '/': {
         template: 'pages/home.html',
         title: 'Home',
-        description: 'This is the home page',
     },
     projects: {
         template: 'pages/projects.html',
         title: 'Projects',
-        description: 'This is the contact page',
     },
 }
 
