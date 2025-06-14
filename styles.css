@@ -4,10 +4,12 @@
     --accent: #d6d6d6;
     --content1: #f9f9f9;
     --content2: #d6d6d6;
+    --color1: rgba(249, 249, 249, 0.85);
     --highlight: #157dfb;
     --radius: 30px;
     --width: 800px;
     --min-width: 600px;
+    --shadow: 0 0 15px rgba(25, 25, 25.0, 0.3);
 }
 
 * {
@@ -39,7 +41,6 @@ body {
     background-color: var(--content1);
 }
 
-
 /* ------------------------ Background ------------------------ */
 /* ------------------------------------------------------------ */
 
@@ -49,30 +50,256 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-image:
-        linear-gradient(var(--accent) 1.6px, transparent 1.1px),
-        linear-gradient(to right, var(--accent) 1.6px, var(--content1) 1.1px);
-    background-size: 32px 32px;
     z-index: -1;
     opacity: 1;
-    transition: opacity 0.5s ease;
 }
 
-.background.dots {
-    background-image: radial-gradient(var(--accent) 1.6px, var(--content1) 1.6px);
-    background-size: 32px 32px;
-    background-position: -15.3px -15.3px;
+/* Animated background */
+.background.animated {
+    background: #ffffff;
+    overflow: hidden;
 }
 
-.fade-out {
-    opacity: 0;
+.background.animated span {
+    width: 37vmin;
+    height: 37vmin;
+    border-radius: 37vmin;
+    backface-visibility: hidden;
+    position: absolute;
+    animation: move 20s linear infinite;
+}
+
+@keyframes move {
+    100% {
+        transform: translate3d(0, 0, 1px) rotate(360deg);
+    }
+}
+
+.background.animated span:nth-child(1) {
+    color: #FFACAC;
+    top: 80%;
+    left: 100%;
+    animation-duration: 301s;
+    animation-delay: -42s;
+    transform-origin: 13vw -15vh;
+    box-shadow: -74vmin 0 9.294494642669756vmin currentColor;
+}
+
+.background.animated span:nth-child(2) {
+    color: #FFACAC;
+    top: 60%;
+    left: 10%;
+    animation-duration: 274s;
+    animation-delay: -140s;
+    transform-origin: 19vw 9vh;
+    box-shadow: -74vmin 0 10.244992328652906vmin currentColor;
+}
+
+.background.animated span:nth-child(3) {
+    color: #583C87;
+    top: 69%;
+    left: 72%;
+    animation-duration: 63s;
+    animation-delay: -195s;
+    transform-origin: 16vw 8vh;
+    box-shadow: 74vmin 0 9.437071122772556vmin currentColor;
+}
+
+.background.animated span:nth-child(4) {
+    color: #FFACAC;
+    top: 53%;
+    left: 47%;
+    animation-duration: 159s;
+    animation-delay: -35s;
+    transform-origin: 15vw 8vh;
+    box-shadow: -74vmin 0 9.756319478587463vmin currentColor;
+}
+
+.background.animated span:nth-child(5) {
+    color: #E45A84;
+    top: 49%;
+    left: 75%;
+    animation-duration: 114s;
+    animation-delay: -21s;
+    transform-origin: 15vw -13vh;
+    box-shadow: -74vmin 0 9.611836071412199vmin currentColor;
+}
+
+.background.animated span:nth-child(6) {
+    color: #E45A84;
+    top: 16%;
+    left: 97%;
+    animation-duration: 64s;
+    animation-delay: -42s;
+    transform-origin: -22vw 3vh;
+    box-shadow: -74vmin 0 9.670052123892075vmin currentColor;
+}
+
+.background.animated span:nth-child(7) {
+    color: #583C87;
+    top: 45%;
+    left: 93%;
+    animation-duration: 256s;
+    animation-delay: -135s;
+    transform-origin: 3vw 11vh;
+    box-shadow: 74vmin 0 9.830858219617957vmin currentColor;
+}
+
+.background.animated span:nth-child(8) {
+    color: #583C87;
+    top: 70%;
+    left: 13%;
+    animation-duration: 184s;
+    animation-delay: -228s;
+    transform-origin: -14vw -3vh;
+    box-shadow: 74vmin 0 9.38588536685881vmin currentColor;
+}
+
+.background.animated span:nth-child(9) {
+    color: #FFACAC;
+    top: 59%;
+    left: 56%;
+    animation-duration: 119s;
+    animation-delay: -52s;
+    transform-origin: -9vw 20vh;
+    box-shadow: 74vmin 0 10.207924166914419vmin currentColor;
+}
+
+.background.animated span:nth-child(10) {
+    color: #E45A84;
+    top: 57%;
+    left: 7%;
+    animation-duration: 221s;
+    animation-delay: -121s;
+    transform-origin: 9vw -7vh;
+    box-shadow: -74vmin 0 9.936966901582815vmin currentColor;
+}
+
+.background.animated span:nth-child(11) {
+    color: #E45A84;
+    top: 53%;
+    left: 51%;
+    animation-duration: 121s;
+    animation-delay: -134s;
+    transform-origin: 7vw 22vh;
+    box-shadow: -74vmin 0 10.05651115006796vmin currentColor;
+}
+
+.background.animated span:nth-child(12) {
+    color: #E45A84;
+    top: 25%;
+    left: 58%;
+    animation-duration: 36s;
+    animation-delay: -149s;
+    transform-origin: 19vw 2vh;
+    box-shadow: -74vmin 0 10.018894472138273vmin currentColor;
+}
+
+.background.animated span:nth-child(13) {
+    color: #E45A84;
+    top: 26%;
+    left: 41%;
+    animation-duration: 257s;
+    animation-delay: -261s;
+    transform-origin: -12vw -24vh;
+    box-shadow: 74vmin 0 9.328696173787964vmin currentColor;
+}
+
+.background.animated span:nth-child(14) {
+    color: #583C87;
+    top: 14%;
+    left: 93%;
+    animation-duration: 238s;
+    animation-delay: -256s;
+    transform-origin: -6vw 7vh;
+    box-shadow: 74vmin 0 9.746353667746476vmin currentColor;
+}
+
+.background.animated span:nth-child(15) {
+    color: #E45A84;
+    top: 62%;
+    left: 100%;
+    animation-duration: 177s;
+    animation-delay: -115s;
+    transform-origin: -23vw 8vh;
+    box-shadow: 74vmin 0 9.946592428067492vmin currentColor;
+}
+
+.background.animated span:nth-child(16) {
+    color: #583C87;
+    top: 61%;
+    left: 49%;
+    animation-duration: 298s;
+    animation-delay: -112s;
+    transform-origin: 1vw 22vh;
+    box-shadow: 74vmin 0 10.073372874786124vmin currentColor;
+}
+
+.background.animated span:nth-child(17) {
+    color: #583C87;
+    top: 90%;
+    left: 20%;
+    animation-duration: 123s;
+    animation-delay: -140s;
+    transform-origin: 10vw -7vh;
+    box-shadow: -74vmin 0 9.502536935313735vmin currentColor;
+}
+
+.background.animated span:nth-child(18) {
+    color: #E45A84;
+    top: 1%;
+    left: 33%;
+    animation-duration: 236s;
+    animation-delay: -14s;
+    transform-origin: 19vw -9vh;
+    box-shadow: -74vmin 0 10.055914116118686vmin currentColor;
+}
+
+.background.animated span:nth-child(19) {
+    color: #FFACAC;
+    top: 72%;
+    left: 29%;
+    animation-duration: 157s;
+    animation-delay: -30s;
+    transform-origin: -13vw 21vh;
+    box-shadow: -74vmin 0 9.584334497614341vmin currentColor;
+}
+
+.background.animated span:nth-child(20) {
+    color: #FFACAC;
+    top: 11%;
+    left: 80%;
+    animation-duration: 16s;
+    animation-delay: -280s;
+    transform-origin: -3vw 21vh;
+    box-shadow: 74vmin 0 10.146627887692084vmin currentColor;
+}
+
+/* ------------------------ Common Box Styling ---------------- */
+/* ------------------------------------------------------------ */
+
+.content-box {
+    background-color: var(--color1);
+    color: var(--foreground);
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    max-width: var(--width);
+    width: 100%;
+    box-shadow: var(--shadow);
+    border-radius: var(--radius);
+    transition: background-color 0.3s ease;
+}
+
+.content-box>* {
+    opacity: 1;
 }
 
 /* -------------------------- Menu Bar ------------------------*/
 /* ------------------------------------------------------------ */
 
 header {
-    background-color: var(--background);
+    background-color: var(--color1);
     color: var(--foreground);
     text-align: center;
     padding: 0px 10px;
@@ -82,8 +309,9 @@ header {
     max-width: var(--width);
     width: 100%;
     text-align: center;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    border-radius: 50px;
+    transition: background-color 0.3s ease;
 }
 
 nav {
@@ -99,21 +327,41 @@ nav {
     margin: 0px 20px;
     display: flex;
     align-items: center;
-    color: var(--foreground);
+    font-size: 1.3em;
+    font-weight: bold;
     text-decoration: none;
-    transition: transform 0.3s ease;
+    color: transparent;
+    background: url("./assets/wave.svg") repeat-x #071c02;
+    -webkit-background-clip: text;
+    background-clip: text;
+    background-size: 200% 100%;
+    background-position-x: 0;
+    background-position-y: 2em;
+    transition: background-position-y 0.6s ease;
+    animation: waveAnimation 4s infinite linear;
+    animation-play-state: paused;
 }
 
 .wideNavItem:hover {
-    transform: scale(1.08);
+    background-position-y: 0;
+    animation-play-state: running;
 }
 
+@keyframes waveAnimation {
+    from {
+        background-position-x: 0%;
+    }
+
+    to {
+        background-position-x: 200%;
+    }
+}
 
 /* --------------------------Home Page------------------------- */
 /*-------------------------------------------------------------- */
 
 .profileBox {
-    background-color: var(--background);
+    background-color: var(--color1);
     color: var(--foreground);
     margin: 10px 0px;
     padding: 10px 10px;
@@ -123,8 +371,13 @@ nav {
     align-items: center;
     max-width: var(--width);
     width: 100%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow);
     border-radius: var(--radius);
+    transition: background-color 0.3s ease;
+}
+
+.profileBox>* {
+    opacity: 1;
 }
 
 .profilePicture {
@@ -165,13 +418,24 @@ nav {
 }
 
 .link-icons {
-    color: var(--foreground);
     fill: var(--foreground);
-    transition: transform 0.3s ease;
+    transition: fill 0.3s ease;
 }
 
 .link-icons:hover {
-    transform: scale(1.1);
+    fill: #583C87;
+}
+
+.linkedin-link .link-icons:hover {
+    fill: #157dfb;
+}
+
+.github-link .link-icons:hover {
+    fill: #E45A84;
+}
+
+.email-link .link-icons:hover {
+    fill: #583C87;
 }
 
 .linkIconSpacer {
@@ -180,14 +444,19 @@ nav {
 }
 
 .aboutBox {
-    background-color: var(--background);
+    background-color: var(--color1);
     color: var(--foreground);
     padding: 10px 20px;
     display: flex;
     flex-direction: column;
     max-width: var(--width);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow);
     border-radius: var(--radius);
+    transition: background-color 0.3s ease;
+}
+
+.aboutBox>* {
+    opacity: 1;
 }
 
 .aboutLayout {
@@ -210,7 +479,7 @@ nav {
 /*-------------------------------------------------------------- */
 
 .projectBox {
-    background-color: var(--background);
+    background-color: var(--color1);
     color: var(--foreground);
     margin-top: 10px;
     padding: 10px 10px;
@@ -219,9 +488,14 @@ nav {
     justify-content: left;
     align-items: left;
     max-width: var(--width);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--shadow);
     border-radius: var(--radius);
     overflow-y: hidden;
+    transition: background-color 0.3s ease;
+}
+
+.projectBox>* {
+    opacity: 1;
 }
 
 .projectBox.clickable {
@@ -239,7 +513,6 @@ nav {
     transition: height 0.4s ease, opacity 0.4s ease;
 }
 
-
 .projectBody.visible {
     opacity: 1;
 }
@@ -247,7 +520,6 @@ nav {
 .projectBody.hidden {
     opacity: 0;
 }
-
 
 .projectIcon {
     transition: brightness 0.3s ease, transform 0.3s ease;
@@ -263,7 +535,6 @@ nav {
     filter: brightness(1.2);
 }
 
-
 .projectDivider {
     display: flex;
     align-items: top;
@@ -277,7 +548,6 @@ nav {
     max-width: calc(var(--width) - 250px);
 }
 
-
 .projectLabelBox {
     margin-left: 0px;
     padding: 0;
@@ -289,11 +559,11 @@ nav {
 }
 
 .label {
-    background-color: var(--background);
-    border: 3px solid var(--accent);
-    border-radius: 10px;
+    background-color: var(--color1);
+    color: var(--foreground);
+    box-shadow: 0 0 10px rgba(50, 50, 50.0, 0.3);
+    background-color: rgba(0, 0, 0, 0);
     box-sizing: border-box;
-    min-width: min-content;
     min-height: min-content;
     justify-content: center;
     align-items: center;
@@ -301,7 +571,6 @@ nav {
     margin: 0px;
     border-radius: 30px;
 }
-
 
 .projectLinkBox {
     display: flex;
@@ -324,7 +593,6 @@ nav {
     transform: translateX(4px);
     filter: brightness(1.2);
 }
-
 
 .projectLabelBox.unclicked {
     margin-left: 8px;

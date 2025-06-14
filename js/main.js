@@ -86,19 +86,12 @@ const locationHandler = async () => {
         .querySelector('meta[name="description"]')
         .setAttribute('content', route.description || '')
 
-    const gridBackground = document.getElementById('gridBackground')
-    const dotsBackground = document.getElementById('dotsBackground')
-
     if (location === '/') {
-        gridBackground.classList.add('fade-out')
-        dotsBackground.classList.remove('fade-out')
         const iconsData = await loadIconsData()
         renderIcons(iconsData)
     }
 
     if (location === 'projects') {
-        gridBackground.classList.remove('fade-out')
-        dotsBackground.classList.add('fade-out')
         const projectData = await loadProjectData()
         renderProjects(projectData)
     }
@@ -132,6 +125,10 @@ function renderIcons(iconsData) {
         const anchor = document.createElement('a')
         anchor.href = icon.href
         anchor.target = icon.target
+
+        if (icon.colorClass) {
+            anchor.classList.add(icon.colorClass)
+        }
 
         const svg = document.createElementNS(
             'http://www.w3.org/2000/svg',
