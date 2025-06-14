@@ -104,9 +104,9 @@ window.addEventListener('hashchange', locationHandler)
 function updateHeaderText() {
     const header = document.getElementById('nameHeader')
 
-    if (window.innerWidth <= 300) {
+    if (window.innerWidth <= 320) {
         header.textContent = 'EA'
-    } else if (window.innerWidth <= 400) {
+    } else if (window.innerWidth <= 415) {
         header.textContent = 'Ed A'
     } else if (window.innerWidth <= 500) {
         header.textContent = 'Ed Agombar'
