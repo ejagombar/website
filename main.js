@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', () => {
         item.addEventListener('click', (event) => {
             event.preventDefault()
             route(event)
-            toggleTheme()
         })
     })
 
@@ -76,19 +75,18 @@ function updateHeaderText() {
 
 window.addEventListener('resize', updateHeaderText)
 
-// =================================== Theme ===================================
-// Theme Toggle Functionality
-function toggleTheme() {
-    const html = document.documentElement
-    const currentTheme = html.getAttribute('data-theme')
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark'
+function handleHeaderScroll() {
+    const header = document.querySelector('header')
+    const scrollThreshold = 20
 
-    html.setAttribute('data-theme', newTheme)
-    localStorage.setItem('theme', newTheme)
+    if (window.scrollY > scrollThreshold) {
+        header.classList.add('scrolled')
+    } else {
+        header.classList.remove('scrolled')
+    }
 }
 
-// Load saved theme or default to light
-function loadTheme() {
-    const savedTheme = localStorage.getItem('theme') || 'light'
-    document.documentElement.setAttribute('data-theme', savedTheme)
-}
+document.addEventListener('DOMContentLoaded', function () {
+    window.addEventListener('scroll', handleHeaderScroll)
+    handleHeaderScroll()
+})
