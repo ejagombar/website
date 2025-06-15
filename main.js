@@ -64,7 +64,7 @@ function updateHeaderText() {
 
     if (window.innerWidth <= 320) {
         header.textContent = 'EA'
-    } else if (window.innerWidth <= 415) {
+    } else if (window.innerWidth <= 430) {
         header.textContent = 'Ed A'
     } else if (window.innerWidth <= 500) {
         header.textContent = 'Ed Agombar'

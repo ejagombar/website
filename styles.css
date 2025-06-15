@@ -17,8 +17,8 @@
 
     /* Accent Colors */
     --primary: light-dark(#157dfb, #4a9eff);
-    --accent-pink: #FFACAC;
-    --accent-purple: #583C87;
+    --accent-1: #FFACAC;
+    --accent-2: #583C87;
     --accent-magenta: #E45A84;
     --muted-text: light-dark(#c5c5c5, #888888);
 
@@ -28,8 +28,8 @@
 
     /* Background Animation Colors */
     --bg-animated: light-dark(#ffffff, #1a1a1a);
-    --animation-color-1: var(--accent-pink);
-    --animation-color-2: var(--accent-purple);
+    --animation-color-1: var(--accent-1);
+    --animation-color-2: var(--accent-2);
     --animation-color-3: var(--accent-magenta);
 }
 
