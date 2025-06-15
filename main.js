@@ -1,5 +1,4 @@
 // =================================== Routing ====================================
-
 const routes = {
     404: {
         template: 'pages/404.html',
@@ -47,14 +46,8 @@ const locationHandler = async () => {
     const route = routes[location] || routes['404']
     const html = await fetch(route.template).then((response) => response.text())
 
-    const parser = new DOMParser()
-    const doc = parser.parseFromString(html, 'text/html')
     const content = document.getElementById('content')
-    content.innerHTML = ''
-
-    Array.from(doc.body.childNodes).forEach((node) => {
-        content.appendChild(document.importNode(node, true))
-    })
+    content.innerHTML = html
 
     document.title = route.title || '404'
     document

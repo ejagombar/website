@@ -386,6 +386,7 @@ nav {
 .profileLayout1 {
     display: flex;
     flex-direction: row;
+    max-width: 550px;
     justify-content: center;
     padding: 20px 0px;
 }
@@ -606,13 +607,26 @@ nav {
     height: 100%;
 }
 
-/* -------------------------------- */
+.external-link-icon {
+    vertical-align: middle;
+    margin-left: 6px;
+}
 
+/* -------------------------------- */
 .videoWrapper {
     position: relative;
+    width: 75%;
+    margin: 0 auto;
+    aspect-ratio: 16 / 9;
     padding-bottom: 56.25%;
-    padding-top: 25px;
     height: 0;
+}
+
+@supports (aspect-ratio: 16 / 9) {
+    .videoWrapper {
+        padding-bottom: 0;
+        height: auto;
+    }
 }
 
 .videoWrapper iframe {
@@ -621,10 +635,13 @@ nav {
     left: 0;
     width: 100%;
     height: 100%;
+    border: none;
+    object-fit: cover;
+    /* Prevents black borders */
 }
 
 .resizable-image {
-    max-width: 100%;
+    max-width: 75%;
     max-height: 100%;
     display: block;
     margin: auto;
