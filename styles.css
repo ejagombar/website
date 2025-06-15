@@ -1,32 +1,26 @@
 /* ======================== CSS VARIABLES ======================== */
 :root {
-    /* Enable automatic light/dark mode support */
     color-scheme: light dark;
 
-    /* Layout */
     --radius: 30px;
     --width: 1200px;
     --min-width: 600px;
 
-    /* Dynamic Colors using light-dark() */
     --foreground: light-dark(#071c02, #e8f5e8);
     --background: light-dark(#f9f9f9, #0a0a0a);
     --surface: light-dark(rgba(249, 249, 249, 0.85), rgba(18, 18, 18, 0.85));
     --surface-solid: light-dark(#f9f9f9, #121212);
     --surface-secondary: light-dark(#d6d6d6, #2a2a2a);
 
-    /* Accent Colors */
     --primary: light-dark(#157dfb, #4a9eff);
     --accent-1: #FFACAC;
     --accent-2: #583C87;
     --accent-magenta: #E45A84;
     --muted-text: light-dark(#c5c5c5, #888888);
 
-    /* Shadows */
     --shadow-primary: light-dark(rgba(25, 25, 25, 0.5), rgba(75, 75, 75, 0.3));
     --shadow-secondary: light-dark(rgba(50, 50, 50, 0.5), rgba(150, 150, 150, 0.5));
 
-    /* Background Animation Colors */
     --bg-animated: light-dark(#ffffff, #1a1a1a);
     --animation-color-1: var(--accent-1);
     --animation-color-2: var(--accent-2);
@@ -380,6 +374,10 @@ nav {
 .profileBox>*,
 .aboutBox>* {
     opacity: 1;
+}
+
+.aboutBox {
+    margin: 10px;
 }
 
 /* ======================== PROFILE SECTION ======================== */
