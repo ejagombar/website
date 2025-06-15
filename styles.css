@@ -371,6 +371,8 @@ nav {
     max-width: var(--width);
     box-shadow: 0 0 15px var(--shadow-primary);
     border-radius: var(--radius);
+    margin-left: 10px;
+    margin-right: 10px;
     transition: background-color 0.3s ease;
 }
 
@@ -382,7 +384,7 @@ nav {
 
 /* ======================== PROFILE SECTION ======================== */
 .profileBox {
-    margin: 10px 0;
+    margin: 10px 10px;
     padding: 10px;
     justify-content: center;
     align-items: center;
