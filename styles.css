@@ -302,11 +302,13 @@ header {
     color: var(--foreground);
     text-align: center;
     padding: 10px;
+    width: calc(100% - 20px);
+    margin-left: 10px;
+    margin-right: 10px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     max-width: var(--width);
-    width: 100%;
     box-shadow: 0 0 15px var(--shadow-primary);
     border-radius: var(--radius);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -367,7 +369,6 @@ nav {
     display: flex;
     flex-direction: column;
     max-width: var(--width);
-    width: 100%;
     box-shadow: 0 0 15px var(--shadow-primary);
     border-radius: var(--radius);
     transition: background-color 0.3s ease;
