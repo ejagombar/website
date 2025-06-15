@@ -30,6 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
         item.addEventListener('click', (event) => {
             event.preventDefault()
             route(event)
+            toggleTheme()
         })
     })
 
@@ -74,3 +75,20 @@ function updateHeaderText() {
 }
 
 window.addEventListener('resize', updateHeaderText)
+
+// =================================== Theme ===================================
+// Theme Toggle Functionality
+function toggleTheme() {
+    const html = document.documentElement
+    const currentTheme = html.getAttribute('data-theme')
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark'
+
+    html.setAttribute('data-theme', newTheme)
+    localStorage.setItem('theme', newTheme)
+}
+
+// Load saved theme or default to light
+function loadTheme() {
+    const savedTheme = localStorage.getItem('theme') || 'light'
+    document.documentElement.setAttribute('data-theme', savedTheme)
+}
