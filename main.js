@@ -1,4 +1,3 @@
-
 // =================================== Routing ====================================
 
 const routes = {
@@ -8,7 +7,7 @@ const routes = {
         description: 'Page not found',
     },
     '/': {
-        template: 'pages/home.html',
+        template: 'pages/404.html',
         title: 'Home',
     },
     '/projects': {
