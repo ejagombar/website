@@ -1,4 +1,5 @@
 // =================================== Routing ====================================
+
 const routes = {
     404: {
         template: 'pages/404.html',
@@ -52,6 +53,7 @@ const locationHandler = async () => {
         .querySelector('meta[name="description"]')
         .setAttribute('content', route.description || '')
 }
+
 // ================================== Home Page====================================
 
 function updateHeaderText() {
