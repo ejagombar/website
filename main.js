@@ -7,7 +7,7 @@ const routes = {
         description: 'Page not found',
     },
     '/': {
-        template: 'pages/404.html',
+        template: 'pages/home.html',
         title: 'Home',
     },
     '/projects': {
