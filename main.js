@@ -9,7 +9,7 @@ const routes = {
         template: 'pages/home.html',
         title: 'Home',
     },
-    projects: {
+    '/projects': {
         template: 'pages/projects.html',
         title: 'Projects',
     },
@@ -22,15 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const route = (event) => {
         event.preventDefault()
-        window.history.pushState({}, '', event.target.href)
+        const href = event.currentTarget.getAttribute('href')
+        window.history.pushState({}, '', href)
         locationHandler()
     }
 
     navItems.forEach((item) => {
-        item.addEventListener('click', (event) => {
-            event.preventDefault()
-            route(event)
-        })
+        item.addEventListener('click', route)
     })
 
     window.onpopstate = locationHandler
@@ -39,8 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 const locationHandler = async () => {
-    let location = window.location.hash.replace('#', '')
-    if (location.length == 0) {
+    let location = window.location.pathname
+    if (location.length === 0) {
         location = '/'
     }
     const route = routes[location] || routes['404']
@@ -54,9 +52,6 @@ const locationHandler = async () => {
         .querySelector('meta[name="description"]')
         .setAttribute('content', route.description || '')
 }
-
-window.addEventListener('hashchange', locationHandler)
-
 // ================================== Home Page====================================
 
 function updateHeaderText() {
@@ -86,7 +81,7 @@ function handleHeaderScroll() {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     window.addEventListener('scroll', handleHeaderScroll)
     handleHeaderScroll()
 })
