@@ -14,25 +14,19 @@
         </div>
         <div class="projectBody">
             <div class="project-full-content">
-                <p>WikiMapper is a 3D graph visualisation tool, used to explore</p> the links between Wikipedia Pages.
-                This has been
-                written from scratch in C++, using OpenGL for the graphics.</p>
-                <p>A major emphasis of this project is performance. I have spent a considerable amount of time
-                    developing realistic
-                    imposter shaders for Spheres and Cylinders, helping to massively reduce the number of vertices
-                    required when
-                    rendering each frame. </p>
-                <p></p>WikiLoader, a C++ Wikipedia XML file parser project was developed to extract the data from
-                Wikipedia. The tool
-                exports the pages (graph nodes) and their associated links (graph edges) into a Neo4j database using the
-                Neo4j-admin tool. This program was parallelised, dropping the execution time to process the 100GB XML
-                dump file
-                by 70%.</p>
+                <p>WikiMapper is a 3D graph visualisation tool used to explore the links between Wikipedia Pages,
+                    written in C++ using OpenGL.</p>
+                <p>A major emphasis of this project is performance. I have developed realistic imposter shaders for
+                    Spheres and Cylinders which have enabled me to render a huge number of nodes and links at high FPS
+                    by reducing vertices to 1 or two for each sphere or cylinder. </p>
+                <p>WikiLoader, a C++ Wikipedia XML file parser project I developed was used extract the data from
+                    Wikipedia. The tool exports the pages (graph nodes) and their associated links (graph edges) into a
+                    Neo4j database. This program was parallelised which dropped the execution time to process the 100GB
+                    XML dump file by 70%.</p>
                 <img class="resizable-image" src="/assets/wikimapper.webp">
-                <p>The above image is a picture of the software. This project is still a work in progress, and while I
-                    am able to
-                    load up pages and simulate their positions as a force-directed graph, there are many more features
-                    to be added.</p>
+                <p>The above image is a picture of the software. This project is still a work in progress, and I am
+                    currently working on improving the efficiency of the force directed graph and polishing the movement
+                    system.</p>
                 <div class="projectLinkBox">
                     <a class="projectLink" href="https://github.com/ejagombar/WikiMapper" target="_blank">
                         WikiMapper Repo
