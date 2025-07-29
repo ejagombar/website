@@ -23,8 +23,41 @@
                     Wikipedia. The tool exports the pages (graph nodes) and their associated links (graph edges) into a
                     Neo4j database. This program was parallelised which dropped the execution time to process the 100GB
                     XML dump file by 70%.</p>
-                <img class="resizable-image" src="/assets/wikimapper.webp">
-                <p>The above image is a picture of the software. This project is still a work in progress, and I am
+
+                <!-- Carousel for WikiMapper -->
+                <div class="carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slide active">
+                            <img class="resizable-image" src="/assets/wikimapper.webp" alt="WikiMapper Interface">
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="videoWrapper">
+                                <iframe
+                                    src="https://www.youtube-nocookie.com/embed/PC5q615khHg?si=9CPLgcEwB7FD7tn5&amp;controls=1&autoplay=0&mute=1"
+                                    frameborder="0" allow="modestbranding;" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-btn carousel-prev">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                    <button class="carousel-btn carousel-next">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                    <div class="carousel-indicators">
+                        <span class="indicator active"></span>
+                        <span class="indicator"></span>
+                    </div>
+                </div>
+
+                <p>The above media shows the software interface and demonstration. This project is still a work in
+                    progress, and I am
                     currently working on improving the efficiency of the force directed graph and polishing the movement
                     system.</p>
                 <div class="projectLinkBox">
@@ -44,6 +77,7 @@
             </div>
         </div>
     </div>
+
     <!-- HomeLab -->
     <div class="projectBox">
         <h2>HomeLab</h2>
@@ -61,8 +95,40 @@
                     decided that it was more effort than it was worth for a homelab environment, and opted to set up a
                     Proxmox server instead. I hosted a number of services such as a VPN, Home Assistant, and my Spanner
                     WebApp. Now I am working on building a new and improved version of the server.</p>
-                <img class="resizable-image" src="/assets/server.webp">
-                <p>Above is a picture of the finished server. The rack was designed in Fusion360 and encases 4 PCs, an
+
+                <!-- Carousel for HomeLab -->
+                <div class="carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slide active">
+                            <img class="resizable-image" src="/assets/server.webp" alt="Homelab Server Rack">
+                        </div>
+                        <div class="carousel-slide">
+                            <img class="resizable-image" src="/assets/server.webp" alt="Server Internal Components">
+                        </div>
+                        <div class="carousel-slide">
+                            <img class="resizable-image" src="/assets/server.webp" alt="Fusion360 Design">
+                        </div>
+                    </div>
+                    <button class="carousel-btn carousel-prev">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                    <button class="carousel-btn carousel-next">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                    <div class="carousel-indicators">
+                        <span class="indicator active"></span>
+                        <span class="indicator"></span>
+                        <span class="indicator"></span>
+                    </div>
+                </div>
+
+                <p>Above is media of the finished server. The rack was designed in Fusion360 and encases 4 PCs, an
                     integrated switch, and the PC power supplies. The entire enclosure is powered via a single cable.
                 </p>
                 <div class="projectLinkBox">
@@ -71,11 +137,11 @@
                         <img src="assets/external-link.svg" width="24" height="24" alt="WikiMapper Repo"
                             class="external-link-icon" />
                     </a>
-
                 </div>
             </div>
         </div>
     </div>
+
     <!-- Spanner -->
     <div class="projectBox">
         <h2 style="display: flex; align-items: center; gap: 8px;">Spanner</h2>
@@ -91,19 +157,32 @@
         </div>
         <div class="projectBody">
             <div class="project-full-content">
-                <p></p>Spanner is a website that allows users to analyse their listening habits and playlists. I
-                undertook this project
-                to learn a bit of web development, and as another justification for building my home server. The
-                frontend was
-                developed in Typescript with React. The backend, which communicates with the Spotify API and processes
-                the data,
-                was written in Go.</p>
-                <div class="videoWrapper">
-                    <iframe
-                        src="https://www.youtube-nocookie.com/embed/TJxTdGHjxUg?si=9CPLgcEwB7FD7tn5&amp;controls=1&autoplay=0&mute=1"
-                        frameborder="0" allow="modestbranding;" allowfullscreen></iframe>
+                <p>Spanner is a website that allows users to analyse their listening habits and playlists. I
+                    undertook this project
+                    to learn a bit of web development, and as another justification for building my home server. The
+                    frontend was
+                    developed in Typescript with React. The backend, which communicates with the Spotify API and
+                    processes
+                    the data,
+                    was written in Go.</p>
+
+                <!-- Carousel for Spanner -->
+                <div class="carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slide active">
+                            <div class="videoWrapper">
+                                <iframe
+                                    src="https://www.youtube-nocookie.com/embed/TJxTdGHjxUg?si=9CPLgcEwB7FD7tn5&amp;controls=1&autoplay=0&mute=1"
+                                    frameborder="0" allow="modestbranding;" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-indicators">
+                        <span class="indicator active"></span>
+                    </div>
                 </div>
-                <p>I hosted the website on my server using Nginx for the routing, however unfortunatley, Spotify has now
+
+                <p>I hosted the website on my server using Nginx for the routing, however unfortunately, Spotify has now
                     deprecated
                     the track analysis endpoints of the API breaking the entire analysis side of the project, so I no
                     longer host
@@ -113,12 +192,12 @@
                         Spanner Backend Repo
                         <img src="assets/external-link.svg" width="24" height="24" alt="WikiMapper Repo"
                             class="external-link-icon" />
-                        </svg>
                     </a>
                 </div>
             </div>
         </div>
     </div>
+
     <!-- Gesture Robotic Hand -->
     <div class="projectBox">
         <h2 style="display: flex; align-items: center; gap: 8px;">Gesture Robotic Hand</h2>
@@ -141,11 +220,23 @@
                     finger position data via a UDP server from a desktop application. The desktop application utilizes
                     computer
                     vision to track the user's hand.</p>
-                <div class="videoWrapper">
-                    <iframe
-                        src="https://www.youtube-nocookie.com/embed/uO_aIPs5To0?si=ACphi8zCP0spFiy9&amp;controls=1&autoplay=0&mute=1"
-                        allowfullscreen></iframe>
+
+                <!-- Carousel for Gesture Robotic Hand -->
+                <div class="carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slide active">
+                            <div class="videoWrapper">
+                                <iframe
+                                    src="https://www.youtube-nocookie.com/embed/uO_aIPs5To0?si=ACphi8zCP0spFiy9&amp;controls=1&autoplay=0&mute=1"
+                                    allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-indicators">
+                        <span class="indicator active"></span>
+                    </div>
                 </div>
+
                 <p>The desktop application was developed in Qt and implemented Google's machine learning library,
                     MediaPipe, for the
                     hand tracking. This data was translated into servo positions and sent over the internet via a server
@@ -155,6 +246,7 @@
             </div>
         </div>
     </div>
+
     <!-- Table Football Robot -->
     <div class="projectBox">
         <h2 style="display: flex; align-items: center; gap: 8px;">Table Football Robot</h2>
@@ -170,30 +262,74 @@
                 <p>At the Nottingham 24 hour Hackathon - HackNotts84, I led a team to win Intel's 1st place prize,
                     building a table football robot and competing against over 40 teams from 25 universities across the
                     UK. This was achieved using computer vision and parts of a 3D printer.</p>
-                <div class="videoWrapper">
-                    <iframe
-                        src="https://www.youtube-nocookie.com/embed/nU2mIn70Abg?si=OpaB1VN8p0i3ZOnH&amp;controls=1&autoplay=0&mute=1"
-                        allowfullscreen></iframe>
+
+                <!-- Carousel for Table Football Robot -->
+                <div class="carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slide active">
+                            <div class="videoWrapper">
+                                <iframe
+                                    src="https://www.youtube-nocookie.com/embed/nU2mIn70Abg?si=OpaB1VN8p0i3ZOnH&amp;controls=1&autoplay=0&mute=1"
+                                    allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-indicators">
+                        <span class="indicator active"></span>
+                    </div>
                 </div>
+
                 <p>We were able to track the location of the ball in real time using a webcam and OpenCV and send Gcode
                     commands to the robot control board in order to intercept and kick the ball towards the goal.
                 </p>
             </div>
         </div>
     </div>
+
     <!-- Other Projects -->
     <div class="projectBox">
         <h2 style="display: flex; align-items: center; gap: 8px;">Other Projects</h2>
         <div class="projectLabelBox"></div>
         <div class="projectBody">
             <div class="project-full-content">
-                <p></p>Other projects that I have been working on recently.</p>
-                <img class="resizable-image" src="/assets/satellite.webp">
-                <p></p>Wire sculpture lamp with capacitive button.</p>
-                <img class="resizable-image" src="/assets/thechair.webp">
-                <p> A replacement for "The chair" which stores half-worn clothes.</p>
-                <img class="resizable-image" src="/assets/cube.webp">
-                <p> A brass wire light sculpture.</p>
+                <p>Other projects that I have been working on recently.</p>
+
+                <!-- Carousel for Other Projects -->
+
+                <div class="carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slide active">
+                            <img class="resizable-image" src="/assets/satellite.webp" alt="Wire sculpture lamp">
+                            <!-- <p class="carousel-caption">Wire sculpture lamp with capacitive button.</p> -->
+                        </div>
+                        <div class="carousel-slide">
+                            <img class="resizable-image" src="/assets/thechair.webp" alt="The chair replacement">
+                            <!-- <p class="carousel-caption">A replacement for "The chair" which stores half-worn clothes. -->
+                            <!-- </p> -->
+                        </div>
+                        <div class="carousel-slide">
+                            <img class="resizable-image" src="/assets/cube.webp" alt="Brass wire sculpture">
+                            <!-- <p class="carousel-caption">A brass wire light sculpture.</p> -->
+                        </div>
+                    </div>
+                    <button class="carousel-btn carousel-prev">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                    <button class="carousel-btn carousel-next">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                    <div class="carousel-indicators">
+                        <span class="indicator active"></span>
+                        <span class="indicator"></span>
+                        <span class="indicator"></span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
