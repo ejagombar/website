@@ -329,7 +329,13 @@ nav {
     margin: 5px;
     margin-left: 10px;
     font-size: 1.8em;
+    text-decoration: none;
+    color: var(--foreground);
+    transition: filter 0.5s ease;
+}
 
+.nameHeader:hover {
+    filter: blur(1.5px);
 }
 
 .wideNavItem {
@@ -345,11 +351,11 @@ nav {
     background-size: 200% 100%;
     background-position-x: 0;
     background-position-y: 2em;
-    transition: transform 0.3s;
+    transition: filter 0.5s ease;
 }
 
 .wideNavItem:hover {
-    transform: scale(1.05);
+    filter: blur(1.5px);
 }
 
 /* ======================== CONTENT BOXES ======================== */
@@ -416,6 +422,7 @@ nav {
 .link-icons {
     fill: var(--foreground);
     transition: transform 0.3s;
+    transition: filter 0.3s;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -425,7 +432,7 @@ nav {
 }
 
 .link-icons:hover {
-    transform: scale(1.2);
+    filter: invert(1) blur(1.5px);
 }
 
 /* ======================== ABOUT SECTION ======================== */
@@ -674,15 +681,15 @@ nav {
 
 .carousel-caption {
     position: absolute;
-    bottom: 0;
+    top: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
     color: white;
-    padding: 20px 15px 15px;
+    padding: 15px 15px 80px;
     margin: 0;
     font-size: 0.9em;
     text-align: center;
+    min-height: 120px;
 }
 
 .carousel-btn {
