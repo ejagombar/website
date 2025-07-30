@@ -429,10 +429,16 @@ nav {
     .link-icons {
         filter: invert(1);
     }
+
+    .link-icons:hover {
+        filter: invert(1) blur(1.5px);
+    }
 }
 
-.link-icons:hover {
-    filter: invert(1) blur(1.5px);
+@media (prefers-color-scheme: light) {
+    .link-icons:hover {
+        filter: blur(1.5px);
+    }
 }
 
 /* ======================== ABOUT SECTION ======================== */
