@@ -19,7 +19,7 @@
     --muted-text: light-dark(#c5c5c5, #888888);
 
     --shadow-primary: light-dark(rgba(25, 25, 25, 0.5), rgba(75, 75, 75, 0.3));
-    --shadow-secondary: light-dark(rgba(50, 50, 50, 0.5), rgba(150, 150, 150, 0.5));
+    --shadow-secondary: light-dark(rgba(50, 50, 50, 0.3), rgba(150, 150, 150, 0.3));
 
     --bg-animated: light-dark(#ffffff, #1a1a1a);
     --animation-color-1: var(--accent-1);
@@ -331,11 +331,6 @@ nav {
     font-size: 1.8em;
     text-decoration: none;
     color: var(--foreground);
-    transition: filter 0.5s ease;
-}
-
-.nameHeader:hover {
-    filter: blur(1.5px);
 }
 
 .wideNavItem {
@@ -351,11 +346,6 @@ nav {
     background-size: 200% 100%;
     background-position-x: 0;
     background-position-y: 2em;
-    transition: filter 0.5s ease;
-}
-
-.wideNavItem:hover {
-    filter: blur(1.5px);
 }
 
 /* ======================== CONTENT BOXES ======================== */
@@ -421,24 +411,6 @@ nav {
 
 .link-icons {
     fill: var(--foreground);
-    transition: transform 0.3s;
-    transition: filter 0.3s;
-}
-
-@media (prefers-color-scheme: dark) {
-    .link-icons {
-        filter: invert(1);
-    }
-
-    .link-icons:hover {
-        filter: invert(1) blur(1.5px);
-    }
-}
-
-@media (prefers-color-scheme: light) {
-    .link-icons:hover {
-        filter: blur(1.5px);
-    }
 }
 
 /* ======================== ABOUT SECTION ======================== */
@@ -564,6 +536,55 @@ nav {
 .external-link-icon {
     vertical-align: middle;
     margin-left: 6px;
+}
+
+.nameHeader,
+.wideNavItem,
+.link-icons {
+    transition: filter 0.3s ease;
+}
+
+.nameHeader:active,
+.wideNavItem:active,
+.link-icons:active {
+    filter: blur(1.5px);
+}
+
+@media (hover: hover) {
+
+    .nameHeader:hover,
+    .wideNavItem:hover,
+    .link-icons:hover {
+        filter: blur(1.5px);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .link-icons {
+        filter: invert(1);
+    }
+
+    .link-icons:active {
+        filter: invert(1) blur(1.5px);
+    }
+
+    @media (hover: hover) {
+        .link-icons:hover {
+            filter: invert(1) blur(1.5px);
+        }
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    .link-icons:active {
+        filter: blur(1.5px);
+    }
+
+    @media (hover: hover) {
+        .link-icons:hover {
+            filter: blur(1.5px);
+        }
+    }
 }
 
 /* ======================== MEDIA ELEMENTS ======================== */
@@ -839,5 +860,3 @@ nav {
         font-size: 0.75em;
     }
 }
-
-/* ======================== CAROUSEL STYLES ======================== */
