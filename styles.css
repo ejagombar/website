@@ -748,7 +748,8 @@ nav {
 
 .carousel-btn:hover {
     background: rgba(0, 0, 0, 0.8);
-    transform: translateY(-50%) scale(1.1);
+    transform: (-50%) scale(1.1);
+    filter: blur(1px);
 }
 
 .carousel-prev {
@@ -776,11 +777,13 @@ nav {
     background: rgba(255, 255, 255, 0.5);
     cursor: pointer;
     transition: background 0.3s ease, transform 0.3s ease;
+    filter: blur(1.5px);
 }
 
 .indicator.active {
     background: white;
     transform: scale(1.2);
+    filter: blur(0.5px);
 }
 
 .indicator:hover {
