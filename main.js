@@ -6,15 +6,15 @@ const routes = {
         title: '404',
         description: 'Page not found',
     },
-    '': {
+    '/': {
         template: 'pages/home.html',
         title: 'Home',
     },
-    home: {
+    '/home': {
         template: 'pages/home.html',
         title: 'Home',
     },
-    projects: {
+    '/projects': {
         template: 'pages/projects.html',
         title: 'Projects',
     },
@@ -23,46 +23,88 @@ const routes = {
 document.addEventListener('DOMContentLoaded', () => {
     updateHeaderText()
 
-    // Handle hash change events
-    window.addEventListener('hashchange', locationHandler)
+    window.addEventListener('popstate', locationHandler)
 
-    // Load initial route
+    document.addEventListener('click', handleNavigation)
+
     locationHandler()
 })
 
 const locationHandler = async () => {
-    let hash = window.location.hash.slice(1)
+    let path = window.location.pathname
 
-    if (!hash) {
-        hash = ''
+    if (!path || path === '/') {
+        path = '/'
     }
 
-    console.log('Loading route:', hash)
+    console.log('Loading route:', path)
 
-    const route = routes[hash] || routes['404']
-    const html = await fetch(route.template).then((response) => response.text())
+    const route = routes[path] || routes['404']
 
-    const content = document.getElementById('content')
-    content.innerHTML = html
+    try {
+        const html = await fetch(route.template).then((response) => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`)
+            }
+            return response.text()
+        })
 
-    document.title = route.title || '404'
-    document
-        .querySelector('meta[name="description"]')
-        .setAttribute('content', route.description || '')
+        const content = document.getElementById('content')
+        content.innerHTML = html
 
-    // Control background patterns based on route
-    if (hash === 'projects') {
-        console.log('Projects page loaded, initializing carousels...')
-        setTimeout(() => {
-            initializeCarousels()
-        }, 100)
+        document.title = route.title || '404'
+
+        const metaDescription = document.querySelector(
+            'meta[name="description"]'
+        )
+        if (metaDescription) {
+            metaDescription.setAttribute('content', route.description || '')
+        }
+
+        if (path === '/projects') {
+            console.log('Projects page loaded, initializing carousels...')
+            setTimeout(() => {
+                initializeCarousels()
+            }, 100)
+        }
+    } catch (error) {
+        console.error('Error loading route:', error)
+        const html404 = await fetch(routes['404'].template).then((response) =>
+            response.text()
+        )
+        document.getElementById('content').innerHTML = html404
+        document.title = '404'
     }
+}
+
+function handleNavigation(e) {
+    const link = e.target.closest('a[href]')
+
+    if (link) {
+        const href = link.getAttribute('href')
+
+        if (href && href.startsWith('/') && !href.startsWith('//')) {
+            e.preventDefault()
+
+            if (href !== window.location.pathname) {
+                navigateTo(href)
+            }
+        }
+    }
+}
+
+function navigateTo(path) {
+    window.history.pushState(null, '', path)
+
+    locationHandler()
 }
 
 // ================================== Home Page====================================
 
 function updateHeaderText() {
     const header = document.getElementById('nameHeader')
+
+    if (!header) return
 
     if (window.innerWidth <= 341) {
         header.textContent = 'EA'
@@ -81,10 +123,12 @@ function handleHeaderScroll() {
     const header = document.querySelector('header')
     const scrollThreshold = 20
 
-    if (window.scrollY > scrollThreshold) {
-        header.classList.add('scrolled')
-    } else {
-        header.classList.remove('scrolled')
+    if (header) {
+        if (window.scrollY > scrollThreshold) {
+            header.classList.add('scrolled')
+        } else {
+            header.classList.remove('scrolled')
+        }
     }
 }
 
@@ -115,7 +159,6 @@ function changeSlide(button, direction) {
         newIndex
     )
 
-    // Handle wrapping
     if (newIndex >= slides.length) {
         newIndex = 0
     } else if (newIndex < 0) {
@@ -124,11 +167,9 @@ function changeSlide(button, direction) {
 
     console.log('Final new index:', newIndex)
 
-    // Update slides
     slides[currentIndex].classList.remove('active')
     slides[newIndex].classList.add('active')
 
-    // Update indicators
     if (indicators.length > 0) {
         indicators[currentIndex].classList.remove('active')
         indicators[newIndex].classList.add('active')
@@ -148,11 +189,9 @@ function goToSlide(indicator, slideIndex) {
     )
 
     if (currentIndex !== slideIndex) {
-        // Update slides
         slides[currentIndex].classList.remove('active')
         slides[slideIndex].classList.add('active')
 
-        // Update indicators
         indicators[currentIndex].classList.remove('active')
         indicators[slideIndex].classList.add('active')
     }
@@ -181,7 +220,6 @@ function initializeCarousels() {
 function handleCarouselClick(e) {
     console.log('Carousel click detected:', e.target)
 
-    // Handle prev/next buttons
     if (e.target.closest('.carousel-prev')) {
         console.log('Previous button clicked')
         const button = e.target.closest('.carousel-prev')
@@ -196,7 +234,6 @@ function handleCarouselClick(e) {
         e.stopPropagation()
     } else if (e.target.closest('.indicator')) {
         console.log('Indicator clicked')
-        // Handle indicator clicks
         const indicator = e.target.closest('.indicator')
         const container = indicator.closest('.carousel-container')
         const indicators = container.querySelectorAll('.indicator')
@@ -207,7 +244,6 @@ function handleCarouselClick(e) {
     }
 }
 
-// Keyboard navigation for carousels
 function handleCarouselKeydown(e) {
     const focusedCarousel = document.querySelector('.carousel-container:hover')
     if (focusedCarousel) {
@@ -221,7 +257,6 @@ function handleCarouselKeydown(e) {
     }
 }
 
-// Touch/swipe support for mobile
 let touchStartX = 0
 let touchEndX = 0
 
