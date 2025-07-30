@@ -138,6 +138,72 @@
     </div>
 
     <div class="projectBox">
+        <h2 style="display: flex; align-items: center; gap: 8px;">Gesture Robotic Hand</h2>
+        <div class="projectLabelBox">
+            <p class="label">MediaPipe</p>
+            <p class="label">OpenCV</p>
+            <p class="label">QT</p>
+            <p class="label">Raspberry Pi</p>
+            <p class="label">Fusion 360</p>
+            <p class="label">C++</p>
+            <p class="label">Python</p>
+            <p class="label">UDP</p>
+        </div>
+        <div class="projectBody">
+            <div class="project-full-content">
+                <p>A gesture-controlled robotic hand, built for my master's dissertation. I designed and 3D printed a
+                    hand with 6
+                    degrees of motion. A microcontroller embedded in the hand is sent data from a Raspberry Pi, which
+                    receives
+                    finger position data via a UDP server from a desktop application. The desktop application utilizes
+                    computer
+                    vision to track the user's hand.</p>
+
+                <div class="carousel-container">
+                    <div class="carousel-wrapper">
+                        <div class="carousel-slide active">
+                            <img class="resizable-image" src="/assets/gesture2.webp" alt="Homelab Server Rack">
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="videoWrapper">
+                                <iframe
+                                    src="https://www.youtube-nocookie.com/embed/uO_aIPs5To0?si=ACphi8zCP0spFiy9&amp;controls=1&autoplay=0&mute=1"
+                                    allowfullscreen></iframe>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <img class="resizable-image" src="/assets/gesture1.webp" alt="Homelab Server Rack">
+                        </div>
+                    </div>
+                    <button class="carousel-btn carousel-prev">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                    <button class="carousel-btn carousel-next">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        </svg>
+                    </button>
+                    <div class="carousel-indicators">
+                        <span class="indicator active"></span>
+                        <span class="indicator"></span>
+                        <span class="indicator"></span>
+                    </div>
+                </div>
+
+                <p>The desktop application was developed in Qt and implemented Google's machine learning library,
+                    MediaPipe, for the hand tracking. This data was translated into servo positions and sent over the
+                    internet via a server to the robotic hand. I was able to reduce the total system (including the hand
+                    tracking) latency to 320ms.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="projectBox">
         <h2 style="display: flex; align-items: center; gap: 8px;">Spanner</h2>
         <div class="projectLabelBox">
             <p class="label">Go</p>
@@ -185,51 +251,6 @@
         </div>
     </div>
 
-    <div class="projectBox">
-        <h2 style="display: flex; align-items: center; gap: 8px;">Gesture Robotic Hand</h2>
-        <div class="projectLabelBox">
-            <p class="label">MediaPipe</p>
-            <p class="label">OpenCV</p>
-            <p class="label">QT</p>
-            <p class="label">Raspberry Pi</p>
-            <p class="label">Fusion 360</p>
-            <p class="label">C++</p>
-            <p class="label">Python</p>
-            <p class="label">UDP</p>
-        </div>
-        <div class="projectBody">
-            <div class="project-full-content">
-                <p>A gesture-controlled robotic hand, built for my master's dissertation. I designed and 3D printed a
-                    hand with 6
-                    degrees of motion. A microcontroller embedded in the hand is sent data from a Raspberry Pi, which
-                    receives
-                    finger position data via a UDP server from a desktop application. The desktop application utilizes
-                    computer
-                    vision to track the user's hand.</p>
-
-                <div class="carousel-container">
-                    <div class="carousel-wrapper">
-                        <div class="carousel-slide active">
-                            <div class="videoWrapper">
-                                <iframe
-                                    src="https://www.youtube-nocookie.com/embed/uO_aIPs5To0?si=ACphi8zCP0spFiy9&amp;controls=1&autoplay=0&mute=1"
-                                    allowfullscreen></iframe>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-indicators">
-                        <span class="indicator active"></span>
-                    </div>
-                </div>
-
-                <p>The desktop application was developed in Qt and implemented Google's machine learning library,
-                    MediaPipe, for the hand tracking. This data was translated into servo positions and sent over the
-                    internet via a server to the robotic hand. I was able to reduce the total system (including the hand
-                    tracking) latency to 320ms.
-                </p>
-            </div>
-        </div>
-    </div>
 
     <div class="projectBox">
         <h2 style="display: flex; align-items: center; gap: 8px;">Table Football Robot</h2>
