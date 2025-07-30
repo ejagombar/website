@@ -253,11 +253,9 @@ function handleSwipe(carousel) {
 
     if (Math.abs(diff) > swipeThreshold) {
         if (diff > 0) {
-            // Swiped left - go to next slide
             const nextBtn = carousel.querySelector('.carousel-next')
             if (nextBtn) changeSlide(nextBtn, 1)
         } else {
-            // Swiped right - go to previous slide
             const prevBtn = carousel.querySelector('.carousel-prev')
             if (prevBtn) changeSlide(prevBtn, -1)
         }
