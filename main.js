@@ -31,10 +31,8 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 const locationHandler = async () => {
-    // Get the hash without the '#' symbol
     let hash = window.location.hash.slice(1)
 
-    // Default to home if no hash
     if (!hash) {
         hash = ''
     }
@@ -52,10 +50,9 @@ const locationHandler = async () => {
         .querySelector('meta[name="description"]')
         .setAttribute('content', route.description || '')
 
-    // Initialize carousel functionality after content is loaded
+    // Control background patterns based on route
     if (hash === 'projects') {
         console.log('Projects page loaded, initializing carousels...')
-        // Small delay to ensure DOM is ready
         setTimeout(() => {
             initializeCarousels()
         }, 100)
@@ -164,23 +161,18 @@ function goToSlide(indicator, slideIndex) {
 function initializeCarousels() {
     console.log('Initializing carousels...')
 
-    // Remove any existing event listeners to prevent duplicates
     document.removeEventListener('keydown', handleCarouselKeydown)
     document.removeEventListener('touchstart', handleTouchStart)
     document.removeEventListener('touchend', handleTouchEnd)
 
-    // Add event listeners
     document.addEventListener('keydown', handleCarouselKeydown)
     document.addEventListener('touchstart', handleTouchStart)
     document.addEventListener('touchend', handleTouchEnd)
 
-    // Set up click event listeners for carousel buttons using event delegation
     const content = document.getElementById('content')
 
-    // Remove existing carousel listeners to prevent duplicates
     content.removeEventListener('click', handleCarouselClick)
 
-    // Add carousel click handler
     content.addEventListener('click', handleCarouselClick)
 
     console.log('Carousel initialization complete')
