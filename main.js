@@ -110,33 +110,43 @@ function updateHeaderText() {
         header.textContent = 'EA'
     } else if (window.innerWidth <= 450) {
         header.textContent = 'Ed A'
-    } else if (window.innerWidth <= 520) {
-        header.textContent = 'Ed Agombar'
     } else {
-        header.textContent = 'Edward Agombar'
+        header.textContent = 'Ed Agombar'
     }
 }
 
 window.addEventListener('resize', updateHeaderText)
 
+let lastScrollY = window.scrollY
+
 function handleHeaderScroll() {
     const header = document.querySelector('header')
-    const scrollThreshold = 20
+    const currentScrollY = window.scrollY
+
+    const styleChangeThreshold = 20 // When to make corners square
+    const hideThreshold = 100 // Minimum scroll before hiding starts
 
     if (header) {
-        if (window.scrollY > scrollThreshold) {
+        if (currentScrollY > styleChangeThreshold) {
             header.classList.add('scrolled')
         } else {
             header.classList.remove('scrolled')
         }
+
+        if (currentScrollY > lastScrollY && currentScrollY > hideThreshold) {
+            header.classList.add('header-hidden')
+        } else {
+            header.classList.remove('header-hidden')
+        }
     }
+
+    lastScrollY = currentScrollY
 }
 
 document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('scroll', handleHeaderScroll)
     handleHeaderScroll()
 })
-
 // ======================== CAROUSEL FUNCTIONALITY ========================
 
 function changeSlide(button, direction) {
