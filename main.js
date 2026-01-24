@@ -151,11 +151,16 @@ function updateHeaderText() {
 
     if (!header) return
 
-    if (window.innerWidth <= 341) {
+    if (window.innerWidth <= 420) {
+        header.style.display = 'none'
+    } else if (window.innerWidth <= 500) {
+        header.style.display = ''
         header.textContent = 'EA'
-    } else if (window.innerWidth <= 450) {
+    } else if (window.innerWidth <= 580) {
+        header.style.display = ''
         header.textContent = 'Ed A'
     } else {
+        header.style.display = ''
         header.textContent = 'Ed Agombar'
     }
 }

@@ -366,6 +366,20 @@ nav {
     background-position-y: 2em;
 }
 
+@media screen and (max-width: 580px) {
+    .wideNavItem {
+        margin: 0 10px;
+        font-size: 1.1em;
+    }
+}
+
+@media screen and (max-width: 420px) {
+    .wideNavItem {
+        margin: 0 8px;
+        font-size: 1em;
+    }
+}
+
 /* ======================== CONTENT BOXES ======================== */
 .content-box,
 .profileBox,
