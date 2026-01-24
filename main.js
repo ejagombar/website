@@ -587,20 +587,11 @@ function renderRecipesByType(recipes, types) {
         return
     }
 
-    // Group recipes - we need to fetch by type since the search results don't include type
-    let html = ''
-
-    // For now, just show all recipes in a simple list since we don't have type info in search results
-    // We'll organize by fetching each type separately
-    html = '<div class="recipe-grid">'
+    let html = '<div class="recipe-list-box"><ul class="recipe-link-list">'
     recipes.forEach(recipe => {
-        html += `
-            <a href="/recipes/${recipe.index}" class="recipe-card">
-                <span class="recipe-card-name">${recipe.name}</span>
-            </a>
-        `
+        html += `<li><a href="/recipes/${recipe.index}" class="recipe-link">${recipe.name}</a></li>`
     })
-    html += '</div>'
+    html += '</ul></div>'
 
     container.innerHTML = html
 }
@@ -614,15 +605,11 @@ function renderRecipeList(recipes) {
         return
     }
 
-    let html = '<div class="recipe-grid">'
+    let html = '<div class="recipe-list-box"><ul class="recipe-link-list">'
     recipes.forEach(recipe => {
-        html += `
-            <a href="/recipes/${recipe.index}" class="recipe-card">
-                <span class="recipe-card-name">${recipe.name}</span>
-            </a>
-        `
+        html += `<li><a href="/recipes/${recipe.index}" class="recipe-link">${recipe.name}</a></li>`
     })
-    html += '</div>'
+    html += '</ul></div>'
 
     container.innerHTML = html
 }
@@ -679,7 +666,7 @@ async function initializeRecipePage(id) {
 
     let html = `
         <div class="recipe-info-box">
-            <img src="${imageUrl}" alt="${recipe.name}" class="recipe-image" onerror="this.style.display='none'">
+            <img src="${imageUrl}" alt="${recipe.name}" class="recipe-image recipe-image-clickable" onerror="this.style.display='none'; this.classList.remove('recipe-image-clickable')">
             <div class="recipe-info-grid">
                 <h1 class="recipe-title">${recipe.name}</h1>
                 ${recipe.description ? `<p class="recipe-description">${recipe.description}</p>` : ''}
@@ -713,4 +700,49 @@ async function initializeRecipePage(id) {
     `
 
     contentContainer.innerHTML = html
+
+    // Set up image lightbox click handler
+    const recipeImage = contentContainer.querySelector('.recipe-image-clickable')
+    if (recipeImage) {
+        recipeImage.addEventListener('click', () => {
+            openLightbox(recipeImage.src)
+        })
+    }
 }
+
+// ======================== IMAGE LIGHTBOX ========================
+
+function openLightbox(imageSrc) {
+    const lightbox = document.getElementById('imageLightbox')
+    const lightboxImage = document.getElementById('lightboxImage')
+
+    if (lightbox && lightboxImage) {
+        lightboxImage.src = imageSrc
+        lightbox.classList.add('active')
+        document.body.style.overflow = 'hidden'
+    }
+}
+
+function closeLightbox() {
+    const lightbox = document.getElementById('imageLightbox')
+
+    if (lightbox) {
+        lightbox.classList.remove('active')
+        document.body.style.overflow = ''
+    }
+}
+
+// Set up lightbox close handler
+document.addEventListener('DOMContentLoaded', () => {
+    const lightbox = document.getElementById('imageLightbox')
+    if (lightbox) {
+        lightbox.addEventListener('click', closeLightbox)
+    }
+
+    // Close on escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            closeLightbox()
+        }
+    })
+})
