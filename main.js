@@ -356,7 +356,14 @@ const RECIPE_API_BASE = 'https://api.recipes.eagombar.uk/recipeQuery'
 let recipeTypes = []
 let allRecipes = []
 let currentTypeFilter = 'all'
+let currentSearchQuery = ''
+let currentSearchIngredients = false
+let lastSearchResults = null
 let searchDebounceTimer = null
+
+function isMobile() {
+    return window.innerWidth <= 600
+}
 
 function parseXML(xmlString) {
     // Strip any content before the XML declaration (PHP warnings, etc.)
@@ -463,48 +470,78 @@ function getRecipeImageUrl(id) {
 async function initializeRecipesPage() {
     console.log('Initializing recipes page...')
 
-    // Use cached data for immediate render if available
-    if (recipeTypes.length > 0 && allRecipes.length > 0) {
-        renderTypeFilters(recipeTypes)
+    const searchInput = document.getElementById('recipeSearch')
+    const searchIngredientsCheckbox = document.getElementById('searchIngredients')
+    const suggestions = document.getElementById('searchSuggestions')
+
+    // Restore saved state
+    if (searchInput && currentSearchQuery) {
+        searchInput.value = currentSearchQuery
+    }
+    if (searchIngredientsCheckbox) {
+        searchIngredientsCheckbox.checked = currentSearchIngredients
+    }
+
+    // Fetch types if needed
+    if (recipeTypes.length === 0) {
+        await fetchRecipeTypes()
+    }
+    renderTypeFilters(recipeTypes)
+
+    // Restore active filter button
+    if (currentTypeFilter !== 'all') {
+        document.querySelectorAll('.type-filter-btn').forEach(b => {
+            b.classList.toggle('active', b.dataset.type === currentTypeFilter)
+        })
+    }
+
+    // Render recipes - use last search results if we have them, otherwise fetch
+    if (lastSearchResults !== null) {
+        renderRecipeList(lastSearchResults)
+    } else if (allRecipes.length > 0) {
         renderRecipesByType(allRecipes, recipeTypes)
     } else {
-        // Fetch types and populate filter buttons
-        const types = await fetchRecipeTypes()
-        renderTypeFilters(types)
-
-        // Load all recipes initially
         allRecipes = await fetchRecipes()
-        renderRecipesByType(allRecipes, types)
+        renderRecipesByType(allRecipes, recipeTypes)
     }
 
     // Set up search
-    const searchInput = document.getElementById('recipeSearch')
-    const searchIngredients = document.getElementById('searchIngredients')
-    const suggestions = document.getElementById('searchSuggestions')
-
     if (searchInput) {
         searchInput.addEventListener('input', (e) => {
             clearTimeout(searchDebounceTimer)
             const query = e.target.value.trim()
+            currentSearchQuery = query
 
             if (query.length < 2) {
                 suggestions.innerHTML = ''
-                suggestions.style.display = 'none'
-                // Reset to show all recipes grouped by type
-                renderRecipesByType(allRecipes, recipeTypes)
+                suggestions.classList.remove('visible')
+                lastSearchResults = null
+                // Reset to show all recipes
+                if (currentTypeFilter === 'all') {
+                    renderRecipesByType(allRecipes, recipeTypes)
+                } else {
+                    fetchRecipes(currentTypeFilter).then(results => {
+                        lastSearchResults = results
+                        renderRecipeList(results)
+                    })
+                }
                 return
             }
 
             searchDebounceTimer = setTimeout(async () => {
-                const includeIngredients = searchIngredients?.checked || false
+                const includeIngredients = searchIngredientsCheckbox?.checked || false
+                currentSearchIngredients = includeIngredients
                 const results = await fetchRecipes(
                     currentTypeFilter !== 'all' ? currentTypeFilter : null,
                     query,
                     includeIngredients
                 )
+                lastSearchResults = results
 
-                // Show suggestions
-                renderSuggestions(results.slice(0, 8), suggestions)
+                // Show suggestions on mobile only
+                if (isMobile()) {
+                    renderSuggestions(results.slice(0, 8), suggestions)
+                }
 
                 // Update main list
                 renderRecipeList(results)
@@ -514,7 +551,18 @@ async function initializeRecipesPage() {
         // Hide suggestions when clicking outside
         document.addEventListener('click', (e) => {
             if (!e.target.closest('.search-container')) {
-                suggestions.style.display = 'none'
+                suggestions.classList.remove('visible')
+            }
+        })
+    }
+
+    // Track checkbox changes
+    if (searchIngredientsCheckbox) {
+        searchIngredientsCheckbox.addEventListener('change', () => {
+            currentSearchIngredients = searchIngredientsCheckbox.checked
+            // Re-trigger search if there's a query
+            if (searchInput && searchInput.value.trim().length >= 2) {
+                searchInput.dispatchEvent(new Event('input'))
             }
         })
     }
@@ -528,22 +576,25 @@ async function initializeRecipesPage() {
         btn.classList.add('active')
 
         currentTypeFilter = btn.dataset.type
-        const searchQuery = document.getElementById('recipeSearch')?.value.trim()
-        const includeIngredients = document.getElementById('searchIngredients')?.checked || false
+        const searchQuery = searchInput?.value.trim() || ''
+        const includeIngredients = searchIngredientsCheckbox?.checked || false
 
-        if (searchQuery && searchQuery.length >= 2) {
+        if (searchQuery.length >= 2) {
             const results = await fetchRecipes(
                 currentTypeFilter !== 'all' ? currentTypeFilter : null,
                 searchQuery,
                 includeIngredients
             )
+            lastSearchResults = results
             renderRecipeList(results)
         } else {
             // Filter allRecipes by type or show grouped view
             if (currentTypeFilter === 'all') {
+                lastSearchResults = null
                 renderRecipesByType(allRecipes, recipeTypes)
             } else {
                 const filtered = await fetchRecipes(currentTypeFilter)
+                lastSearchResults = filtered
                 renderRecipeList(filtered)
             }
         }
@@ -554,10 +605,12 @@ function renderTypeFilters(types) {
     const container = document.getElementById('typeFilters')
     if (!container) return
 
-    let html = '<button class="type-filter-btn active" data-type="all">All</button>'
+    const isAllActive = currentTypeFilter === 'all'
+    let html = `<button class="type-filter-btn${isAllActive ? ' active' : ''}" data-type="all">All</button>`
     types.forEach(type => {
         const displayName = type.charAt(0).toUpperCase() + type.slice(1)
-        html += `<button class="type-filter-btn" data-type="${type}">${displayName}</button>`
+        const isActive = currentTypeFilter === type
+        html += `<button class="type-filter-btn${isActive ? ' active' : ''}" data-type="${type}">${displayName}</button>`
     })
     container.innerHTML = html
 }
@@ -566,7 +619,7 @@ function renderSuggestions(recipes, container) {
     if (!container) return
 
     if (recipes.length === 0) {
-        container.style.display = 'none'
+        container.classList.remove('visible')
         return
     }
 
@@ -575,7 +628,7 @@ function renderSuggestions(recipes, container) {
         html += `<a href="/recipes/${recipe.index}" class="suggestion-item">${recipe.name}</a>`
     })
     container.innerHTML = html
-    container.style.display = 'block'
+    container.classList.add('visible')
 }
 
 function renderRecipesByType(recipes, types) {

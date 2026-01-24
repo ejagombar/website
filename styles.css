@@ -1034,7 +1034,7 @@ nav {
     list-style: none;
     margin: 0;
     padding: 0;
-    column-count: 3;
+    column-count: 2;
     column-gap: 40px;
     column-rule: 1px solid var(--muted-text);
 }
@@ -1054,16 +1054,20 @@ nav {
     color: var(--primary);
 }
 
-@media screen and (max-width: 900px) {
-    .recipe-link-list {
-        column-count: 2;
-    }
+/* Hide search suggestions on desktop - results already visible below */
+.search-suggestions {
+    display: none !important;
 }
 
 @media screen and (max-width: 600px) {
     .recipe-link-list {
         column-count: 1;
         column-rule: none;
+    }
+
+    /* Show search suggestions on mobile only when visible class is added */
+    .search-suggestions.visible {
+        display: block !important;
     }
 }
 
