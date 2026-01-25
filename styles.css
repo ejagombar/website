@@ -1453,6 +1453,269 @@ nav {
     animation-delay: 0.45s;
 }
 
+/* ======================== RECIPE UPLOADER ======================== */
+.upload-page {
+    width: calc(100% - 20px);
+    max-width: var(--width);
+    padding: 10px;
+}
+
+.upload-page h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.upload-section {
+    width: 100%;
+}
+
+.login-box,
+.import-box,
+.recipe-form-box {
+    background-color: var(--surface-solid);
+    border-radius: var(--radius);
+    padding: 20px 30px;
+    margin-bottom: 10px;
+}
+
+.login-box {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.login-box h2,
+.import-box h2,
+.recipe-form-box h2 {
+    margin: 0 0 20px 0;
+    padding: 0;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--muted-text);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1em;
+    background-color: var(--background);
+    color: var(--foreground);
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1em;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.submit-btn:hover {
+    opacity: 0.9;
+}
+
+.error-message {
+    color: #e74c3c;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.status-message {
+    margin-top: 10px;
+    text-align: center;
+}
+
+.status-message.success {
+    color: #27ae60;
+}
+
+.status-message.error {
+    color: #e74c3c;
+}
+
+/* Import section */
+.import-row {
+    display: flex;
+    gap: 10px;
+}
+
+.import-input {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid var(--muted-text);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1em;
+    background-color: var(--background);
+    color: var(--foreground);
+}
+
+.import-input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.import-btn {
+    padding: 10px 20px;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.import-btn:hover {
+    opacity: 0.9;
+}
+
+/* Dynamic lists */
+.dynamic-list {
+    margin-bottom: 10px;
+}
+
+.ingredient-row,
+.instruction-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 8px;
+    align-items: flex-start;
+}
+
+.ingredient-row input,
+.instruction-row textarea {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid var(--muted-text);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1em;
+    background-color: var(--background);
+    color: var(--foreground);
+}
+
+.ingredient-row input:focus,
+.instruction-row textarea:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.instruction-num {
+    min-width: 25px;
+    padding-top: 10px;
+    font-weight: 500;
+}
+
+.remove-btn {
+    width: 36px;
+    height: 36px;
+    padding: 0;
+    background-color: transparent;
+    color: var(--muted-text);
+    border: 1px solid var(--muted-text);
+    border-radius: 8px;
+    font-size: 1.2em;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.remove-btn:hover {
+    background-color: #e74c3c;
+    border-color: #e74c3c;
+    color: white;
+}
+
+.add-btn {
+    padding: 8px 16px;
+    background-color: transparent;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    border-radius: 8px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.add-btn:hover {
+    background-color: var(--primary);
+    color: white;
+}
+
+/* Search options row */
+.search-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.upload-btn {
+    padding: 6px 14px;
+    background-color: var(--primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 0.9em;
+    transition: opacity 0.2s;
+}
+
+.upload-btn:hover {
+    opacity: 0.9;
+}
+
+/* Responsive */
+@media screen and (max-width: 600px) {
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .login-box,
+    .import-box,
+    .recipe-form-box {
+        padding: 15px 20px;
+    }
+
+    .search-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+}
+
 /* ======================== IMAGE LIGHTBOX ======================== */
 .lightbox {
     position: fixed;

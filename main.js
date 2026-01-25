@@ -22,6 +22,10 @@ const routes = {
         template: '/pages/recipes.html',
         title: 'Recipes',
     },
+    '/upload': {
+        template: '/pages/upload.html',
+        title: 'Recipe Uploader',
+    },
 }
 
 const dynamicRoutes = {
@@ -110,6 +114,12 @@ const locationHandler = async () => {
         if (path.startsWith('/recipes/') && currentRouteParams.id) {
             setTimeout(() => {
                 initializeRecipePage(currentRouteParams.id)
+            }, 100)
+        }
+
+        if (path === '/upload') {
+            setTimeout(() => {
+                initializeUploadPage()
             }, 100)
         }
     } catch (error) {
@@ -821,6 +831,298 @@ async function initializeRecipePage(id) {
             }
         })
     })
+}
+
+// ======================== RECIPE UPLOADER ========================
+
+const UPLOAD_API_BASE = 'https://api.recipes.eagombar.uk'
+
+async function initializeUploadPage() {
+    console.log('Initializing upload page...')
+
+    // Check if already authenticated
+    const isAuth = await checkAuth()
+    if (isAuth) {
+        showUploadForm()
+    }
+
+    // Login form handler
+    const loginForm = document.getElementById('loginForm')
+    if (loginForm) {
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault()
+            const password = document.getElementById('password').value
+            const errorEl = document.getElementById('loginError')
+
+            try {
+                const response = await fetch(`${UPLOAD_API_BASE}/auth.php`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ password })
+                })
+
+                const data = await response.json()
+
+                if (data.success) {
+                    showUploadForm()
+                } else {
+                    errorEl.textContent = data.error || 'Invalid password'
+                }
+            } catch (error) {
+                errorEl.textContent = 'Connection error. Please try again.'
+            }
+        })
+    }
+
+    // Import button handler
+    const importBtn = document.getElementById('importBtn')
+    if (importBtn) {
+        importBtn.addEventListener('click', handleImport)
+    }
+
+    // Recipe form handler
+    const recipeForm = document.getElementById('recipeForm')
+    if (recipeForm) {
+        recipeForm.addEventListener('submit', handleRecipeSubmit)
+    }
+}
+
+async function checkAuth() {
+    try {
+        const response = await fetch(`${UPLOAD_API_BASE}/check-auth.php`, {
+            credentials: 'include'
+        })
+        const data = await response.json()
+        return data.authenticated === true
+    } catch (error) {
+        return false
+    }
+}
+
+function showUploadForm() {
+    document.getElementById('loginSection').style.display = 'none'
+    document.getElementById('uploadSection').style.display = 'block'
+}
+
+async function handleImport() {
+    const urlInput = document.getElementById('importUrl')
+    const statusEl = document.getElementById('importStatus')
+    const url = urlInput.value.trim()
+
+    if (!url) {
+        statusEl.textContent = 'Please enter a URL'
+        statusEl.className = 'status-message error'
+        return
+    }
+
+    statusEl.textContent = 'Importing recipe...'
+    statusEl.className = 'status-message'
+
+    try {
+        const response = await fetch(`${UPLOAD_API_BASE}/parse-url.php`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ url })
+        })
+
+        const data = await response.json()
+
+        if (data.success && data.recipe) {
+            populateForm(data.recipe)
+            statusEl.textContent = 'Recipe imported! Review and submit.'
+            statusEl.className = 'status-message success'
+        } else {
+            statusEl.textContent = data.error || 'Failed to parse recipe'
+            statusEl.className = 'status-message error'
+        }
+    } catch (error) {
+        statusEl.textContent = 'Import failed. Please try manually.'
+        statusEl.className = 'status-message error'
+    }
+}
+
+function populateForm(recipe) {
+    // Basic fields
+    if (recipe.name) document.getElementById('recipeName').value = recipe.name
+    if (recipe.description) document.getElementById('recipeDescription').value = recipe.description
+    if (recipe.type) document.getElementById('recipeType').value = recipe.type
+    if (recipe.source) document.getElementById('recipeSource').value = recipe.source
+    if (recipe.preparation_time) document.getElementById('prepTime').value = recipe.preparation_time
+    if (recipe.cooking_time) document.getElementById('cookTime').value = recipe.cooking_time
+    if (recipe.temperature) document.getElementById('temperature').value = recipe.temperature
+    if (recipe.serves) document.getElementById('serves').value = recipe.serves
+    if (recipe.makes) document.getElementById('makes').value = recipe.makes
+    if (recipe.image) document.getElementById('imageUrl').value = recipe.image
+
+    // Ingredients
+    if (recipe.ingredients && recipe.ingredients.length > 0) {
+        const container = document.getElementById('ingredientsList')
+        container.innerHTML = ''
+        recipe.ingredients.forEach(ing => {
+            addIngredient(ing)
+        })
+    }
+
+    // Instructions
+    if (recipe.instructions && recipe.instructions.length > 0) {
+        const container = document.getElementById('instructionsList')
+        container.innerHTML = ''
+        recipe.instructions.slice(0, 16).forEach((inst, index) => {
+            addInstruction(inst)
+        })
+    }
+}
+
+async function handleRecipeSubmit(e) {
+    e.preventDefault()
+
+    const statusEl = document.getElementById('uploadStatus')
+    statusEl.textContent = 'Uploading recipe...'
+    statusEl.className = 'status-message'
+
+    // Gather form data
+    const formData = {
+        name: document.getElementById('recipeName').value,
+        description: document.getElementById('recipeDescription').value,
+        type: document.getElementById('recipeType').value,
+        source: document.getElementById('recipeSource').value,
+        preparation_time: document.getElementById('prepTime').value,
+        cooking_time: document.getElementById('cookTime').value,
+        temperature: document.getElementById('temperature').value,
+        serves: document.getElementById('serves').value,
+        makes: document.getElementById('makes').value,
+        image: document.getElementById('imageUrl').value,
+        ingredients: [],
+        instructions: []
+    }
+
+    // Gather ingredients
+    document.querySelectorAll('#ingredientsList input[name="ingredients[]"]').forEach(input => {
+        if (input.value.trim()) {
+            formData.ingredients.push(input.value.trim())
+        }
+    })
+
+    // Gather instructions
+    document.querySelectorAll('#instructionsList textarea[name="instructions[]"]').forEach(textarea => {
+        if (textarea.value.trim()) {
+            formData.instructions.push(textarea.value.trim())
+        }
+    })
+
+    try {
+        const response = await fetch(`${UPLOAD_API_BASE}/upload-recipe.php`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify(formData)
+        })
+
+        const data = await response.json()
+
+        if (data.success) {
+            statusEl.textContent = `Recipe uploaded successfully! ID: ${data.id}`
+            statusEl.className = 'status-message success'
+            // Clear form
+            document.getElementById('recipeForm').reset()
+            resetDynamicLists()
+        } else {
+            statusEl.textContent = data.error || 'Upload failed'
+            statusEl.className = 'status-message error'
+        }
+    } catch (error) {
+        statusEl.textContent = 'Upload failed. Please try again.'
+        statusEl.className = 'status-message error'
+    }
+}
+
+function resetDynamicLists() {
+    document.getElementById('ingredientsList').innerHTML = `
+        <div class="ingredient-row">
+            <input type="text" name="ingredients[]" placeholder="e.g. 200g flour" required>
+            <button type="button" class="remove-btn" onclick="removeRow(this)">-</button>
+        </div>
+    `
+    document.getElementById('instructionsList').innerHTML = `
+        <div class="instruction-row">
+            <span class="instruction-num">1.</span>
+            <textarea name="instructions[]" rows="2" placeholder="First step..." required></textarea>
+            <button type="button" class="remove-btn" onclick="removeRow(this)">-</button>
+        </div>
+    `
+    document.getElementById('addInstructionBtn').style.display = ''
+}
+
+// Global functions for onclick handlers
+window.addIngredient = function(value = '') {
+    const container = document.getElementById('ingredientsList')
+    const row = document.createElement('div')
+    row.className = 'ingredient-row'
+    row.innerHTML = `
+        <input type="text" name="ingredients[]" placeholder="e.g. 200g flour" value="${escapeHtml(value)}">
+        <button type="button" class="remove-btn" onclick="removeRow(this)">-</button>
+    `
+    container.appendChild(row)
+}
+
+window.addInstruction = function(value = '') {
+    const container = document.getElementById('instructionsList')
+    const count = container.querySelectorAll('.instruction-row').length
+
+    if (count >= 16) {
+        document.getElementById('addInstructionBtn').style.display = 'none'
+        return
+    }
+
+    const row = document.createElement('div')
+    row.className = 'instruction-row'
+    row.innerHTML = `
+        <span class="instruction-num">${count + 1}.</span>
+        <textarea name="instructions[]" rows="2" placeholder="Step ${count + 1}...">${escapeHtml(value)}</textarea>
+        <button type="button" class="remove-btn" onclick="removeRow(this)">-</button>
+    `
+    container.appendChild(row)
+
+    if (count + 1 >= 16) {
+        document.getElementById('addInstructionBtn').style.display = 'none'
+    }
+}
+
+window.removeRow = function(btn) {
+    const row = btn.parentElement
+    const container = row.parentElement
+
+    // Don't remove if it's the last one
+    if (container.children.length > 1) {
+        row.remove()
+        // Renumber instructions if needed
+        if (container.id === 'instructionsList') {
+            renumberInstructions()
+            document.getElementById('addInstructionBtn').style.display = ''
+        }
+    }
+}
+
+function renumberInstructions() {
+    const rows = document.querySelectorAll('#instructionsList .instruction-row')
+    rows.forEach((row, index) => {
+        const numSpan = row.querySelector('.instruction-num')
+        if (numSpan) {
+            numSpan.textContent = `${index + 1}.`
+        }
+        const textarea = row.querySelector('textarea')
+        if (textarea) {
+            textarea.placeholder = `Step ${index + 1}...`
+        }
+    })
+}
+
+function escapeHtml(text) {
+    const div = document.createElement('div')
+    div.textContent = text
+    return div.innerHTML
 }
 
 // ======================== IMAGE LIGHTBOX ========================
