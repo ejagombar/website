@@ -835,7 +835,7 @@ async function initializeRecipePage(id) {
 
 // ======================== RECIPE UPLOADER ========================
 
-const UPLOAD_API_BASE = 'https://api.recipes.eagombar.uk'
+const UPLOAD_API_BASE = 'https://api.recipes.eagombar.uk/recipeQuery'
 
 async function initializeUploadPage() {
     console.log('Initializing upload page...')
@@ -893,6 +893,7 @@ async function checkAuth() {
         const response = await fetch(`${UPLOAD_API_BASE}/check-auth.php`, {
             credentials: 'include'
         })
+        if (!response.ok) return false
         const data = await response.json()
         return data.authenticated === true
     } catch (error) {
