@@ -324,6 +324,7 @@ header {
     z-index: 100;
     backdrop-filter: blur(10px);
     margin-bottom: 10px;
+    min-height: 68px;
 }
 
 header.header-hidden {
@@ -366,17 +367,10 @@ nav {
     background-position-y: 2em;
 }
 
-@media screen and (max-width: 580px) {
-    .wideNavItem {
-        margin: 0 10px;
-        font-size: 1.1em;
-    }
-}
 
 @media screen and (max-width: 420px) {
-    .wideNavItem {
-        margin: 0 8px;
-        font-size: 1em;
+    header {
+        justify-content: center;
     }
 }
 
@@ -1167,7 +1161,7 @@ nav {
 .recipe-details-grid {
     display: grid;
     grid-template-columns: 1fr 2fr;
-    gap: 15px;
+    gap: 10px;
     margin: 10px 0;
 }
 
@@ -1199,6 +1193,66 @@ nav {
 
 .instructions-list li {
     margin-bottom: 12px;
+}
+
+/* Tracker feature */
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.section-header h2 {
+    margin: 0;
+    padding: 0;
+}
+
+.tracker-toggle {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    font-size: 0.9em;
+    color: var(--muted-text);
+    user-select: none;
+}
+
+.tracker-toggle input {
+    cursor: pointer;
+    width: 16px;
+    height: 16px;
+    accent-color: var(--primary);
+}
+
+.tracker-checkbox {
+    display: none;
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    margin-top: 3px;
+    cursor: pointer;
+    accent-color: var(--primary);
+}
+
+.tracker-enabled .trackable-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    list-style: none;
+}
+
+.tracker-enabled .tracker-checkbox {
+    display: block;
+}
+
+.tracker-enabled {
+    padding-left: 0;
+}
+
+.tracker-enabled .tracker-checkbox:checked+.item-text {
+    text-decoration: line-through;
+    opacity: 0.6;
 }
 
 .recipe-source {
@@ -1245,9 +1299,12 @@ nav {
 
 /* Skeleton Loading */
 @keyframes skeleton-pulse {
-    0%, 100% {
+
+    0%,
+    100% {
         opacity: 0.3;
     }
+
     50% {
         opacity: 0.5;
     }
@@ -1344,15 +1401,49 @@ nav {
     animation: skeleton-pulse 1.5s ease-in-out infinite;
 }
 
-.skeleton-link:nth-child(1) { width: 45%; }
-.skeleton-link:nth-child(2) { width: 60%; animation-delay: 0.1s; }
-.skeleton-link:nth-child(3) { width: 35%; animation-delay: 0.15s; }
-.skeleton-link:nth-child(4) { width: 55%; animation-delay: 0.2s; }
-.skeleton-link:nth-child(5) { width: 40%; animation-delay: 0.25s; }
-.skeleton-link:nth-child(6) { width: 50%; animation-delay: 0.3s; }
-.skeleton-link:nth-child(7) { width: 65%; animation-delay: 0.35s; }
-.skeleton-link:nth-child(8) { width: 38%; animation-delay: 0.4s; }
-.skeleton-link:nth-child(9) { width: 52%; animation-delay: 0.45s; }
+.skeleton-link:nth-child(1) {
+    width: 45%;
+}
+
+.skeleton-link:nth-child(2) {
+    width: 60%;
+    animation-delay: 0.1s;
+}
+
+.skeleton-link:nth-child(3) {
+    width: 35%;
+    animation-delay: 0.15s;
+}
+
+.skeleton-link:nth-child(4) {
+    width: 55%;
+    animation-delay: 0.2s;
+}
+
+.skeleton-link:nth-child(5) {
+    width: 40%;
+    animation-delay: 0.25s;
+}
+
+.skeleton-link:nth-child(6) {
+    width: 50%;
+    animation-delay: 0.3s;
+}
+
+.skeleton-link:nth-child(7) {
+    width: 65%;
+    animation-delay: 0.35s;
+}
+
+.skeleton-link:nth-child(8) {
+    width: 38%;
+    animation-delay: 0.4s;
+}
+
+.skeleton-link:nth-child(9) {
+    width: 52%;
+    animation-delay: 0.45s;
+}
 
 /* ======================== IMAGE LIGHTBOX ======================== */
 .lightbox {

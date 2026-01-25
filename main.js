@@ -700,18 +700,24 @@ async function initializeRecipePage(id) {
         infoItems += `<div class="recipe-info-item"><span class="info-label">Temperature</span><span class="info-value">${recipe.temperature}</span></div>`
     }
 
-    // Build instructions list
+    // Load tracker state from localStorage
+    const trackerKey = `recipe-tracker-${id}`
+    let trackerState = JSON.parse(localStorage.getItem(trackerKey) || '{"enabled": false, "ingredients": {}, "instructions": {}}')
+
+    // Build instructions list with checkboxes
     let instructionsHtml = ''
     recipe.instructions.forEach((instruction, index) => {
-        instructionsHtml += `<li>${instruction}</li>`
+        const checked = trackerState.instructions[index] ? 'checked' : ''
+        instructionsHtml += `<li class="trackable-item"><input type="checkbox" class="tracker-checkbox instruction-checkbox" data-index="${index}" ${checked}><span class="item-text">${instruction}</span></li>`
     })
 
     // Build ingredients list - split by newlines only (not commas, as ingredients can contain commas)
     let ingredientsHtml = ''
     if (recipe.ingredients) {
         const ingredients = recipe.ingredients.split(/[\r\n]+/).map(i => i.trim()).filter(i => i)
-        ingredients.forEach(ingredient => {
-            ingredientsHtml += `<li>${ingredient}</li>`
+        ingredients.forEach((ingredient, index) => {
+            const checked = trackerState.ingredients[index] ? 'checked' : ''
+            ingredientsHtml += `<li class="trackable-item"><input type="checkbox" class="tracker-checkbox ingredient-checkbox" data-index="${index}" ${checked}><span class="item-text">${ingredient}</span></li>`
         })
     }
 
@@ -732,8 +738,14 @@ async function initializeRecipePage(id) {
         <div class="recipe-details-grid">
             ${ingredientsHtml ? `
             <div class="recipe-ingredients-box">
-                <h2>Ingredients</h2>
-                <ul class="ingredients-list">
+                <div class="section-header">
+                    <h2>Ingredients</h2>
+                    <label class="tracker-toggle">
+                        <input type="checkbox" id="trackerToggle" ${trackerState.enabled ? 'checked' : ''}>
+                        <span>Tracker</span>
+                    </label>
+                </div>
+                <ul class="ingredients-list${trackerState.enabled ? ' tracker-enabled' : ''}">
                     ${ingredientsHtml}
                 </ul>
             </div>
@@ -742,7 +754,7 @@ async function initializeRecipePage(id) {
             ${instructionsHtml ? `
             <div class="recipe-instructions-box">
                 <h2>Instructions</h2>
-                <ol class="instructions-list">
+                <ol class="instructions-list${trackerState.enabled ? ' tracker-enabled' : ''}">
                     ${instructionsHtml}
                 </ol>
             </div>
@@ -761,6 +773,42 @@ async function initializeRecipePage(id) {
             openLightbox(recipeImage.src)
         })
     }
+
+    // Set up tracker toggle
+    const trackerToggle = document.getElementById('trackerToggle')
+    const ingredientsList = contentContainer.querySelector('.ingredients-list')
+    const instructionsList = contentContainer.querySelector('.instructions-list')
+
+    if (trackerToggle) {
+        trackerToggle.addEventListener('change', () => {
+            trackerState.enabled = trackerToggle.checked
+            localStorage.setItem(trackerKey, JSON.stringify(trackerState))
+
+            if (trackerToggle.checked) {
+                ingredientsList?.classList.add('tracker-enabled')
+                instructionsList?.classList.add('tracker-enabled')
+            } else {
+                ingredientsList?.classList.remove('tracker-enabled')
+                instructionsList?.classList.remove('tracker-enabled')
+            }
+        })
+    }
+
+    // Set up ingredient checkbox listeners
+    contentContainer.querySelectorAll('.ingredient-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            trackerState.ingredients[checkbox.dataset.index] = checkbox.checked
+            localStorage.setItem(trackerKey, JSON.stringify(trackerState))
+        })
+    })
+
+    // Set up instruction checkbox listeners
+    contentContainer.querySelectorAll('.instruction-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('change', () => {
+            trackerState.instructions[checkbox.dataset.index] = checkbox.checked
+            localStorage.setItem(trackerKey, JSON.stringify(trackerState))
+        })
+    })
 }
 
 // ======================== IMAGE LIGHTBOX ========================
