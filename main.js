@@ -809,6 +809,18 @@ async function initializeRecipePage(id) {
             localStorage.setItem(trackerKey, JSON.stringify(trackerState))
         })
     })
+
+    // Set up text click to toggle checkbox (only when tracker enabled)
+    contentContainer.querySelectorAll('.item-text').forEach(text => {
+        text.addEventListener('click', () => {
+            if (!trackerToggle?.checked) return
+            const checkbox = text.previousElementSibling
+            if (checkbox && checkbox.classList.contains('tracker-checkbox')) {
+                checkbox.checked = !checkbox.checked
+                checkbox.dispatchEvent(new Event('change'))
+            }
+        })
+    })
 }
 
 // ======================== IMAGE LIGHTBOX ========================

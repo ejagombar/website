@@ -1179,10 +1179,14 @@ nav {
     font-size: 1.3em;
 }
 
-.ingredients-list,
-.instructions-list {
+.ingredients-list {
     margin: 0;
     padding-left: 20px;
+}
+
+.instructions-list {
+    margin: 0;
+    padding-left: 28px;
 }
 
 .ingredients-list li,
@@ -1240,6 +1244,10 @@ nav {
     align-items: flex-start;
     gap: 10px;
     list-style: none;
+}
+
+.tracker-enabled .item-text {
+    cursor: pointer;
 }
 
 .tracker-enabled .tracker-checkbox {
