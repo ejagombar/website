@@ -970,7 +970,7 @@ function populateForm(recipe) {
     if (recipe.instructions && recipe.instructions.length > 0) {
         const container = document.getElementById('instructionsList')
         container.innerHTML = ''
-        recipe.instructions.slice(0, 12).forEach((inst, index) => {
+        recipe.instructions.slice(0, 16).forEach((inst, index) => {
             addInstruction(inst)
         })
     }
@@ -1072,7 +1072,7 @@ window.addInstruction = function(value = '') {
     const container = document.getElementById('instructionsList')
     const count = container.querySelectorAll('.instruction-row').length
 
-    if (count >= 12) {
+    if (count >= 16) {
         document.getElementById('addInstructionBtn').style.display = 'none'
         return
     }
@@ -1086,7 +1086,7 @@ window.addInstruction = function(value = '') {
     `
     container.appendChild(row)
 
-    if (count + 1 >= 12) {
+    if (count + 1 >= 16) {
         document.getElementById('addInstructionBtn').style.display = 'none'
     }
 }
