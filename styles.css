@@ -1674,6 +1674,121 @@ nav {
     color: white;
 }
 
+/* Image inputs */
+.image-inputs {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.image-inputs input[type="url"] {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid var(--muted-text);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1em;
+    background-color: var(--background);
+    color: var(--foreground);
+}
+
+.image-inputs input[type="url"]:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.image-or {
+    color: var(--muted-text);
+    font-size: 0.9em;
+    flex-shrink: 0;
+}
+
+.file-upload-btn {
+    padding: 8px 16px;
+    background-color: transparent;
+    color: var(--primary);
+    border: 1px solid var(--primary);
+    border-radius: 8px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.file-upload-btn:hover {
+    background-color: var(--primary);
+    color: white;
+}
+
+/* Image preview */
+.image-preview-container {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+.image-preview-container img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.image-remove-btn {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 28px !important;
+    height: 28px !important;
+    border-radius: 50% !important;
+    font-size: 1em !important;
+}
+
+/* Edit recipe button */
+.recipe-title-row {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.edit-recipe-btn {
+    padding: 6px 14px;
+    background-color: var(--primary);
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 0.85em;
+    font-family: inherit;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+}
+
+.edit-recipe-btn:hover {
+    opacity: 0.9;
+}
+
+@media screen and (max-width: 768px) {
+    .recipe-title-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .image-inputs {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .image-or {
+        text-align: center;
+    }
+
+    .file-upload-btn {
+        text-align: center;
+    }
+}
+
 /* Search options row */
 .search-options {
     display: flex;

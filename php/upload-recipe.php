@@ -102,6 +102,14 @@ $serves = trim($input['serves'] ?? '');
 $makes = trim($input['makes'] ?? '');
 $image = trim($input['image'] ?? '');
 
+// Decode base64 image data if present
+if (strpos($image, 'data:image/') === 0) {
+    $commaPos = strpos($image, ',');
+    if ($commaPos !== false) {
+        $image = base64_decode(substr($image, $commaPos + 1));
+    }
+}
+
 // Join ingredients with newlines
 $ingredients = implode("\n", array_filter(array_map('trim', $input['ingredients'])));
 

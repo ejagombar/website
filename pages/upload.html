@@ -64,6 +64,11 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <label for="sourceLink">Source Link</label>
+                    <input type="url" id="sourceLink" name="source_link" placeholder="https://...">
+                </div>
+
                 <!-- Time and Servings -->
                 <div class="form-row">
                     <div class="form-group">
@@ -116,10 +121,19 @@
                     <button type="button" class="add-btn" id="addInstructionBtn" onclick="addInstruction()">+ Add Instruction</button>
                 </div>
 
-                <!-- Image URL -->
+                <!-- Image -->
                 <div class="form-group">
-                    <label for="imageUrl">Image URL</label>
-                    <input type="url" id="imageUrl" name="image" placeholder="https://...">
+                    <label>Image</label>
+                    <div class="image-preview-container" id="imagePreviewContainer" style="display: none;">
+                        <img id="imagePreview" src="" alt="Preview">
+                        <button type="button" class="remove-btn image-remove-btn" id="imageRemoveBtn">-</button>
+                    </div>
+                    <div class="image-inputs">
+                        <input type="url" id="imageUrl" name="image" placeholder="Paste image URL...">
+                        <span class="image-or">or</span>
+                        <label for="imageFile" class="file-upload-btn">Choose File</label>
+                        <input type="file" id="imageFile" accept="image/*" style="display: none;">
+                    </div>
                 </div>
 
                 <button type="submit" class="submit-btn">Upload Recipe</button>

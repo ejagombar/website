@@ -64,7 +64,14 @@ while($row = $result->fetch_assoc()) {
     if($row['serves']) $recipe->addChild('serves', htmlspecialchars($row['serves'], ENT_XHTML, 'UTF-8'));
     if($row['makes']) $recipe->addChild('makes', htmlspecialchars($row['makes'], ENT_XHTML, 'UTF-8'));
     if($row['source']) $recipe->addChild('source', htmlspecialchars($row['source'], ENT_XHTML, 'UTF-8'));
-    $recipe->addChild('image', $row['image']);
+    if($row['source_link']) $recipe->addChild('source_link', htmlspecialchars($row['source_link'], ENT_XHTML, 'UTF-8'));
+    if (!empty($row['image'])) {
+        if (filter_var($row['image'], FILTER_VALIDATE_URL)) {
+            $recipe->addChild('image', htmlspecialchars($row['image'], ENT_XHTML, 'UTF-8'));
+        } else {
+            $recipe->addChild('has_image', '1');
+        }
+    }
 }
 
 $stmt->close();

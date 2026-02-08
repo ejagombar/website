@@ -29,6 +29,11 @@ const routes = {
 }
 
 const dynamicRoutes = {
+    '/edit/': {
+        template: '/pages/upload.html',
+        title: 'Edit Recipe',
+        paramName: 'id',
+    },
     '/recipes/': {
         template: '/pages/recipe.html',
         title: 'Recipe',
@@ -120,6 +125,12 @@ const locationHandler = async () => {
         if (path === '/upload') {
             setTimeout(() => {
                 initializeUploadPage()
+            }, 100)
+        }
+
+        if (path.startsWith('/edit/') && currentRouteParams.id) {
+            setTimeout(() => {
+                initializeEditPage(currentRouteParams.id)
             }, 100)
         }
     } catch (error) {
@@ -465,7 +476,10 @@ async function fetchRecipeDetails(id) {
             temperature: getValue('temperature'),
             serves: getValue('serves'),
             makes: getValue('makes'),
-            source: getValue('source')
+            source: getValue('source'),
+            sourceLink: getValue('source_link'),
+            image: getValue('image'),
+            hasImage: getValue('has_image') === '1'
         }
     } catch (error) {
         console.error('Error fetching recipe details:', error)
@@ -731,11 +745,16 @@ async function initializeRecipePage(id) {
         })
     }
 
-    const imageUrl = getRecipeImageUrl(id)
+    let imageUrl = ''
+    if (recipe.image) {
+        imageUrl = recipe.image
+    } else if (recipe.hasImage) {
+        imageUrl = getRecipeImageUrl(id)
+    }
 
     let html = `
         <div class="recipe-info-box">
-            <img src="${imageUrl}" alt="${recipe.name}" class="recipe-image recipe-image-clickable" onerror="this.style.display='none'; this.classList.remove('recipe-image-clickable')">
+            ${imageUrl ? `<img src="${imageUrl}" alt="${recipe.name}" class="recipe-image recipe-image-clickable" onerror="this.style.display='none'; this.classList.remove('recipe-image-clickable')">` : ''}
             <div class="recipe-info-grid">
                 <h1 class="recipe-title">${recipe.name}</h1>
                 ${recipe.description ? `<p class="recipe-description">${recipe.description}</p>` : ''}
@@ -771,10 +790,28 @@ async function initializeRecipePage(id) {
             ` : ''}
         </div>
 
-        ${recipe.source ? `<p class="recipe-source">Source: ${recipe.source}</p>` : ''}
+        ${recipe.source ? `<p class="recipe-source">Source: ${recipe.sourceLink ? `<a href="${recipe.sourceLink}" target="_blank" rel="noopener">${recipe.source}</a>` : recipe.source}</p>` : ''}
     `
 
     contentContainer.innerHTML = html
+
+    // Add edit button if authenticated
+    checkAuth().then(isAuth => {
+        if (isAuth) {
+            const titleEl = contentContainer.querySelector('.recipe-title')
+            if (titleEl) {
+                const wrapper = document.createElement('div')
+                wrapper.className = 'recipe-title-row'
+                titleEl.parentNode.insertBefore(wrapper, titleEl)
+                wrapper.appendChild(titleEl)
+                const editBtn = document.createElement('a')
+                editBtn.href = `/edit/${id}`
+                editBtn.className = 'edit-recipe-btn'
+                editBtn.textContent = 'Edit'
+                wrapper.appendChild(editBtn)
+            }
+        }
+    })
 
     // Set up image lightbox click handler
     const recipeImage = contentContainer.querySelector('.recipe-image-clickable')
@@ -886,6 +923,8 @@ async function initializeUploadPage() {
     if (recipeForm) {
         recipeForm.addEventListener('submit', handleRecipeSubmit)
     }
+
+    setupImageHandlers()
 }
 
 async function checkAuth() {
@@ -899,6 +938,50 @@ async function checkAuth() {
     } catch (error) {
         return false
     }
+}
+
+function setupImageHandlers() {
+    const imageUrl = document.getElementById('imageUrl')
+    const imageFile = document.getElementById('imageFile')
+    const previewContainer = document.getElementById('imagePreviewContainer')
+    const previewImg = document.getElementById('imagePreview')
+    const removeBtn = document.getElementById('imageRemoveBtn')
+
+    if (!imageUrl || !imageFile) return
+
+    imageFile.addEventListener('change', () => {
+        const file = imageFile.files[0]
+        if (!file) return
+
+        const reader = new FileReader()
+        reader.onload = (e) => {
+            imageUrl.dataset.fileData = e.target.result
+            imageUrl.value = ''
+            previewImg.src = e.target.result
+            previewContainer.style.display = ''
+        }
+        reader.readAsDataURL(file)
+    })
+
+    imageUrl.addEventListener('input', () => {
+        delete imageUrl.dataset.fileData
+        imageFile.value = ''
+        const url = imageUrl.value.trim()
+        if (url) {
+            previewImg.src = url
+            previewContainer.style.display = ''
+        } else {
+            previewContainer.style.display = 'none'
+        }
+    })
+
+    removeBtn.addEventListener('click', () => {
+        imageUrl.value = ''
+        delete imageUrl.dataset.fileData
+        imageFile.value = ''
+        previewContainer.style.display = 'none'
+        previewImg.src = ''
+    })
 }
 
 function showUploadForm() {
@@ -956,6 +1039,7 @@ function populateForm(recipe) {
     if (recipe.serves) document.getElementById('serves').value = recipe.serves
     if (recipe.makes) document.getElementById('makes').value = recipe.makes
     if (recipe.image) document.getElementById('imageUrl').value = recipe.image
+    if (recipe.source_link) document.getElementById('sourceLink').value = recipe.source_link
 
     // Ingredients
     if (recipe.ingredients && recipe.ingredients.length > 0) {
@@ -984,17 +1068,19 @@ async function handleRecipeSubmit(e) {
     statusEl.className = 'status-message'
 
     // Gather form data
+    const imageUrlEl = document.getElementById('imageUrl')
     const formData = {
         name: document.getElementById('recipeName').value,
         description: document.getElementById('recipeDescription').value,
         type: document.getElementById('recipeType').value,
         source: document.getElementById('recipeSource').value,
+        source_link: document.getElementById('sourceLink').value,
         preparation_time: document.getElementById('prepTime').value,
         cooking_time: document.getElementById('cookTime').value,
         temperature: document.getElementById('temperature').value,
         serves: document.getElementById('serves').value,
         makes: document.getElementById('makes').value,
-        image: document.getElementById('imageUrl').value,
+        image: imageUrlEl.dataset.fileData || imageUrlEl.value,
         ingredients: [],
         instructions: []
     }
@@ -1054,6 +1140,201 @@ function resetDynamicLists() {
         </div>
     `
     document.getElementById('addInstructionBtn').style.display = ''
+
+    // Reset image
+    const imageUrl = document.getElementById('imageUrl')
+    if (imageUrl) {
+        imageUrl.value = ''
+        delete imageUrl.dataset.fileData
+    }
+    const imageFile = document.getElementById('imageFile')
+    if (imageFile) imageFile.value = ''
+    const previewContainer = document.getElementById('imagePreviewContainer')
+    if (previewContainer) previewContainer.style.display = 'none'
+}
+
+// ======================== RECIPE EDIT ========================
+
+async function initializeEditPage(id) {
+    const isAuth = await checkAuth()
+    if (isAuth) {
+        showUploadForm()
+        setupEditForm(id)
+    } else {
+        // Show login form, on success proceed to edit
+        const loginForm = document.getElementById('loginForm')
+        if (loginForm) {
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault()
+                const password = document.getElementById('password').value
+                const errorEl = document.getElementById('loginError')
+
+                try {
+                    const response = await fetch(`${UPLOAD_API_BASE}/auth.php`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        credentials: 'include',
+                        body: JSON.stringify({ password })
+                    })
+
+                    const data = await response.json()
+
+                    if (data.success) {
+                        showUploadForm()
+                        setupEditForm(id)
+                    } else {
+                        errorEl.textContent = data.error || 'Invalid password'
+                    }
+                } catch (error) {
+                    errorEl.textContent = 'Connection error. Please try again.'
+                }
+            })
+        }
+    }
+}
+
+async function setupEditForm(id) {
+    // Change heading
+    const heading = document.querySelector('.upload-page h1')
+    if (heading) heading.textContent = 'Edit Recipe'
+
+    // Hide auto-import section
+    const importBox = document.querySelector('.import-box')
+    if (importBox) importBox.style.display = 'none'
+
+    // Fetch recipe data
+    const recipe = await fetchRecipeDetails(id)
+    if (!recipe) {
+        const statusEl = document.getElementById('uploadStatus')
+        if (statusEl) {
+            statusEl.textContent = 'Failed to load recipe data'
+            statusEl.className = 'status-message error'
+        }
+        return
+    }
+
+    // Populate form
+    populateFormForEdit(recipe, id)
+
+    // Show existing image preview
+    const previewContainer = document.getElementById('imagePreviewContainer')
+    const previewImg = document.getElementById('imagePreview')
+    if (recipe.image) {
+        previewImg.src = recipe.image
+        previewContainer.style.display = ''
+    } else if (recipe.hasImage) {
+        previewImg.src = getRecipeImageUrl(id)
+        previewContainer.style.display = ''
+    }
+
+    // Change submit button text
+    const submitBtn = document.querySelector('.submit-btn')
+    if (submitBtn) submitBtn.textContent = 'Update Recipe'
+
+    // Replace form submit handler
+    const recipeForm = document.getElementById('recipeForm')
+    if (recipeForm) {
+        const newForm = recipeForm.cloneNode(true)
+        recipeForm.parentNode.replaceChild(newForm, recipeForm)
+        newForm.addEventListener('submit', (e) => handleEditSubmit(e, id))
+    }
+
+    setupImageHandlers()
+}
+
+function populateFormForEdit(recipe, id) {
+    if (recipe.name) document.getElementById('recipeName').value = recipe.name
+    if (recipe.description) document.getElementById('recipeDescription').value = recipe.description
+    if (recipe.type) document.getElementById('recipeType').value = recipe.type
+    if (recipe.source) document.getElementById('recipeSource').value = recipe.source
+    if (recipe.sourceLink) document.getElementById('sourceLink').value = recipe.sourceLink
+    if (recipe.preparationTime) document.getElementById('prepTime').value = recipe.preparationTime
+    if (recipe.cookingTime) document.getElementById('cookTime').value = recipe.cookingTime
+    if (recipe.temperature) document.getElementById('temperature').value = recipe.temperature
+    if (recipe.serves) document.getElementById('serves').value = recipe.serves
+    if (recipe.makes) document.getElementById('makes').value = recipe.makes
+    if (recipe.image) document.getElementById('imageUrl').value = recipe.image
+
+    // Ingredients - split by newlines
+    if (recipe.ingredients) {
+        const container = document.getElementById('ingredientsList')
+        container.innerHTML = ''
+        const ingredients = recipe.ingredients.split(/[\r\n]+/).map(i => i.trim()).filter(i => i)
+        ingredients.forEach(ing => {
+            addIngredient(ing)
+        })
+    }
+
+    // Instructions
+    if (recipe.instructions && recipe.instructions.length > 0) {
+        const container = document.getElementById('instructionsList')
+        container.innerHTML = ''
+        recipe.instructions.forEach(inst => {
+            addInstruction(inst)
+        })
+    }
+}
+
+async function handleEditSubmit(e, id) {
+    e.preventDefault()
+
+    const statusEl = document.getElementById('uploadStatus')
+    statusEl.textContent = 'Updating recipe...'
+    statusEl.className = 'status-message'
+
+    const imageUrlEl = document.getElementById('imageUrl')
+    const formData = {
+        id: id,
+        name: document.getElementById('recipeName').value,
+        description: document.getElementById('recipeDescription').value,
+        type: document.getElementById('recipeType').value,
+        source: document.getElementById('recipeSource').value,
+        source_link: document.getElementById('sourceLink').value,
+        preparation_time: document.getElementById('prepTime').value,
+        cooking_time: document.getElementById('cookTime').value,
+        temperature: document.getElementById('temperature').value,
+        serves: document.getElementById('serves').value,
+        makes: document.getElementById('makes').value,
+        image: imageUrlEl.dataset.fileData || imageUrlEl.value,
+        ingredients: [],
+        instructions: []
+    }
+
+    document.querySelectorAll('#ingredientsList input[name="ingredients[]"]').forEach(input => {
+        if (input.value.trim()) {
+            formData.ingredients.push(input.value.trim())
+        }
+    })
+
+    document.querySelectorAll('#instructionsList textarea[name="instructions[]"]').forEach(textarea => {
+        if (textarea.value.trim()) {
+            formData.instructions.push(textarea.value.trim())
+        }
+    })
+
+    try {
+        const response = await fetch(`${UPLOAD_API_BASE}/update-recipe.php`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify(formData)
+        })
+
+        const data = await response.json()
+
+        if (data.success) {
+            // Clear any cached recipe data
+            lastSearchResults = null
+            allRecipes = []
+            navigateTo(`/recipes/${id}`)
+        } else {
+            statusEl.textContent = data.error || 'Update failed'
+            statusEl.className = 'status-message error'
+        }
+    } catch (error) {
+        statusEl.textContent = 'Update failed. Please try again.'
+        statusEl.className = 'status-message error'
+    }
 }
 
 // Global functions for onclick handlers
