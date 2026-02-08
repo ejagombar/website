@@ -724,8 +724,13 @@ async function initializeRecipePage(id) {
         infoItems += `<div class="recipe-info-item"><span class="info-label">Temperature</span><span class="info-value">${recipe.temperature}</span></div>`
     }
 
-    // Load tracker state from localStorage
+    // Load tracker state - only track one recipe at a time
     const trackerKey = `recipe-tracker-${id}`
+    const lastTrackedRecipe = localStorage.getItem('recipe-tracker-current')
+    if (lastTrackedRecipe && lastTrackedRecipe !== id) {
+        localStorage.removeItem(`recipe-tracker-${lastTrackedRecipe}`)
+    }
+    localStorage.setItem('recipe-tracker-current', id)
     let trackerState = JSON.parse(localStorage.getItem(trackerKey) || '{"enabled": false, "ingredients": {}, "instructions": {}}')
 
     // Build instructions list with checkboxes
@@ -923,6 +928,16 @@ async function initializeUploadPage() {
     const recipeForm = document.getElementById('recipeForm')
     if (recipeForm) {
         recipeForm.addEventListener('submit', handleRecipeSubmit)
+    }
+
+    // Cancel button
+    const cancelBtn = document.getElementById('cancelBtn')
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', () => {
+            if (confirm('Are you sure you want to cancel? Any unsaved changes will be lost.')) {
+                window.history.back()
+            }
+        })
     }
 
     setupImageHandlers()
@@ -1239,6 +1254,16 @@ async function setupEditForm(id) {
         if (recipe.type) newForm.querySelector('#recipeType').value = recipe.type
         const submitBtn = newForm.querySelector('.submit-btn')
         if (submitBtn) submitBtn.textContent = 'Update Recipe'
+
+        // Re-attach cancel handler after clone
+        const cancelBtn = newForm.querySelector('#cancelBtn')
+        if (cancelBtn) {
+            cancelBtn.addEventListener('click', () => {
+                if (confirm('Are you sure you want to cancel? Any unsaved changes will be lost.')) {
+                    window.history.back()
+                }
+            })
+        }
     }
 
     setupImageHandlers()

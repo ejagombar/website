@@ -1545,6 +1545,32 @@ nav {
     opacity: 0.9;
 }
 
+.form-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.form-actions .submit-btn {
+    flex: 1;
+}
+
+.cancel-btn {
+    padding: 12px 24px;
+    background-color: transparent;
+    color: var(--muted-text);
+    border: 1px solid var(--muted-text);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.cancel-btn:hover {
+    border-color: #e74c3c;
+    color: #e74c3c;
+}
+
 .error-message {
     color: #e74c3c;
     margin-top: 10px;
