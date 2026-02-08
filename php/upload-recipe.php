@@ -12,7 +12,7 @@
 header('Content-Type: application/json; charset=UTF-8');
 
 // Allow both production and local development
-$allowedOrigins = ['https://eagombar.uk', 'http://localhost:8080'];
+$allowedOrigins = ['https://eagombar.uk'];
 $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
 if (in_array($origin, $allowedOrigins)) {
     header("Access-Control-Allow-Origin: $origin");
