@@ -1457,7 +1457,6 @@ nav {
 .upload-page {
     width: calc(100% - 20px);
     max-width: var(--width);
-    padding: 10px;
 }
 
 .upload-page h1 {
