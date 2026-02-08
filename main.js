@@ -807,7 +807,8 @@ async function initializeRecipePage(id) {
                 const editBtn = document.createElement('a')
                 editBtn.href = `/edit/${id}`
                 editBtn.className = 'edit-recipe-btn'
-                editBtn.textContent = 'Edit'
+                editBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>'
+                editBtn.title = 'Edit recipe'
                 wrapper.appendChild(editBtn)
             }
         }
@@ -1032,7 +1033,7 @@ function populateForm(recipe) {
     if (recipe.name) document.getElementById('recipeName').value = recipe.name
     if (recipe.description) document.getElementById('recipeDescription').value = recipe.description
     if (recipe.type) document.getElementById('recipeType').value = recipe.type
-    if (recipe.source) document.getElementById('recipeSource').value = recipe.source
+    if (recipe.source) document.getElementById('sourceLink').value = recipe.source
     if (recipe.preparation_time) document.getElementById('prepTime').value = recipe.preparation_time
     if (recipe.cooking_time) document.getElementById('cookTime').value = recipe.cooking_time
     if (recipe.temperature) document.getElementById('temperature').value = recipe.temperature
@@ -1227,16 +1228,17 @@ async function setupEditForm(id) {
         previewContainer.style.display = ''
     }
 
-    // Change submit button text
-    const submitBtn = document.querySelector('.submit-btn')
-    if (submitBtn) submitBtn.textContent = 'Update Recipe'
-
-    // Replace form submit handler
+    // Replace form submit handler (cloneNode resets select values and button text)
     const recipeForm = document.getElementById('recipeForm')
     if (recipeForm) {
         const newForm = recipeForm.cloneNode(true)
         recipeForm.parentNode.replaceChild(newForm, recipeForm)
         newForm.addEventListener('submit', (e) => handleEditSubmit(e, id))
+
+        // Re-set type and button text after clone
+        if (recipe.type) newForm.querySelector('#recipeType').value = recipe.type
+        const submitBtn = newForm.querySelector('.submit-btn')
+        if (submitBtn) submitBtn.textContent = 'Update Recipe'
     }
 
     setupImageHandlers()

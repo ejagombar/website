@@ -1747,30 +1747,29 @@ nav {
 .recipe-title-row {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
 }
 
 .edit-recipe-btn {
-    padding: 6px 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
     background-color: var(--primary);
     color: white;
     text-decoration: none;
-    border-radius: 6px;
-    font-size: 0.85em;
-    font-family: inherit;
+    border-radius: 8px;
     transition: opacity 0.2s;
-    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .edit-recipe-btn:hover {
-    opacity: 0.9;
+    opacity: 0.85;
 }
 
-@media screen and (max-width: 768px) {
-    .recipe-title-row {
-        flex-direction: column;
-        align-items: flex-start;
-    }
+.edit-recipe-btn svg {
+    display: block;
 }
 
 @media screen and (max-width: 600px) {
