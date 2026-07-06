@@ -2,7 +2,7 @@
 @font-face {
     font-family: 'Fira Code';
     src: url('/assets/fonts/FiraCode-VF.woff2') format('woff2-variations'),
-         url('/assets/fonts/FiraCode-Regular.woff2') format('woff2');
+        url('/assets/fonts/FiraCode-Regular.woff2') format('woff2');
     font-weight: 300 700;
     font-style: normal;
     font-display: swap;
@@ -589,11 +589,11 @@ nav {
     .project-full-content .projectLabelBox {
         display: flex;
         width: auto;
+        margin-top: 8px;
     }
 }
 
 .projectLabelBox {
-    margin-left: 8px;
     padding: 0;
     display: flex;
     align-self: flex-start;
@@ -791,6 +791,7 @@ nav {
 /* Fixed height for WikiMapper carousel wrapper */
 .carousel-wrapper {
     height: 100%;
+    margin-left: 5px;
 }
 
 .carousel-slide {
