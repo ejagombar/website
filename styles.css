@@ -565,7 +565,7 @@ nav {
 }
 
 /* Labels beside the floated carousel */
-.project-full-content .projectLabelBox {
+.project-full-content:has(.project-carousel-float) .projectLabelBox {
     display: inline-flex;
     width: calc(100% - 42% - 24px);
     max-width: 100%;
@@ -586,9 +586,10 @@ nav {
         margin: 0 0 16px 0;
     }
 
-    .project-full-content .projectLabelBox {
+    .project-full-content:has(.project-carousel-float) .projectLabelBox {
         display: flex;
         width: auto;
+        margin-left: 0;
         margin-top: 8px;
     }
 }
