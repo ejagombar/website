@@ -446,6 +446,11 @@ nav {
     gap: 20px;
 }
 
+.link-icons-container a {
+    color: var(--foreground);
+    text-decoration: none;
+}
+
 .link-icons {
     fill: var(--foreground);
 }
@@ -783,17 +788,12 @@ nav {
 .carousel-wrapper {
     position: relative;
     width: 100%;
-    height: auto;
     overflow: hidden;
     display: flex;
     justify-content: center;
 }
 
 /* Fixed height for WikiMapper carousel wrapper */
-.carousel-wrapper {
-    height: 100%;
-    margin-left: 5px;
-}
 
 .carousel-slide {
     display: none;
