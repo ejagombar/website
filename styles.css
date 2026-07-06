@@ -800,10 +800,13 @@ nav {
     width: 100%;
     position: relative;
     animation: fadeIn 0.5s ease-in-out;
+    content-visibility: auto;
+    contain-intrinsic-size: auto 300px;
 }
 
 .carousel-slide.active {
     display: block;
+    content-visibility: visible;
 }
 
 .carousel-slide img,
@@ -1966,6 +1969,36 @@ nav {
 
 .lightbox.active .lightbox-image {
     transform: scale(1);
+}
+
+/* ======================== REDUCED MOTION ======================== */
+@media (prefers-reduced-motion: reduce) {
+    .background.animated span {
+        animation: none !important;
+    }
+
+    .background.animated {
+        opacity: 0.3;
+    }
+
+    .carousel-slide {
+        animation: none;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Reduce background complexity on mobile */
+@media screen and (max-width: 768px) {
+    .background.animated span:nth-child(n+11) {
+        display: none;
+    }
 }
 
 /* ======================== CAROUSEL LIGHTBOX ======================== */
