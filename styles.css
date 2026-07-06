@@ -473,7 +473,7 @@ nav {
     padding: 10px;
     justify-content: flex-start;
     align-items: flex-start;
-    overflow-y: hidden;
+    overflow: hidden;
 }
 
 .projectBox>* {
@@ -527,12 +527,78 @@ nav {
     max-width: calc(var(--width) - 250px);
 }
 
+.project-carousel-float {
+    float: right;
+    width: 42%;
+    max-width: 480px;
+    min-width: 280px;
+    margin: 0 0 16px 24px;
+    cursor: pointer;
+}
+
+.project-carousel-float.carousel-container {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.project-carousel-float .carousel-wrapper {
+    height: auto;
+    align-items: flex-start;
+}
+
+.project-carousel-float .carousel-slide {
+    cursor: pointer;
+}
+
+.project-carousel-float .carousel-slide img,
+.project-carousel-float .carousel-slide .videoWrapper {
+    cursor: pointer;
+}
+
+.project-carousel-float .carousel-btn,
+.project-carousel-float .indicator {
+    cursor: pointer;
+}
+
+.project-carousel-float .carousel-btn:hover {
+    filter: blur(0);
+}
+
+/* Labels beside the floated carousel */
+.project-full-content .projectLabelBox {
+    display: inline-flex;
+    width: calc(100% - 42% - 24px);
+    max-width: 100%;
+}
+
+/* Ensure block text wraps around the float and flows below */
+.project-full-content p,
+.project-full-content .projectLinkBox {
+    clear: none;
+}
+
+@media screen and (max-width: 768px) {
+    .project-carousel-float {
+        float: none;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0;
+        margin: 0 0 16px 0;
+    }
+
+    .project-full-content .projectLabelBox {
+        display: flex;
+        width: auto;
+    }
+}
+
 .projectLabelBox {
     margin-left: 8px;
     padding: 0;
     display: flex;
     align-self: flex-start;
     flex-wrap: wrap;
+    max-width: 100%;
     min-width: min-content;
     gap: 5px;
 }
@@ -1897,4 +1963,134 @@ nav {
 
 .lightbox.active .lightbox-image {
     transform: scale(1);
+}
+
+/* ======================== CAROUSEL LIGHTBOX ======================== */
+.carousel-lightbox {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.92);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.carousel-lightbox.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.carousel-lightbox-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.15);
+    border: none;
+    color: white;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    z-index: 20;
+    transition: background 0.3s ease;
+}
+
+.carousel-lightbox-close:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.carousel-lightbox-content {
+    width: 90vw;
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-lightbox-content .carousel-container {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    background: transparent;
+    cursor: default;
+}
+
+.carousel-lightbox-content .carousel-wrapper {
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.carousel-lightbox-content .carousel-slide {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.carousel-lightbox-content .carousel-slide.active {
+    display: flex;
+}
+
+.carousel-lightbox-content .carousel-slide img {
+    max-width: 100%;
+    max-height: 90vh;
+    object-fit: contain;
+    cursor: default;
+}
+
+.carousel-lightbox-content .carousel-slide .videoWrapper {
+    width: 80%;
+    max-width: 1200px;
+    aspect-ratio: 16 / 9;
+    padding-bottom: 0;
+    height: auto;
+    position: relative;
+}
+
+.carousel-lightbox-content .carousel-slide .videoWrapper video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.carousel-lightbox-content .carousel-btn {
+    width: 52px;
+    height: 52px;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.carousel-lightbox-content .carousel-btn:hover {
+    background: rgba(255, 255, 255, 0.3);
+    filter: none;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-lightbox-content .carousel-caption {
+    color: white;
+    font-size: 1em;
+    padding: 20px;
+}
+
+.carousel-lightbox-content .carousel-indicators {
+    bottom: 25px;
+}
+
+.carousel-lightbox-content .indicator {
+    width: 14px;
+    height: 14px;
 }

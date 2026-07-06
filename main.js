@@ -322,6 +322,18 @@ function handleCarouselClick(e) {
         goToSlide(indicator, slideIndex)
         e.preventDefault()
         e.stopPropagation()
+    } else {
+        // Check if click is on a carousel slide (image/video area)
+        const container = e.target.closest('.carousel-container')
+        if (container && !e.target.closest('.carousel-lightbox-content')) {
+            // Don't open lightbox if directly interacting with video controls
+            if (e.target.tagName === 'VIDEO') {
+                return
+            }
+            openCarouselLightbox(container)
+            e.preventDefault()
+            e.stopPropagation()
+        }
     }
 }
 
@@ -367,6 +379,167 @@ function handleSwipe(carousel) {
             const prevBtn = carousel.querySelector('.carousel-prev')
             if (prevBtn) changeSlide(prevBtn, -1)
         }
+    }
+}
+
+// ======================== CAROUSEL LIGHTBOX ========================
+
+function openCarouselLightbox(container) {
+    const lightbox = document.getElementById('carouselLightbox')
+    const lightboxContent = lightbox.querySelector('.carousel-lightbox-content')
+
+    // Find current active index
+    const slides = container.querySelectorAll('.carousel-slide')
+    let activeIndex = Array.from(slides).findIndex(s => s.classList.contains('active'))
+    if (activeIndex < 0) activeIndex = 0
+
+    // Clone the carousel wrapper
+    const originalWrapper = container.querySelector('.carousel-wrapper')
+    const clonedWrapper = originalWrapper.cloneNode(true)
+
+    // Create a fresh carousel container for the lightbox
+    const clonedContainer = document.createElement('div')
+    clonedContainer.className = 'carousel-container'
+    clonedContainer.appendChild(clonedWrapper)
+
+    // Add nav buttons
+    const slidesInClone = clonedWrapper.querySelectorAll('.carousel-slide')
+    if (slidesInClone.length > 1) {
+        // Prev button
+        const prevBtn = document.createElement('button')
+        prevBtn.className = 'carousel-btn carousel-prev'
+        prevBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+        clonedContainer.appendChild(prevBtn)
+
+        // Next button
+        const nextBtn = document.createElement('button')
+        nextBtn.className = 'carousel-btn carousel-next'
+        nextBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+        clonedContainer.appendChild(nextBtn)
+
+        // Indicators
+        const indicatorsDiv = document.createElement('div')
+        indicatorsDiv.className = 'carousel-indicators'
+        for (let i = 0; i < slidesInClone.length; i++) {
+            const indicator = document.createElement('span')
+            indicator.className = 'indicator' + (i === activeIndex ? ' active' : '')
+            indicatorsDiv.appendChild(indicator)
+        }
+        clonedContainer.appendChild(indicatorsDiv)
+    }
+
+    // Set active slide
+    slidesInClone.forEach((s, i) => {
+        s.classList.toggle('active', i === activeIndex)
+    })
+
+    // Add click handlers to cloned nav
+    clonedContainer.addEventListener('click', (e) => {
+        if (e.target.closest('.carousel-prev')) {
+            changeLightboxSlide(clonedContainer, -1)
+            e.preventDefault()
+            e.stopPropagation()
+        } else if (e.target.closest('.carousel-next')) {
+            changeLightboxSlide(clonedContainer, 1)
+            e.preventDefault()
+            e.stopPropagation()
+        } else if (e.target.closest('.indicator')) {
+            const indicator = e.target.closest('.indicator')
+            const indicators = clonedContainer.querySelectorAll('.indicator')
+            const slideIndex = Array.from(indicators).indexOf(indicator)
+            goToLightboxSlide(clonedContainer, slideIndex)
+            e.preventDefault()
+            e.stopPropagation()
+        }
+    })
+
+    // Store reference for keydown handling
+    lightbox._clonedContainer = clonedContainer
+
+    // Insert into lightbox
+    lightboxContent.innerHTML = ''
+    lightboxContent.appendChild(clonedContainer)
+
+    // Show lightbox
+    lightbox.classList.add('active')
+    document.body.style.overflow = 'hidden'
+
+    // Pause any videos in the original carousel
+    container.querySelectorAll('video').forEach(v => v.pause())
+}
+
+function changeLightboxSlide(container, direction) {
+    const slides = container.querySelectorAll('.carousel-slide')
+    const indicators = container.querySelectorAll('.indicator')
+
+    let currentIndex = Array.from(slides).findIndex(s => s.classList.contains('active'))
+    let newIndex = currentIndex + direction
+
+    if (newIndex >= slides.length) newIndex = 0
+    else if (newIndex < 0) newIndex = slides.length - 1
+
+    slides[currentIndex].classList.remove('active')
+    slides[newIndex].classList.add('active')
+
+    if (indicators.length > 0) {
+        indicators[currentIndex].classList.remove('active')
+        indicators[newIndex].classList.add('active')
+    }
+
+    // Pause video in previous slide
+    const prevVideo = slides[currentIndex].querySelector('video')
+    if (prevVideo) {
+        prevVideo.pause()
+        prevVideo.currentTime = 0
+    }
+}
+
+function goToLightboxSlide(container, slideIndex) {
+    const slides = container.querySelectorAll('.carousel-slide')
+    const indicators = container.querySelectorAll('.indicator')
+
+    const currentIndex = Array.from(slides).findIndex(s => s.classList.contains('active'))
+
+    if (currentIndex !== slideIndex) {
+        slides[currentIndex].classList.remove('active')
+        slides[slideIndex].classList.add('active')
+
+        if (indicators.length > 0) {
+            indicators[currentIndex].classList.remove('active')
+            indicators[slideIndex].classList.add('active')
+        }
+
+        // Pause video in previous slide
+        const prevVideo = slides[currentIndex].querySelector('video')
+        if (prevVideo) {
+            prevVideo.pause()
+            prevVideo.currentTime = 0
+        }
+    }
+}
+
+function closeCarouselLightbox() {
+    const lightbox = document.getElementById('carouselLightbox')
+
+    if (lightbox) {
+        // Pause any playing videos
+        const container = lightbox.querySelector('.carousel-container')
+        if (container) {
+            container.querySelectorAll('video').forEach(v => {
+                v.pause()
+                v.currentTime = 0
+            })
+        }
+
+        lightbox.classList.remove('active')
+        document.body.style.overflow = ''
+
+        // Clear content after transition
+        setTimeout(() => {
+            const content = lightbox.querySelector('.carousel-lightbox-content')
+            if (content) content.innerHTML = ''
+            lightbox._clonedContainer = null
+        }, 300)
     }
 }
 
@@ -1456,17 +1629,51 @@ function closeLightbox() {
     }
 }
 
-// Set up lightbox close handler
+// Set up lightbox close handlers
 document.addEventListener('DOMContentLoaded', () => {
     const lightbox = document.getElementById('imageLightbox')
     if (lightbox) {
         lightbox.addEventListener('click', closeLightbox)
     }
 
+    // Carousel lightbox close handlers
+    const carouselLightbox = document.getElementById('carouselLightbox')
+    if (carouselLightbox) {
+        // Click background to close
+        carouselLightbox.addEventListener('click', (e) => {
+            if (e.target === carouselLightbox || e.target.classList.contains('carousel-lightbox-content')) {
+                closeCarouselLightbox()
+            }
+        })
+
+        // Close button
+        const closeBtn = carouselLightbox.querySelector('.carousel-lightbox-close')
+        if (closeBtn) {
+            closeBtn.addEventListener('click', closeCarouselLightbox)
+        }
+    }
+
     // Close on escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
-            closeLightbox()
+            const cl = document.getElementById('carouselLightbox')
+            if (cl && cl.classList.contains('active')) {
+                closeCarouselLightbox()
+            } else {
+                closeLightbox()
+            }
+        }
+    })
+
+    // Keyboard nav for carousel lightbox
+    document.addEventListener('keydown', (e) => {
+        const cl = document.getElementById('carouselLightbox')
+        if (cl && cl.classList.contains('active') && cl._clonedContainer) {
+            if (e.key === 'ArrowLeft') {
+                changeLightboxSlide(cl._clonedContainer, -1)
+            } else if (e.key === 'ArrowRight') {
+                changeLightboxSlide(cl._clonedContainer, 1)
+            }
         }
     })
 })

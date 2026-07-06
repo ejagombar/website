@@ -1,29 +1,9 @@
 <div id="projectsContainer">
     <div class="projectBox">
         <h2 style="display: flex; align-items: center; gap: 8px;">WikiMapper</h2>
-        <div class="projectLabelBox">
-            <p class="label">C++</p>
-            <p class="label">OpenGL</p>
-            <p class="label">SIMD</p>
-            <p class="label">Imposters</p>
-            <p class="label">SAX XML Parser</p>
-            <p class="label">Neo4j</p>
-            <p class="label">GProf</p>
-            <p class="label">Parallelisation</p>
-        </div>
         <div class="projectBody">
             <div class="project-full-content">
-                <p>WikiMapper is a 3D graph visualisation tool used to explore the links between Wikipedia Pages,
-                    written in C++ using OpenGL.</p>
-                <p>A major emphasis of this project is performance. I have developed realistic imposter shaders for
-                    Spheres and Cylinders which have enabled me to render a huge number of nodes and links at high FPS
-                    by reducing vertices to 1 for each sphere and 2 for each cylinder. </p>
-                <p>WikiLoader, a C++ Wikipedia XML file parser project I developed was used extract the data from
-                    Wikipedia. The tool exports the pages (graph nodes) and their associated links (graph edges) into a
-                    Neo4j database. This program was parallelised which dropped the execution time to process the 100GB
-                    XML dump file by 70%.</p>
-
-                <div class="carousel-container">
+                <div class="carousel-container project-carousel-float">
                     <div class="carousel-wrapper">
                         <div class="carousel-slide active">
                             <img class="resizable-image" src="/assets/wikimapper.webp" alt="WikiMapper Interface">
@@ -59,11 +39,28 @@
                         <span class="indicator"></span>
                     </div>
                 </div>
-
+                <div class="projectLabelBox">
+                    <p class="label">C++</p>
+                    <p class="label">OpenGL</p>
+                    <p class="label">SIMD</p>
+                    <p class="label">Imposters</p>
+                    <p class="label">SAX XML Parser</p>
+                    <p class="label">Neo4j</p>
+                    <p class="label">GProf</p>
+                    <p class="label">Parallelisation</p>
+                </div>
+                <p>WikiMapper is a 3D graph visualisation tool used to explore the links between Wikipedia Pages,
+                    written in C++ using OpenGL.</p>
+                <p>A major emphasis of this project is performance. I have developed realistic imposter shaders for
+                    Spheres and Cylinders which have enabled me to render a huge number of nodes and links at high FPS
+                    by reducing vertices to 1 for each sphere and 2 for each cylinder. </p>
+                <p>WikiLoader, a C++ Wikipedia XML file parser project I developed was used extract the data from
+                    Wikipedia. The tool exports the pages (graph nodes) and their associated links (graph edges) into a
+                    Neo4j database. This program was parallelised which dropped the execution time to process the 100GB
+                    XML dump file by 70%.</p>
                 <p>The above media shows the software interface and demonstration. This project is still a work in
                     progress, and I am currently working on improving the efficiency of the force directed graph and
-                    polishing the movement
-                    system.</p>
+                    polishing the movement system.</p>
                 <div class="projectLinkBox">
                     <a class="projectLink" href="https://github.com/ejagombar/WikiMapper" target="_blank">
                         WikiMapper Repo
@@ -78,22 +75,9 @@
     <!-- HomeLab -->
     <div class="projectBox">
         <h2>HomeLab</h2>
-        <div class="projectLabelBox">
-            <p class="label">Linux</p>
-            <p class="label">Kubernetes</p>
-            <p class="label">Networking</p>
-            <p class="label">Proxmox</p>
-            <p class="label">Nginx</p>
-        </div>
         <div class="projectBody">
             <div class="project-full-content">
-                <p>The initial goal of this project was to self host a HA Kubernetes cluster to learn more about
-                    Kubernetes. I designed and built a compact rack based off 4 Lenovo Mini PCs. After setting up K3S, I
-                    decided that it was more effort than it was worth for a homelab environment, and opted to set up a
-                    Proxmox server instead. I hosted a number of services such as a VPN, Home Assistant, and my Spanner
-                    WebApp. Now I am working on building a new and improved version of the server.</p>
-
-                <div class="carousel-container">
+                <div class="carousel-container project-carousel-float">
                     <div class="carousel-wrapper">
                         <div class="carousel-slide active">
                             <img class="resizable-image" src="/assets/server.webp" alt="Homelab Server Rack">
@@ -120,7 +104,18 @@
                         <span class="indicator"></span>
                     </div>
                 </div>
-
+                <div class="projectLabelBox">
+                    <p class="label">Linux</p>
+                    <p class="label">Kubernetes</p>
+                    <p class="label">Networking</p>
+                    <p class="label">Proxmox</p>
+                    <p class="label">Nginx</p>
+                </div>
+                <p>The initial goal of this project was to self host a HA Kubernetes cluster to learn more about
+                    Kubernetes. I designed and built a compact rack based off 4 Lenovo Mini PCs. After setting up K3S, I
+                    decided that it was more effort than it was worth for a homelab environment, and opted to set up a
+                    Proxmox server instead. I hosted a number of services such as a VPN, Home Assistant, and my Spanner
+                    WebApp. Now I am working on building a new and improved version of the server.</p>
                 <p>Above is media of the finished server. The rack was designed in Fusion360 and encases 4 PCs, an
                     integrated switch, and the PC power supplies. The entire enclosure is powered via a single cable.
                 </p>
@@ -137,27 +132,9 @@
 
     <div class="projectBox">
         <h2 style="display: flex; align-items: center; gap: 8px;">Gesture Robotic Hand</h2>
-        <div class="projectLabelBox">
-            <p class="label">MediaPipe</p>
-            <p class="label">OpenCV</p>
-            <p class="label">QT</p>
-            <p class="label">Raspberry Pi</p>
-            <p class="label">Fusion 360</p>
-            <p class="label">C++</p>
-            <p class="label">Python</p>
-            <p class="label">UDP</p>
-        </div>
         <div class="projectBody">
             <div class="project-full-content">
-                <p>A gesture-controlled robotic hand, built for my master's dissertation. I designed and 3D printed a
-                    hand with 6
-                    degrees of motion. A microcontroller embedded in the hand is sent data from a Raspberry Pi, which
-                    receives
-                    finger position data via a UDP server from a desktop application. The desktop application utilizes
-                    computer
-                    vision to track the user's hand.</p>
-
-                <div class="carousel-container">
+                <div class="carousel-container project-carousel-float">
                     <div class="carousel-wrapper">
                         <div class="carousel-slide active">
                             <img class="resizable-image" src="/assets/gesture2.webp" alt="Homelab Server Rack">
@@ -189,28 +166,40 @@
                         <span class="indicator"></span>
                     </div>
                 </div>
-
+                <div class="projectLabelBox">
+                    <p class="label">MediaPipe</p>
+                    <p class="label">OpenCV</p>
+                    <p class="label">QT</p>
+                    <p class="label">Raspberry Pi</p>
+                    <p class="label">Fusion 360</p>
+                    <p class="label">C++</p>
+                    <p class="label">Python</p>
+                    <p class="label">UDP</p>
+                </div>
+                <p>A gesture-controlled robotic hand, built for my master's dissertation. I designed and 3D printed a
+                    hand with 6 degrees of motion. A microcontroller embedded in the hand is sent data from a
+                    Raspberry Pi, which receives finger position data via a UDP server from a desktop application. The
+                    desktop application utilizes computer vision to track the user's hand.</p>
                 <p>The desktop application was developed in Qt and implemented Google's machine learning library,
                     MediaPipe, for the hand tracking. This data was translated into servo positions and sent over the
                     internet via a server to the robotic hand. I was able to reduce the total system (including the hand
-                    tracking) latency to 320ms.
-                </p>
+                    tracking) latency to 320ms.</p>
             </div>
         </div>
     </div>
 
     <div class="projectBox">
         <h2 style="display: flex; align-items: center; gap: 8px;">Personal Recipe Site</h2>
-        <div class="projectLabelBox">
-            <p class="label">PHP</p>
-            <p class="label">MySQL</p>
-            <p class="label">JavaScript</p>
-            <p class="label">CSS</p>
-            <p class="label">API Design</p>
-            <p class="label">Python</p>
-        </div>
         <div class="projectBody">
             <div class="project-full-content">
+                <div class="projectLabelBox">
+                    <p class="label">PHP</p>
+                    <p class="label">MySQL</p>
+                    <p class="label">JavaScript</p>
+                    <p class="label">CSS</p>
+                    <p class="label">API Design</p>
+                    <p class="label">Python</p>
+                </div>
                 <p>I had been looking for ways to store our family recipes and access them in an easy way. This recipe
                     site lets me browse, search, and filter recipes by type. Each recipe includes ingredients,
                     instructions, timings, and an image.</p>
@@ -231,24 +220,9 @@
 
     <div class="projectBox">
         <h2 style="display: flex; align-items: center; gap: 8px;">Spanner</h2>
-        <div class="projectLabelBox">
-            <p class="label">Go</p>
-            <p class="label">Typescript</p>
-            <p class="label">Oauth 2</p>
-            <p class="label">HTML</p>
-            <p class="label">API Design</p>
-            <p class="label">CSS</p>
-            <p class="label">SQL</p>
-            <p class="label">Nginx</p>
-        </div>
         <div class="projectBody">
             <div class="project-full-content">
-                <p>Spanner is a website that allows users to analyse their listening habits and playlists. I undertook
-                    this project to learn a bit of web development, and as another justification for building my home
-                    server. The frontend was developed in Typescript with React. The backend, which communicates with
-                    the Spotify API and processes the data, was written in Go.</p>
-
-                <div class="carousel-container">
+                <div class="carousel-container project-carousel-float">
                     <div class="carousel-wrapper">
                         <div class="carousel-slide active">
                             <div class="videoWrapper">
@@ -257,7 +231,20 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="projectLabelBox">
+                    <p class="label">Go</p>
+                    <p class="label">Typescript</p>
+                    <p class="label">Oauth 2</p>
+                    <p class="label">HTML</p>
+                    <p class="label">API Design</p>
+                    <p class="label">CSS</p>
+                    <p class="label">SQL</p>
+                    <p class="label">Nginx</p>
+                </div>
+                <p>Spanner is a website that allows users to analyse their listening habits and playlists. I undertook
+                    this project to learn a bit of web development, and as another justification for building my home
+                    server. The frontend was developed in Typescript with React. The backend, which communicates with
+                    the Spotify API and processes the data, was written in Go.</p>
                 <p>I hosted the website on my server using Nginx for the routing, however unfortunately, Spotify has now
                     deprecated the track analysis endpoints of the API breaking the entire analysis side of the project,
                     so I no longer host it.</p>
@@ -272,23 +259,11 @@
         </div>
     </div>
 
-
     <div class="projectBox">
         <h2 style="display: flex; align-items: center; gap: 8px;">Table Football Robot</h2>
-        <div class="projectLabelBox">
-            <p class="label">Hackathon</p>
-            <p class="label">Intel</p>
-            <p class="label">OpenCV</p>
-            <p class="label">GCODE</p>
-            <p class="label">C++</p>
-        </div>
         <div class="projectBody">
             <div class="project-full-content">
-                <p>At the Nottingham 24 hour Hackathon - HackNotts84, I led a team to win Intel's 1st place prize,
-                    building a table football robot and competing against over 40 teams from 25 universities across the
-                    UK. This was achieved using computer vision and parts of a 3D printer.</p>
-
-                <div class="carousel-container">
+                <div class="carousel-container project-carousel-float">
                     <div class="carousel-wrapper">
                         <div class="carousel-slide active">
                             <div class="videoWrapper">
@@ -297,7 +272,16 @@
                         </div>
                     </div>
                 </div>
-
+                <div class="projectLabelBox">
+                    <p class="label">Hackathon</p>
+                    <p class="label">Intel</p>
+                    <p class="label">OpenCV</p>
+                    <p class="label">GCODE</p>
+                    <p class="label">C++</p>
+                </div>
+                <p>At the Nottingham 24 hour Hackathon - HackNotts84, I led a team to win Intel's 1st place prize,
+                    building a table football robot and competing against over 40 teams from 25 universities across the
+                    UK. This was achieved using computer vision and parts of a 3D printer.</p>
                 <p>We were able to track the location of the ball in real time using a webcam and OpenCV and send Gcode
                     commands to the robot control board in order to intercept and kick the ball towards the goal.
                 </p>
@@ -307,12 +291,9 @@
 
     <div class="projectBox">
         <h2 style="display: flex; align-items: center; gap: 8px;">Other Projects</h2>
-        <div class="projectLabelBox"></div>
         <div class="projectBody">
             <div class="project-full-content">
-                <p>Other mildly interesting projects that I have been working on recently.</p>
-
-                <div class="carousel-container">
+                <div class="carousel-container project-carousel-float">
                     <div class="carousel-wrapper">
                         <div class="carousel-slide active">
                             <img class="resizable-image" src="/assets/satellite.webp" alt="Wire sculpture lamp">
@@ -346,6 +327,8 @@
                         <span class="indicator"></span>
                     </div>
                 </div>
+                <div class="projectLabelBox"></div>
+                <p>Other mildly interesting projects that I have been working on recently.</p>
             </div>
         </div>
     </div>
