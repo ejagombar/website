@@ -37,7 +37,7 @@ if (!isset($input['password'])) {
     exit();
 }
 
-$passwordHash = getenv('ADMIN_PASS_HASH');
+$passwordHash = trim(getenv('ADMIN_PASS_HASH') ?? '', "\"' \t\n\r\0\x0B");
 
 if (!$passwordHash) {
     http_response_code(500);

@@ -19,3 +19,6 @@
 
 # Go workspace file
 go.work
+
+# self host video assets
+assets/videos/

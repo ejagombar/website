@@ -1,3 +1,13 @@
+/* ======================== FONTS ======================== */
+@font-face {
+    font-family: 'Fira Code';
+    src: url('/assets/fonts/FiraCode-VF.woff2') format('woff2-variations'),
+         url('/assets/fonts/FiraCode-Regular.woff2') format('woff2');
+    font-weight: 300 700;
+    font-style: normal;
+    font-display: swap;
+}
+
 /* ======================== CSS VARIABLES ======================== */
 :root {
     color-scheme: light dark;
@@ -357,7 +367,7 @@ nav {
     display: flex;
     align-items: center;
     font-size: 1.3em;
-    font-weight: bold;
+    font-weight: 500;
     text-decoration: none;
     color: transparent;
     background: var(--foreground);
@@ -633,14 +643,14 @@ nav {
     }
 }
 
-.videoWrapper iframe {
+.videoWrapper video {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     border: none;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .resizable-image {
@@ -1849,8 +1859,6 @@ nav {
     }
 
     .search-options {
-        flex-direction: column;
-        align-items: flex-start;
         gap: 10px;
     }
 }
