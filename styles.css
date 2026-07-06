@@ -791,6 +791,7 @@ nav {
     overflow: hidden;
     display: flex;
     justify-content: center;
+    margin-left: 5px;
 }
 
 /* Fixed height for WikiMapper carousel wrapper */

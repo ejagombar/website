@@ -10,15 +10,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Run deploy commands on server
-        uses: appleboy/ssh-action@v0.1.10
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          host: eagombar.uk
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.DEPLOY_KEY }}
-          script: |
-            cd /var/www/eagombar.uk
-            git pull
-            sudo nginx -s reload
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build (minify)
+        run: npm run build
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.DEPLOY_KEY }}" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+
+      - name: Deploy to server
+        run: |
+          rsync -avz --delete \
+            -e "ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new" \
+            dist/ ${{ secrets.SERVER_USER }}@eagombar.uk:/var/www/eagombar.uk/
+
+      - name: Reload nginx
+        run: |
+          ssh -i ~/.ssh/deploy_key -o StrictHostKeyChecking=accept-new \
+            ${{ secrets.SERVER_USER }}@eagombar.uk \
+            "sudo nginx -s reload"

@@ -20,5 +20,10 @@
 # Go workspace file
 go.work
 
-# self host video assets
-assets/videos/
+# npm
+node_modules/
+
+# Build output
+dist/
+
+

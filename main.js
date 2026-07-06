@@ -220,7 +220,7 @@ function handleHeaderScroll() {
     lastScrollY = currentScrollY
 }
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     window.addEventListener('scroll', handleHeaderScroll)
     handleHeaderScroll()
 })
@@ -396,7 +396,9 @@ function openCarouselLightbox(container) {
 
     // Find current active index
     const slides = container.querySelectorAll('.carousel-slide')
-    let activeIndex = Array.from(slides).findIndex(s => s.classList.contains('active'))
+    let activeIndex = Array.from(slides).findIndex((s) =>
+        s.classList.contains('active')
+    )
     if (activeIndex < 0) activeIndex = 0
 
     // Clone the carousel wrapper
@@ -414,13 +416,15 @@ function openCarouselLightbox(container) {
         // Prev button
         const prevBtn = document.createElement('button')
         prevBtn.className = 'carousel-btn carousel-prev'
-        prevBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+        prevBtn.innerHTML =
+            '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
         clonedContainer.appendChild(prevBtn)
 
         // Next button
         const nextBtn = document.createElement('button')
         nextBtn.className = 'carousel-btn carousel-next'
-        nextBtn.innerHTML = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+        nextBtn.innerHTML =
+            '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
         clonedContainer.appendChild(nextBtn)
 
         // Indicators
@@ -428,7 +432,8 @@ function openCarouselLightbox(container) {
         indicatorsDiv.className = 'carousel-indicators'
         for (let i = 0; i < slidesInClone.length; i++) {
             const indicator = document.createElement('span')
-            indicator.className = 'indicator' + (i === activeIndex ? ' active' : '')
+            indicator.className =
+                'indicator' + (i === activeIndex ? ' active' : '')
             indicatorsDiv.appendChild(indicator)
         }
         clonedContainer.appendChild(indicatorsDiv)
@@ -471,14 +476,16 @@ function openCarouselLightbox(container) {
     document.body.style.overflow = 'hidden'
 
     // Pause any videos in the original carousel
-    container.querySelectorAll('video').forEach(v => v.pause())
+    container.querySelectorAll('video').forEach((v) => v.pause())
 }
 
 function changeLightboxSlide(container, direction) {
     const slides = container.querySelectorAll('.carousel-slide')
     const indicators = container.querySelectorAll('.indicator')
 
-    let currentIndex = Array.from(slides).findIndex(s => s.classList.contains('active'))
+    let currentIndex = Array.from(slides).findIndex((s) =>
+        s.classList.contains('active')
+    )
     let newIndex = currentIndex + direction
 
     if (newIndex >= slides.length) newIndex = 0
@@ -504,7 +511,9 @@ function goToLightboxSlide(container, slideIndex) {
     const slides = container.querySelectorAll('.carousel-slide')
     const indicators = container.querySelectorAll('.indicator')
 
-    const currentIndex = Array.from(slides).findIndex(s => s.classList.contains('active'))
+    const currentIndex = Array.from(slides).findIndex((s) =>
+        s.classList.contains('active')
+    )
 
     if (currentIndex !== slideIndex) {
         slides[currentIndex].classList.remove('active')
@@ -531,7 +540,7 @@ function closeCarouselLightbox() {
         // Pause any playing videos
         const container = lightbox.querySelector('.carousel-container')
         if (container) {
-            container.querySelectorAll('video').forEach(v => {
+            container.querySelectorAll('video').forEach((v) => {
                 v.pause()
                 v.currentTime = 0
             })
@@ -583,13 +592,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (carouselLightbox) {
         // Click background to close
         carouselLightbox.addEventListener('click', (e) => {
-            if (e.target === carouselLightbox || e.target.classList.contains('carousel-lightbox-content')) {
+            if (
+                e.target === carouselLightbox ||
+                e.target.classList.contains('carousel-lightbox-content')
+            ) {
                 closeCarouselLightbox()
             }
         })
 
         // Close button
-        const closeBtn = carouselLightbox.querySelector('.carousel-lightbox-close')
+        const closeBtn = carouselLightbox.querySelector(
+            '.carousel-lightbox-close'
+        )
         if (closeBtn) {
             closeBtn.addEventListener('click', closeCarouselLightbox)
         }
@@ -621,6 +635,6 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 // Export for dynamic imports
-window.navigateTo = navigateTo;
-window.openLightbox = openLightbox;
-window.closeLightbox = closeLightbox;
+window.navigateTo = navigateTo
+window.openLightbox = openLightbox
+window.closeLightbox = closeLightbox
