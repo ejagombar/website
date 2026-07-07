@@ -537,13 +537,14 @@ nav {
     width: 42%;
     max-width: 480px;
     min-width: 280px;
-    margin: 0 0 16px 24px;
+    margin: 4px 0 20px 28px;
     cursor: pointer;
 }
 
 .project-carousel-float.carousel-container {
     margin-top: 0;
     margin-bottom: 0;
+    margin-left: 28px;
 }
 
 .project-carousel-float .carousel-wrapper {
@@ -572,7 +573,7 @@ nav {
 /* Labels beside the floated carousel */
 .project-full-content:has(.project-carousel-float) .projectLabelBox {
     display: inline-flex;
-    width: calc(100% - 42% - 24px);
+    width: calc(100% - 42% - 28px);
     max-width: 100%;
 }
 
@@ -791,7 +792,6 @@ nav {
     overflow: hidden;
     display: flex;
     justify-content: center;
-    margin-left: 5px;
 }
 
 /* Fixed height for WikiMapper carousel wrapper */
