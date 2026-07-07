@@ -467,7 +467,7 @@ nav {
     margin: 0;
     padding: 0;
     color: var(--muted-text);
-    font-weight: bold;
+    font-weight: 500;
     justify-content: center;
     text-align: center;
 }
@@ -537,14 +537,14 @@ nav {
     width: 42%;
     max-width: 480px;
     min-width: 280px;
-    margin: 4px 0 20px 28px;
+    margin: 4px 0 20px 0.6em;
     cursor: pointer;
 }
 
 .project-carousel-float.carousel-container {
     margin-top: 0;
     margin-bottom: 0;
-    margin-left: 28px;
+    margin-left: 0.6em;
 }
 
 .project-carousel-float .carousel-wrapper {
@@ -573,7 +573,7 @@ nav {
 /* Labels beside the floated carousel */
 .project-full-content:has(.project-carousel-float) .projectLabelBox {
     display: inline-flex;
-    width: calc(100% - 42% - 28px);
+    width: calc(100% - 42% - 0.6em);
     max-width: 100%;
 }
 
@@ -584,7 +584,9 @@ nav {
 }
 
 @media screen and (max-width: 768px) {
-    .project-carousel-float {
+
+    .project-carousel-float,
+    .project-carousel-float.carousel-container {
         float: none;
         width: 100%;
         max-width: 100%;
