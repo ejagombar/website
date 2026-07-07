@@ -575,7 +575,22 @@ function openCarouselLightbox(container) {
 
     // Show lightbox
     lightbox.classList.add('active')
+
+    // Lock background scroll
+    lightbox._scrollY = window.scrollY
     document.body.style.overflow = 'hidden'
+    document.body.style.position = 'fixed'
+    document.body.style.top = -lightbox._scrollY + 'px'
+    document.body.style.width = '100%'
+    document.documentElement.style.overflow = 'hidden'
+
+    // Prevent touch-scroll on lightbox background (allow within carousel content)
+    lightbox._preventScroll = (e) => {
+        if (!e.target.closest('.carousel-lightbox-content')) {
+            e.preventDefault()
+        }
+    }
+    lightbox.addEventListener('touchmove', lightbox._preventScroll, { passive: false })
 
     // Pause any videos in the original carousel
     container.querySelectorAll('video').forEach((v) => v.pause())
@@ -657,7 +672,20 @@ function closeCarouselLightbox() {
         }
 
         lightbox.classList.remove('active')
+
+        // Restore background scroll
         document.body.style.overflow = ''
+        document.body.style.position = ''
+        document.body.style.top = ''
+        document.body.style.width = ''
+        document.documentElement.style.overflow = ''
+        window.scrollTo(0, lightbox._scrollY || 0)
+
+        // Remove touch-scroll prevention
+        if (lightbox._preventScroll) {
+            lightbox.removeEventListener('touchmove', lightbox._preventScroll)
+            lightbox._preventScroll = null
+        }
 
         // Clear content after transition
         setTimeout(() => {
