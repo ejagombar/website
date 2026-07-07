@@ -805,6 +805,7 @@ nav {
     animation: fadeIn 0.5s ease-in-out;
     content-visibility: auto;
     contain-intrinsic-size: auto 300px;
+    background-color: var(--surface-solid);
 }
 
 .carousel-slide.active {
@@ -817,6 +818,11 @@ nav {
     width: 100%;
     height: auto;
     display: block;
+    background-color: var(--surface-solid);
+}
+
+.carousel-slide img[data-loaded="true"] {
+    background-color: transparent;
 }
 
 .carousel-caption {

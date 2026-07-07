@@ -226,6 +226,31 @@ document.addEventListener('DOMContentLoaded', function () {
 })
 // ======================== CAROUSEL FUNCTIONALITY ========================
 
+function preloadCarouselImages(container, indices) {
+    const slides = container.querySelectorAll('.carousel-slide')
+    indices.forEach((idx) => {
+        if (idx >= 0 && idx < slides.length) {
+            const imgs = slides[idx].querySelectorAll('img[loading="lazy"]')
+            imgs.forEach((img) => {
+                img.loading = 'eager'
+            })
+        }
+    })
+}
+
+function markImageLoaded(img) {
+    if (img.complete) {
+        img.setAttribute('data-loaded', 'true')
+    } else {
+        img.addEventListener('load', () => {
+            img.setAttribute('data-loaded', 'true')
+        }, { once: true })
+        img.addEventListener('error', () => {
+            img.setAttribute('data-loaded', 'true')
+        }, { once: true })
+    }
+}
+
 function changeSlide(button, direction) {
     console.log('changeSlide called with direction:', direction)
 
@@ -257,6 +282,11 @@ function changeSlide(button, direction) {
     slides[currentIndex].classList.remove('active')
     slides[newIndex].classList.add('active')
 
+    // Preload images in the new slide and adjacent ones
+    const nextAfter = (newIndex + 1) % slides.length
+    const prevBefore = (newIndex - 1 + slides.length) % slides.length
+    preloadCarouselImages(container, [newIndex, nextAfter, prevBefore])
+
     if (indicators.length > 0) {
         indicators[currentIndex].classList.remove('active')
         indicators[newIndex].classList.add('active')
@@ -279,6 +309,11 @@ function goToSlide(indicator, slideIndex) {
         slides[currentIndex].classList.remove('active')
         slides[slideIndex].classList.add('active')
 
+        // Preload images in the new slide and adjacent ones
+        const nextAfter = (slideIndex + 1) % slides.length
+        const prevBefore = (slideIndex - 1 + slides.length) % slides.length
+        preloadCarouselImages(container, [slideIndex, nextAfter, prevBefore])
+
         indicators[currentIndex].classList.remove('active')
         indicators[slideIndex].classList.add('active')
     }
@@ -300,6 +335,17 @@ function initializeCarousels() {
     content.removeEventListener('click', handleCarouselClick)
 
     content.addEventListener('click', handleCarouselClick)
+
+    // Preload images in all carousels (first 2 slides each)
+    const carousels = content.querySelectorAll('.carousel-container')
+    carousels.forEach((carousel) => {
+        const slides = carousel.querySelectorAll('.carousel-slide')
+        const indices = slides.length > 2 ? [0, 1] : Array.from({ length: slides.length }, (_, i) => i)
+        preloadCarouselImages(carousel, indices)
+
+        // Mark all images for loaded state tracking
+        carousel.querySelectorAll('img').forEach(markImageLoaded)
+    })
 
     console.log('Carousel initialization complete')
 }
@@ -444,6 +490,11 @@ function openCarouselLightbox(container) {
         s.classList.toggle('active', i === activeIndex)
     })
 
+    // Preload first 2 slides in lightbox
+    const preloadIndices = slidesInClone.length > 2 ? [activeIndex, (activeIndex + 1) % slidesInClone.length] : Array.from({ length: slidesInClone.length }, (_, i) => i)
+    preloadCarouselImages(clonedContainer, preloadIndices)
+    clonedContainer.querySelectorAll('img').forEach(markImageLoaded)
+
     // Add click handlers to cloned nav
     clonedContainer.addEventListener('click', (e) => {
         if (e.target.closest('.carousel-prev')) {
@@ -493,6 +544,13 @@ function changeLightboxSlide(container, direction) {
 
     slides[currentIndex].classList.remove('active')
     slides[newIndex].classList.add('active')
+
+    // Preload adjacent slides
+    const nextAfter = (newIndex + 1) % slides.length
+    preloadCarouselImages(container, [newIndex, nextAfter])
+
+    // Track load state for images in the newly active slide
+    slides[newIndex].querySelectorAll('img').forEach(markImageLoaded)
 
     if (indicators.length > 0) {
         indicators[currentIndex].classList.remove('active')
