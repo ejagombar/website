@@ -226,13 +226,14 @@ document.addEventListener('DOMContentLoaded', function () {
 })
 // ======================== CAROUSEL FUNCTIONALITY ========================
 
-function preloadCarouselImages(container, indices) {
+function preloadCarouselImages(container, indices, priority = 'low') {
     const slides = container.querySelectorAll('.carousel-slide')
     indices.forEach((idx) => {
         if (idx >= 0 && idx < slides.length) {
             const imgs = slides[idx].querySelectorAll('img[loading="lazy"]')
             imgs.forEach((img) => {
                 img.loading = 'eager'
+                img.fetchPriority = priority
             })
         }
     })
@@ -282,10 +283,11 @@ function changeSlide(button, direction) {
     slides[currentIndex].classList.remove('active')
     slides[newIndex].classList.add('active')
 
-    // Preload images in the new slide and adjacent ones
+    // Boost new active slide to high priority, preload adjacent at low
+    preloadCarouselImages(container, [newIndex], 'high')
     const nextAfter = (newIndex + 1) % slides.length
     const prevBefore = (newIndex - 1 + slides.length) % slides.length
-    preloadCarouselImages(container, [newIndex, nextAfter, prevBefore])
+    preloadCarouselImages(container, [nextAfter, prevBefore], 'low')
 
     if (indicators.length > 0) {
         indicators[currentIndex].classList.remove('active')
@@ -309,10 +311,11 @@ function goToSlide(indicator, slideIndex) {
         slides[currentIndex].classList.remove('active')
         slides[slideIndex].classList.add('active')
 
-        // Preload images in the new slide and adjacent ones
+        // Boost new active slide to high priority, preload adjacent at low
+        preloadCarouselImages(container, [slideIndex], 'high')
         const nextAfter = (slideIndex + 1) % slides.length
         const prevBefore = (slideIndex - 1 + slides.length) % slides.length
-        preloadCarouselImages(container, [slideIndex, nextAfter, prevBefore])
+        preloadCarouselImages(container, [nextAfter, prevBefore], 'low')
 
         indicators[currentIndex].classList.remove('active')
         indicators[slideIndex].classList.add('active')
@@ -336,15 +339,43 @@ function initializeCarousels() {
 
     content.addEventListener('click', handleCarouselClick)
 
-    // Preload images in all carousels (first 2 slides each)
+    // Phase 1: Load active (first) slide images at high priority
+    // Phase 2: Once those are done, background-load the rest
     const carousels = content.querySelectorAll('.carousel-container')
     carousels.forEach((carousel) => {
         const slides = carousel.querySelectorAll('.carousel-slide')
-        const indices = slides.length > 2 ? [0, 1] : Array.from({ length: slides.length }, (_, i) => i)
-        preloadCarouselImages(carousel, indices)
 
-        // Mark all images for loaded state tracking
+        // Track load state for all images
         carousel.querySelectorAll('img').forEach(markImageLoaded)
+
+        // Immediately load the active slide at high priority
+        preloadCarouselImages(carousel, [0], 'high')
+
+        if (slides.length <= 1) return
+
+        // Wait for active images to load, then background-load the rest
+        const activeImgs = slides[0].querySelectorAll('img')
+        const loadPromises = Array.from(activeImgs).map((img) => {
+            if (img.complete) return Promise.resolve()
+            return new Promise((resolve) => {
+                img.addEventListener('load', resolve, { once: true })
+                img.addEventListener('error', resolve, { once: true })
+            })
+        })
+
+        const backgroundLoad = () => {
+            const remaining = Array.from(
+                { length: slides.length - 1 },
+                (_, i) => i + 1
+            )
+            preloadCarouselImages(carousel, remaining, 'low')
+        }
+
+        // Fire background load after active images complete or 3s timeout
+        Promise.race([
+            Promise.all(loadPromises),
+            new Promise((resolve) => setTimeout(resolve, 3000)),
+        ]).then(backgroundLoad)
     })
 
     console.log('Carousel initialization complete')
@@ -490,9 +521,11 @@ function openCarouselLightbox(container) {
         s.classList.toggle('active', i === activeIndex)
     })
 
-    // Preload first 2 slides in lightbox
-    const preloadIndices = slidesInClone.length > 2 ? [activeIndex, (activeIndex + 1) % slidesInClone.length] : Array.from({ length: slidesInClone.length }, (_, i) => i)
-    preloadCarouselImages(clonedContainer, preloadIndices)
+    // Preload active slide at high priority, next at low
+    preloadCarouselImages(clonedContainer, [activeIndex], 'high')
+    if (slidesInClone.length > 1) {
+        preloadCarouselImages(clonedContainer, [(activeIndex + 1) % slidesInClone.length], 'low')
+    }
     clonedContainer.querySelectorAll('img').forEach(markImageLoaded)
 
     // Add click handlers to cloned nav
@@ -545,9 +578,10 @@ function changeLightboxSlide(container, direction) {
     slides[currentIndex].classList.remove('active')
     slides[newIndex].classList.add('active')
 
-    // Preload adjacent slides
+    // Boost new active slide to high priority, preload next at low
+    preloadCarouselImages(container, [newIndex], 'high')
     const nextAfter = (newIndex + 1) % slides.length
-    preloadCarouselImages(container, [newIndex, nextAfter])
+    preloadCarouselImages(container, [nextAfter], 'low')
 
     // Track load state for images in the newly active slide
     slides[newIndex].querySelectorAll('img').forEach(markImageLoaded)

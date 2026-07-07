@@ -802,7 +802,6 @@ nav {
     display: none;
     width: 100%;
     position: relative;
-    animation: fadeIn 0.5s ease-in-out;
     content-visibility: auto;
     contain-intrinsic-size: auto 300px;
     background-color: var(--surface-solid);
@@ -920,17 +919,29 @@ nav {
 
 /* Responsive adjustments */
 @media screen and (max-width: 768px) {
+
+    /* Lock carousel height to prevent page scroll jumps when switching slides */
+    .carousel-wrapper {
+        aspect-ratio: 4 / 3;
+    }
+
+    .carousel-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+
     .other-projects-carousel {
         max-width: 100%;
     }
 
     .other-projects-carousel .carousel-slide {
-        min-height: 300px;
+        min-height: 0;
     }
 
     .other-projects-carousel .carousel-slide img {
-        max-height: 250px;
-        margin-bottom: 50px;
+        max-height: none;
+        margin-bottom: 0;
     }
 
     .other-projects-carousel .carousel-caption {
@@ -970,12 +981,7 @@ nav {
     }
 
     .other-projects-carousel .carousel-slide {
-        min-height: 250px;
-    }
-
-    .other-projects-carousel .carousel-slide img {
-        max-height: 200px;
-        margin-bottom: 40px;
+        min-height: 0;
     }
 
     .other-projects-carousel .carousel-caption {
@@ -2082,6 +2088,7 @@ nav {
     align-items: center;
     justify-content: center;
     height: 100%;
+    background-color: transparent;
 }
 
 .carousel-lightbox-content .carousel-slide.active {
@@ -2093,6 +2100,7 @@ nav {
     max-height: 90vh;
     object-fit: contain;
     cursor: default;
+    background-color: transparent;
 }
 
 .carousel-lightbox-content .carousel-slide .videoWrapper {
