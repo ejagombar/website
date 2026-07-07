@@ -280,6 +280,10 @@ function changeSlide(button, direction) {
 
     console.log('Final new index:', newIndex)
 
+    // Lock wrapper height to prevent page scroll jump during transition
+    const currentHeight = wrapper.offsetHeight
+    wrapper.style.minHeight = currentHeight + 'px'
+
     slides[currentIndex].classList.remove('active')
     slides[newIndex].classList.add('active')
 
@@ -293,6 +297,11 @@ function changeSlide(button, direction) {
         indicators[currentIndex].classList.remove('active')
         indicators[newIndex].classList.add('active')
     }
+
+    // Reset min-height after transition so wrapper sizes naturally to the new slide
+    requestAnimationFrame(() => {
+        wrapper.style.minHeight = ''
+    })
 
     console.log('Slide change complete')
 }
@@ -308,6 +317,10 @@ function goToSlide(indicator, slideIndex) {
     )
 
     if (currentIndex !== slideIndex) {
+        // Lock wrapper height to prevent page scroll jump during transition
+        const currentHeight = wrapper.offsetHeight
+        wrapper.style.minHeight = currentHeight + 'px'
+
         slides[currentIndex].classList.remove('active')
         slides[slideIndex].classList.add('active')
 
@@ -319,6 +332,11 @@ function goToSlide(indicator, slideIndex) {
 
         indicators[currentIndex].classList.remove('active')
         indicators[slideIndex].classList.add('active')
+
+        // Reset min-height after transition
+        requestAnimationFrame(() => {
+            wrapper.style.minHeight = ''
+        })
     }
 }
 
