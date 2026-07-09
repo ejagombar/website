@@ -52,7 +52,21 @@ const server = http.createServer((req, res) => {
 
             const fileExt = path.extname(filePath).toLowerCase()
             const contentType = mimeTypes[fileExt] || 'application/octet-stream'
-            res.writeHead(200, { 'Content-Type': contentType })
+
+            // Cache headers matching production nginx config
+            const headers = { 'Content-Type': contentType }
+            const immutableExts = ['.woff', '.woff2', '.webp', '.png', '.jpg', '.jpeg', '.gif', '.svg', '.ico']
+            const cacheExts = ['.css', '.js']
+
+            if (immutableExts.includes(fileExt)) {
+                headers['Cache-Control'] = 'public, max-age=31536000, immutable'
+            } else if (cacheExts.includes(fileExt)) {
+                headers['Cache-Control'] = 'public, max-age=604800, must-revalidate'
+            } else if (fileExt === '.html') {
+                headers['Cache-Control'] = 'public, max-age=3600, must-revalidate'
+            }
+
+            res.writeHead(200, headers)
             res.end(content)
         })
     })

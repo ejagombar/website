@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <meta name="description">
+    <meta name="description" content="Ed Agombar — Software Engineer at ThreatSpike. Portfolio of hardware and software projects in networking, low-level development, and performance.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ed Agombar</title>
 
@@ -11,11 +11,18 @@
     <link rel="dns-prefetch" href="https://api.recipes.eagombar.uk">
     <link rel="preconnect" href="https://api.recipes.eagombar.uk" crossorigin>
 
-    <!-- Preload critical font to reduce FOUT -->
+    <!-- Preload critical resources -->
     <link rel="preload" href="/assets/fonts/FiraCode-VF.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/pages/home.html" as="fetch" crossorigin="anonymous">
+    <link rel="preload" href="/styles.css" as="style">
 
-    <!-- Critical CSS (render-blocking but necessary) -->
-    <link rel="stylesheet" href="/styles.css" />
+    <!-- Inline critical CSS for instant first paint -->
+    <style>/* critical-css */:root{color-scheme:light dark;--radius:30px;--width:1200px;--min-width:600px;--foreground:light-dark(#071c02,#e0e0e0);--background:light-dark(#e3e3e3,#222);--surface:light-dark(rgba(249,249,249,.8),rgba(28,28,28,.8));--surface-solid:light-dark(rgba(249,249,249),rgba(28,28,28));--primary:light-dark(#157dfb,#4a9eff);--shadow-primary:light-dark(rgba(100,100,100,.9),rgba(100,100,100,.3))}*,::after,::before{box-sizing:border-box}html{overflow-y:scroll}body{display:flex;flex-direction:column;justify-content:center;align-items:center;font-family:'Fira Code',Helvetica,sans-serif;font-style:normal;background-color:var(--background);margin:0;color:var(--foreground)}main#content{width:100%;display:flex;flex-direction:column;align-items:center}h1,h2{font-size:1.5em;padding:10px;margin:0}.background{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;transition:opacity .5s ease}.background.animated{background:var(--background);overflow:hidden;z-index:-3}.background.blend-dots{background-image:radial-gradient(circle at center,transparent 1.6px,var(--background) 1.6px);background-size:32px 32px;background-position:-16px -16px;background-color:transparent;z-index:-1}header{background-color:var(--surface);color:var(--foreground);text-align:center;padding:10px;width:calc(100% - 20px);margin:0 10px 10px;display:flex;align-items:center;justify-content:space-between;max-width:var(--width);border-radius:var(--radius);transition:all .3s cubic-bezier(.4,0,.2,1);position:sticky;top:10px;z-index:100;backdrop-filter:blur(10px);min-height:68px}header.header-hidden{transform:translateY(-200%)}header.scrolled{border-radius:0 0 var(--radius) var(--radius);top:0;padding:10px;box-shadow:0 0 15px var(--shadow-primary)}nav{display:flex;justify-content:center}.nameHeader{margin:5px 5px 5px 10px;font-size:1.8em;text-decoration:none;color:var(--foreground)}.wideNavItem{margin:0 15px;display:flex;align-items:center;font-size:1.3em;font-weight:500;text-decoration:none;color:var(--foreground)}.profileBox,.aboutBox,.content-box{background-color:var(--surface-solid);color:var(--foreground);padding:10px 20px;display:flex;flex-direction:column;max-width:var(--width);border-radius:var(--radius);margin:10px}.profileBox{padding:10px;justify-content:center;align-items:center}.profilePicture{border-radius:50%}.profileLayout1{display:flex;flex-direction:row;max-width:550px;align-items:center;justify-content:center;padding:20px 0}.profileLayout2{display:flex;flex-direction:column;align-items:flex-start;margin:10px 20px}.link-icons-container{display:flex;align-items:center;gap:20px}.aboutParagraph{margin:15px 0;line-height:1.6}@media(max-width:490px){.profileLayout1{flex-direction:column;align-items:center;padding:20px 0}.profileLayout2{align-items:center;text-align:center;margin:0 20px}}@media(max-width:420px){header{justify-content:center}}</style>
+
+    <!-- Async full CSS (non-render-blocking) -->
+    <link rel="stylesheet" href="/styles.css" media="print" onload="this.media='all';this.onload=null">
+    <noscript><link rel="stylesheet" href="/styles.css"></noscript>
+
     <link rel="shortcut icon" type="image/x-icon" href="/assets/favicon.ico">
 
     <!-- Module script (deferred by default) -->

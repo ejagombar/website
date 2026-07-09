@@ -24,9 +24,10 @@ async function build() {
   }
   await mkdir(DIST, { recursive: true });
 
-  // Copy assets as-is (already optimised)
+  // Copy assets and static root files as-is
   console.log('Copying assets...');
   await cp('assets', `${DIST}/assets`, { recursive: true });
+  await cp('robots.txt', `${DIST}/robots.txt`);
 
   // Copy pages directory
   await mkdir(`${DIST}/pages`, { recursive: true });
