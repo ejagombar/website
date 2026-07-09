@@ -523,15 +523,17 @@ function openCarouselLightbox(container) {
         // Prev button
         const prevBtn = document.createElement('button')
         prevBtn.className = 'carousel-btn carousel-prev'
+        prevBtn.setAttribute('aria-label', 'Previous slide')
         prevBtn.innerHTML =
-            '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+            '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
         clonedContainer.appendChild(prevBtn)
 
         // Next button
         const nextBtn = document.createElement('button')
         nextBtn.className = 'carousel-btn carousel-next'
+        nextBtn.setAttribute('aria-label', 'Next slide')
         nextBtn.innerHTML =
-            '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+            '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M9 18L15 12L9 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
         clonedContainer.appendChild(nextBtn)
 
         // Indicators
