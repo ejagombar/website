@@ -9,18 +9,22 @@ const routes = {
     '/': {
         template: '/pages/home.html',
         title: 'Home',
+        description: 'Ed Agombar - Software Engineer at ThreatSpike.',
     },
     '/home': {
         template: '/pages/home.html',
         title: 'Home',
+        description: 'Ed Agombar - Software Engineer at ThreatSpike.',
     },
     '/projects': {
         template: '/pages/projects.html',
         title: 'Projects',
+        description: 'A mix of hardware and software projects',
     },
     '/recipes': {
         template: '/pages/recipes.html',
         title: 'Recipes',
+        description: 'Recipe collection',
     },
     '/upload': {
         template: '/pages/upload.html',
@@ -99,8 +103,8 @@ const locationHandler = async () => {
         const metaDescription = document.querySelector(
             'meta[name="description"]'
         )
-        if (metaDescription) {
-            metaDescription.setAttribute('content', route.description || '')
+        if (metaDescription && route.description) {
+            metaDescription.setAttribute('content', route.description)
         }
 
         if (path === '/projects') {
@@ -243,12 +247,20 @@ function markImageLoaded(img) {
     if (img.complete) {
         img.setAttribute('data-loaded', 'true')
     } else {
-        img.addEventListener('load', () => {
-            img.setAttribute('data-loaded', 'true')
-        }, { once: true })
-        img.addEventListener('error', () => {
-            img.setAttribute('data-loaded', 'true')
-        }, { once: true })
+        img.addEventListener(
+            'load',
+            () => {
+                img.setAttribute('data-loaded', 'true')
+            },
+            { once: true }
+        )
+        img.addEventListener(
+            'error',
+            () => {
+                img.setAttribute('data-loaded', 'true')
+            },
+            { once: true }
+        )
     }
 }
 
@@ -542,7 +554,11 @@ function openCarouselLightbox(container) {
     // Preload active slide at high priority, next at low
     preloadCarouselImages(clonedContainer, [activeIndex], 'high')
     if (slidesInClone.length > 1) {
-        preloadCarouselImages(clonedContainer, [(activeIndex + 1) % slidesInClone.length], 'low')
+        preloadCarouselImages(
+            clonedContainer,
+            [(activeIndex + 1) % slidesInClone.length],
+            'low'
+        )
     }
     clonedContainer.querySelectorAll('img').forEach(markImageLoaded)
 
@@ -590,7 +606,9 @@ function openCarouselLightbox(container) {
             e.preventDefault()
         }
     }
-    lightbox.addEventListener('touchmove', lightbox._preventScroll, { passive: false })
+    lightbox.addEventListener('touchmove', lightbox._preventScroll, {
+        passive: false,
+    })
 
     // Pause any videos in the original carousel
     container.querySelectorAll('video').forEach((v) => v.pause())
