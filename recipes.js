@@ -429,23 +429,7 @@ async function initializeRecipePage(id) {
     contentContainer.innerHTML = html
 
     // Add edit button if authenticated
-    checkAuth().then(isAuth => {
-        if (isAuth) {
-            const titleEl = contentContainer.querySelector('.recipe-title')
-            if (titleEl) {
-                const wrapper = document.createElement('div')
-                wrapper.className = 'recipe-title-row'
-                titleEl.parentNode.insertBefore(wrapper, titleEl)
-                wrapper.appendChild(titleEl)
-                const editBtn = document.createElement('a')
-                editBtn.href = `/edit/${id}`
-                editBtn.className = 'edit-recipe-btn'
-                editBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>'
-                editBtn.title = 'Edit recipe'
-                wrapper.appendChild(editBtn)
-            }
-        }
-    })
+    addEditButtonIfAuth(contentContainer, id)
 
     // Set up image lightbox click handler
     const recipeImage = contentContainer.querySelector('.recipe-image-clickable')
@@ -502,6 +486,31 @@ async function initializeRecipePage(id) {
             }
         })
     })
+}
+
+async function addEditButtonIfAuth(contentContainer, id) {
+    try {
+        const { checkAuth } = await import('/upload.js')
+        const isAuth = await checkAuth()
+        if (isAuth) {
+            const titleEl = contentContainer.querySelector('.recipe-title')
+            if (titleEl) {
+                const wrapper = document.createElement('div')
+                wrapper.className = 'recipe-title-row'
+                titleEl.parentNode.insertBefore(wrapper, titleEl)
+                wrapper.appendChild(titleEl)
+                const editBtn = document.createElement('a')
+                editBtn.href = `/edit/${id}`
+                editBtn.className = 'edit-recipe-btn'
+                editBtn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.85 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>'
+                editBtn.title = 'Edit recipe'
+                wrapper.appendChild(editBtn)
+            }
+        }
+    } catch (e) {
+        // Auth check not available, skip edit button
+        console.warn('Could not check auth status:', e)
+    }
 }
 
 // Export for dynamic import

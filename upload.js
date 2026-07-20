@@ -558,4 +558,4 @@ function escapeHtml(text) {
 
 
 // Export for dynamic import
-export { initializeUploadPage, initializeEditPage };
+export { initializeUploadPage, initializeEditPage, checkAuth };
