@@ -28,6 +28,7 @@ async function build() {
   console.log('Copying assets...');
   await cp('assets', `${DIST}/assets`, { recursive: true });
   await cp('robots.txt', `${DIST}/robots.txt`);
+  await cp('sitemap.xml', `${DIST}/sitemap.xml`);
 
   // Copy pages directory
   await mkdir(`${DIST}/pages`, { recursive: true });
