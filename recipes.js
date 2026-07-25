@@ -332,7 +332,8 @@ async function initializeRecipePage(id) {
         return
     }
 
-    document.title = recipe.name + ' - Recipe'
+    const recipeTitle = `${recipe.name} | Recipe | Ed Agombar`
+    document.title = recipeTitle
 
     // Build info items
     let infoItems = ''
@@ -383,6 +384,34 @@ async function initializeRecipePage(id) {
         imageUrl = recipe.image
     } else if (recipe.hasImage) {
         imageUrl = getRecipeImageUrl(id)
+    }
+
+    // Update SEO & Social Sharing Metadata
+    const recipeDesc = recipe.description || `Step-by-step instructions and ingredients to make ${recipe.name}.`
+    const metaDescription = document.querySelector('meta[name="description"]')
+    if (metaDescription) {
+        metaDescription.setAttribute('content', recipeDesc)
+    }
+
+    const ogTitle = document.querySelector('meta[property="og:title"]')
+    if (ogTitle) ogTitle.setAttribute('content', recipeTitle)
+
+    const ogDesc = document.querySelector('meta[property="og:description"]')
+    if (ogDesc) ogDesc.setAttribute('content', recipeDesc)
+
+    const twitterTitle = document.querySelector('meta[property="twitter:title"]')
+    if (twitterTitle) twitterTitle.setAttribute('content', recipeTitle)
+
+    const twitterDesc = document.querySelector('meta[property="twitter:description"]')
+    if (twitterDesc) twitterDesc.setAttribute('content', recipeDesc)
+
+    if (imageUrl) {
+        const absoluteImageUrl = imageUrl.startsWith('http') ? imageUrl : window.location.origin + '/' + imageUrl
+        const ogImage = document.querySelector('meta[property="og:image"]')
+        if (ogImage) ogImage.setAttribute('content', absoluteImageUrl)
+
+        const twitterImage = document.querySelector('meta[property="twitter:image"]')
+        if (twitterImage) twitterImage.setAttribute('content', absoluteImageUrl)
     }
 
     let html = `

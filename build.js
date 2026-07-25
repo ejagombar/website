@@ -17,6 +17,69 @@ const htmlMinifyOptions = {
   keepClosingSlash: false,
 };
 
+async function generateSitemap() {
+  console.log('Generating sitemap.xml...');
+  const baseUrls = [
+    'https://eagombar.uk/',
+    'https://eagombar.uk/home',
+    'https://eagombar.uk/projects',
+    'https://eagombar.uk/recipes'
+  ];
+
+  const urls = [...baseUrls];
+
+  try {
+    const response = await fetch('https://api.recipes.eagombar.uk/recipeQuery/recipeQuery.php');
+    if (response.ok) {
+      const xmlText = await response.text();
+      const regex = /<index>([^<]+)<\/index>/g;
+      let match;
+      const recipeIds = [];
+      while ((match = regex.exec(xmlText)) !== null) {
+        recipeIds.push(match[1]);
+      }
+      console.log(`  Fetched ${recipeIds.length} recipe IDs from API`);
+      for (const id of recipeIds) {
+        urls.push(`https://eagombar.uk/recipes/${id}`);
+      }
+    } else {
+      console.warn('  API response not OK, using base URLs only');
+    }
+  } catch (error) {
+    console.warn('  Could not fetch dynamic recipes for sitemap (offline or API down), using base URLs only:', error.message);
+  }
+
+  const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.map(url => {
+  let priority = '0.5';
+  let changefreq = 'monthly';
+  if (url === 'https://eagombar.uk/') {
+    priority = '1.0';
+  } else if (url.endsWith('/home')) {
+    priority = '0.9';
+  } else if (url.endsWith('/projects')) {
+    priority = '0.8';
+  } else if (url.endsWith('/recipes')) {
+    priority = '0.7';
+    changefreq = 'weekly';
+  } else if (url.includes('/recipes/')) {
+    priority = '0.6';
+    changefreq = 'weekly';
+  }
+  return `  <url>
+    <loc>${url}</loc>
+    <changefreq>${changefreq}</changefreq>
+    <priority>${priority}</priority>
+  </url>`;
+}).join('\n')}
+</urlset>`;
+
+  await writeFile('sitemap.xml', sitemapContent);
+  await writeFile(`${DIST}/sitemap.xml`, sitemapContent);
+  console.log('  sitemap.xml generated successfully');
+}
+
 async function build() {
   // Clean and recreate dist
   if (existsSync(DIST)) {
@@ -28,7 +91,7 @@ async function build() {
   console.log('Copying assets...');
   await cp('assets', `${DIST}/assets`, { recursive: true });
   await cp('robots.txt', `${DIST}/robots.txt`);
-  await cp('sitemap.xml', `${DIST}/sitemap.xml`);
+  await generateSitemap();
 
   // Copy pages directory
   await mkdir(`${DIST}/pages`, { recursive: true });
@@ -42,7 +105,11 @@ async function build() {
   ];
 
   for (const file of htmlFiles) {
-    const src = await readFile(file, 'utf-8');
+    let src = await readFile(file, 'utf-8');
+    if (file === 'index.html') {
+      const homeHtml = await readFile('pages/home.html', 'utf-8');
+      src = src.replace('<!-- HOME_FALLBACK_PLACEHOLDER -->', homeHtml);
+    }
     const minified = await minifyHtml(src, htmlMinifyOptions);
     await writeFile(`${DIST}/${file}`, minified);
     const reduction = ((1 - Buffer.byteLength(minified) / Buffer.byteLength(src)) * 100).toFixed(0);

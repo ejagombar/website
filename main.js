@@ -98,14 +98,44 @@ const locationHandler = async () => {
         const content = document.getElementById('content')
         content.innerHTML = html
 
-        document.title = route.title || '404'
+        const pageTitle = route.title ? `${route.title} | Ed Agombar` : 'Ed Agombar'
+        document.title = pageTitle
 
-        const metaDescription = document.querySelector(
-            'meta[name="description"]'
-        )
-        if (metaDescription && route.description) {
-            metaDescription.setAttribute('content', route.description)
+        const pageDescription = route.description || 'Ed Agombar — Software Engineer at ThreatSpike. Portfolio of hardware and software projects in networking, low-level development, and performance.'
+
+        const metaDescription = document.querySelector('meta[name="description"]')
+        if (metaDescription) {
+            metaDescription.setAttribute('content', pageDescription)
         }
+
+        // Update canonical URL
+        const canonicalUrl = window.location.origin + path
+        let canonicalEl = document.querySelector('link[rel="canonical"]')
+        if (!canonicalEl) {
+            canonicalEl = document.createElement('link')
+            canonicalEl.setAttribute('rel', 'canonical')
+            document.head.appendChild(canonicalEl)
+        }
+        canonicalEl.setAttribute('href', canonicalUrl)
+
+        // Update Open Graph and Twitter metadata
+        const ogTitle = document.querySelector('meta[property="og:title"]')
+        if (ogTitle) ogTitle.setAttribute('content', pageTitle)
+
+        const ogDesc = document.querySelector('meta[property="og:description"]')
+        if (ogDesc) ogDesc.setAttribute('content', pageDescription)
+
+        const ogUrl = document.querySelector('meta[property="og:url"]')
+        if (ogUrl) ogUrl.setAttribute('content', canonicalUrl)
+
+        const twitterTitle = document.querySelector('meta[property="twitter:title"]')
+        if (twitterTitle) twitterTitle.setAttribute('content', pageTitle)
+
+        const twitterDesc = document.querySelector('meta[property="twitter:description"]')
+        if (twitterDesc) twitterDesc.setAttribute('content', pageDescription)
+
+        const twitterUrl = document.querySelector('meta[property="twitter:url"]')
+        if (twitterUrl) twitterUrl.setAttribute('content', canonicalUrl)
 
         if (path === '/projects') {
             console.log('Projects page loaded, initializing carousels...')
