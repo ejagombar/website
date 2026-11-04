@@ -19,35 +19,11 @@ const htmlMinifyOptions = {
 
 async function generateSitemap() {
   console.log('Generating sitemap.xml...');
-  const baseUrls = [
+  const urls = [
     'https://eagombar.uk/',
     'https://eagombar.uk/home',
-    'https://eagombar.uk/projects',
-    'https://eagombar.uk/recipes'
+    'https://eagombar.uk/projects'
   ];
-
-  const urls = [...baseUrls];
-
-  try {
-    const response = await fetch('https://api.recipes.eagombar.uk/recipeQuery/recipeQuery.php');
-    if (response.ok) {
-      const xmlText = await response.text();
-      const regex = /<index>([^<]+)<\/index>/g;
-      let match;
-      const recipeIds = [];
-      while ((match = regex.exec(xmlText)) !== null) {
-        recipeIds.push(match[1]);
-      }
-      console.log(`  Fetched ${recipeIds.length} recipe IDs from API`);
-      for (const id of recipeIds) {
-        urls.push(`https://eagombar.uk/recipes/${id}`);
-      }
-    } else {
-      console.warn('  API response not OK, using base URLs only');
-    }
-  } catch (error) {
-    console.warn('  Could not fetch dynamic recipes for sitemap (offline or API down), using base URLs only:', error.message);
-  }
 
   const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -60,12 +36,6 @@ ${urls.map(url => {
     priority = '0.9';
   } else if (url.endsWith('/projects')) {
     priority = '0.8';
-  } else if (url.endsWith('/recipes')) {
-    priority = '0.7';
-    changefreq = 'weekly';
-  } else if (url.includes('/recipes/')) {
-    priority = '0.6';
-    changefreq = 'weekly';
   }
   return `  <url>
     <loc>${url}</loc>
@@ -126,7 +96,7 @@ async function build() {
 
   // Minify JS (preserving ES module syntax)
   console.log('Minifying JS...');
-  const prodJsFiles = ['main.js', 'recipes.js', 'upload.js'];
+  const prodJsFiles = ['main.js'];
   for (const file of prodJsFiles) {
     const src = await readFile(file, 'utf-8');
     const result = await minifyJs(src, {

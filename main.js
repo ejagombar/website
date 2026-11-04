@@ -21,28 +21,6 @@ const routes = {
         title: 'Projects',
         description: 'A mix of hardware and software projects',
     },
-    '/recipes': {
-        template: '/pages/recipes.html',
-        title: 'Recipes',
-        description: 'Recipe collection',
-    },
-    '/upload': {
-        template: '/pages/upload.html',
-        title: 'Recipe Uploader',
-    },
-}
-
-const dynamicRoutes = {
-    '/edit/': {
-        template: '/pages/upload.html',
-        title: 'Edit Recipe',
-        paramName: 'id',
-    },
-    '/recipes/': {
-        template: '/pages/recipe.html',
-        title: 'Recipe',
-        paramName: 'id',
-    },
 }
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -55,8 +33,6 @@ document.addEventListener('DOMContentLoaded', () => {
     locationHandler()
 })
 
-let currentRouteParams = {}
-
 const locationHandler = async () => {
     let path = window.location.pathname
 
@@ -64,24 +40,15 @@ const locationHandler = async () => {
         path = '/'
     }
 
+    // The recipes moved to their own site, which redirects old recipe links.
+    if (path === '/recipes' || path.startsWith('/recipes/')) {
+        window.location.replace('https://recipes.eagombar.uk' + path)
+        return
+    }
+
     console.log('Loading route:', path)
 
     let route = routes[path]
-    currentRouteParams = {}
-
-    // Check dynamic routes if no exact match
-    if (!route) {
-        for (const [prefix, dynamicRoute] of Object.entries(dynamicRoutes)) {
-            if (path.startsWith(prefix)) {
-                route = dynamicRoute
-                const paramValue = path.slice(prefix.length)
-                if (paramValue) {
-                    currentRouteParams[dynamicRoute.paramName] = paramValue
-                }
-                break
-            }
-        }
-    }
 
     if (!route) {
         route = routes['404']
@@ -141,36 +108,6 @@ const locationHandler = async () => {
             console.log('Projects page loaded, initializing carousels...')
             setTimeout(() => {
                 initializeCarousels()
-            }, 100)
-        }
-
-        if (path === '/recipes') {
-            setTimeout(async () => {
-                const { initializeRecipesPage } = await import('/recipes.js')
-                initializeRecipesPage()
-            }, 100)
-        }
-
-        if (path.startsWith('/recipes/') && currentRouteParams.id) {
-            const id = currentRouteParams.id
-            setTimeout(async () => {
-                const { initializeRecipePage } = await import('/recipes.js')
-                initializeRecipePage(id)
-            }, 100)
-        }
-
-        if (path === '/upload') {
-            setTimeout(async () => {
-                const { initializeUploadPage } = await import('/upload.js')
-                initializeUploadPage()
-            }, 100)
-        }
-
-        if (path.startsWith('/edit/') && currentRouteParams.id) {
-            const id = currentRouteParams.id
-            setTimeout(async () => {
-                const { initializeEditPage } = await import('/upload.js')
-                initializeEditPage(id)
             }, 100)
         }
     } catch (error) {

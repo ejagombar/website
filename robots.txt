@@ -1,6 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /upload
-Disallow: /edit/
 
 Sitemap: https://eagombar.uk/sitemap.xml
