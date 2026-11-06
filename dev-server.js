@@ -1,4 +1,4 @@
-// To run: node dev-server.js
+// To run: npm run dev
 
 import http from 'http';
 import fs from 'fs';
@@ -32,6 +32,13 @@ const server = http.createServer((req, res) => {
     // Parse URL to remove query strings
     const urlPath = req.url.split('?')[0]
     let filePath = path.join(ROOT, urlPath === '/' ? 'index.html' : urlPath)
+
+    // Refuse paths that escape the project directory (e.g. /../../etc/passwd)
+    if (!filePath.startsWith(ROOT + path.sep)) {
+        res.writeHead(403)
+        res.end('Forbidden')
+        return
+    }
 
     console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} -> ${filePath}`)
 
