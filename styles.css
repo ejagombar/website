@@ -14,7 +14,6 @@
 
     --radius: 30px;
     --width: 1200px;
-    --min-width: 600px;
 
     --foreground: light-dark(#071c02, #e0e0e0);
     --background: light-dark(#e3e3e3, #222222);
@@ -385,7 +384,6 @@ nav {
 }
 
 /* ======================== CONTENT BOXES ======================== */
-.content-box,
 .profileBox,
 .aboutBox,
 .projectBox {
@@ -402,7 +400,6 @@ nav {
     transition: background-color 0.3s ease;
 }
 
-.content-box>*,
 .profileBox>*,
 .aboutBox>* {
     opacity: 1;
@@ -456,12 +453,6 @@ nav {
 }
 
 /* ======================== ABOUT SECTION ======================== */
-.aboutLayout {
-    margin: 10px 20px;
-    justify-content: right;
-    align-items: right;
-}
-
 .date {
     align-items: right;
     margin: 0;
@@ -485,10 +476,6 @@ nav {
     opacity: 1;
 }
 
-.projectBox.clickable {
-    cursor: pointer;
-}
-
 .projectBody {
     padding: 0 10px;
     display: flex;
@@ -499,37 +486,6 @@ nav {
     height: fit-content;
     width: 100%;
     transition: height 0.4s ease, opacity 0.4s ease;
-}
-
-.projectBody.visible {
-    opacity: 1;
-}
-
-.projectBody.hidden {
-    opacity: 0;
-}
-
-.projectIcon {
-    transition: brightness 0.3s ease, transform 0.3s ease;
-}
-
-.projectBox:hover .projectIcon,
-.projectBox.active .projectIcon {
-    transform: translateX(5px);
-    filter: brightness(1.2);
-}
-
-.projectDivider {
-    display: flex;
-    align-items: top;
-    flex-direction: row;
-    justify-content: space-between;
-}
-
-.projectText {
-    padding: 0;
-    margin: 0;
-    max-width: calc(var(--width) - 250px);
 }
 
 .project-carousel-float {
@@ -736,12 +692,6 @@ nav {
 }
 
 /* ======================== RESPONSIVE DESIGN ======================== */
-@media screen and (max-width: 606px) {
-    .projectLabelBox.unclicked {
-        display: none;
-    }
-}
-
 @media screen and (max-width: 490px) {
     .profileLayout1 {
         flex-direction: column;
@@ -757,13 +707,6 @@ nav {
 }
 
 /* ======================== UTILITY CLASSES ======================== */
-.container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-}
-
 .centered {
     height: 100%;
     text-align: center;
@@ -795,8 +738,6 @@ nav {
     display: flex;
     justify-content: center;
 }
-
-/* Fixed height for WikiMapper carousel wrapper */
 
 .carousel-slide {
     display: none;
@@ -907,37 +848,8 @@ nav {
     display: none;
 }
 
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
 /* Responsive adjustments */
 @media screen and (max-width: 768px) {
-    .other-projects-carousel {
-        max-width: 100%;
-    }
-
-    .other-projects-carousel .carousel-slide {
-        min-height: 300px;
-    }
-
-    .other-projects-carousel .carousel-slide img {
-        max-height: 250px;
-        margin-bottom: 50px;
-    }
-
-    .other-projects-carousel .carousel-caption {
-        font-size: 0.8em;
-        padding: 15px 10px 10px;
-        bottom: 40px;
-    }
-
     .carousel-btn {
         width: 35px;
         height: 35px;
@@ -961,62 +873,6 @@ nav {
         width: 10px;
         height: 10px;
     }
-}
-
-@media screen and (max-width: 480px) {
-    .wikimapper-carousel {
-        height: 250px;
-    }
-
-    .other-projects-carousel .carousel-slide {
-        min-height: 250px;
-    }
-
-    .other-projects-carousel .carousel-slide img {
-        max-height: 200px;
-        margin-bottom: 40px;
-    }
-
-    .other-projects-carousel .carousel-caption {
-        bottom: 35px;
-        font-size: 0.75em;
-    }
-}
-
-/* ======================== IMAGE LIGHTBOX ======================== */
-.lightbox {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-    cursor: pointer;
-}
-
-.lightbox.active {
-    opacity: 1;
-    visibility: visible;
-}
-
-.lightbox-image {
-    max-width: 90%;
-    max-height: 90%;
-    object-fit: contain;
-    border-radius: 10px;
-    transform: scale(0.9);
-    transition: transform 0.3s ease;
-}
-
-.lightbox.active .lightbox-image {
-    transform: scale(1);
 }
 
 /* ======================== REDUCED MOTION ======================== */

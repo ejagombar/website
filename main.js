@@ -683,36 +683,8 @@ function closeCarouselLightbox() {
     }
 }
 
-// ======================== IMAGE LIGHTBOX ========================
-
-function openLightbox(imageSrc) {
-    const lightbox = document.getElementById('imageLightbox')
-    const lightboxImage = document.getElementById('lightboxImage')
-
-    if (lightbox && lightboxImage) {
-        lightboxImage.src = imageSrc
-        lightbox.classList.add('active')
-        document.body.style.overflow = 'hidden'
-    }
-}
-
-function closeLightbox() {
-    const lightbox = document.getElementById('imageLightbox')
-
-    if (lightbox) {
-        lightbox.classList.remove('active')
-        document.body.style.overflow = ''
-    }
-}
-
-// Set up lightbox close handlers
+// Set up carousel lightbox close handlers
 document.addEventListener('DOMContentLoaded', () => {
-    const lightbox = document.getElementById('imageLightbox')
-    if (lightbox) {
-        lightbox.addEventListener('click', closeLightbox)
-    }
-
-    // Carousel lightbox close handlers
     const carouselLightbox = document.getElementById('carouselLightbox')
     if (carouselLightbox) {
         // Click background to close
@@ -740,8 +712,6 @@ document.addEventListener('DOMContentLoaded', () => {
             const cl = document.getElementById('carouselLightbox')
             if (cl && cl.classList.contains('active')) {
                 closeCarouselLightbox()
-            } else {
-                closeLightbox()
             }
         }
     })
@@ -758,8 +728,3 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     })
 })
-
-// Export for dynamic imports
-window.navigateTo = navigateTo
-window.openLightbox = openLightbox
-window.closeLightbox = closeLightbox

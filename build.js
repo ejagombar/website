@@ -19,30 +19,19 @@ const htmlMinifyOptions = {
 
 async function generateSitemap() {
   console.log('Generating sitemap.xml...');
-  const urls = [
-    'https://eagombar.uk/',
-    'https://eagombar.uk/home',
-    'https://eagombar.uk/projects'
+  const pages = [
+    { url: 'https://eagombar.uk/', priority: '1.0' },
+    { url: 'https://eagombar.uk/home', priority: '0.9' },
+    { url: 'https://eagombar.uk/projects', priority: '0.8' },
   ];
 
   const sitemapContent = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${urls.map(url => {
-  let priority = '0.5';
-  let changefreq = 'monthly';
-  if (url === 'https://eagombar.uk/') {
-    priority = '1.0';
-  } else if (url.endsWith('/home')) {
-    priority = '0.9';
-  } else if (url.endsWith('/projects')) {
-    priority = '0.8';
-  }
-  return `  <url>
+${pages.map(({ url, priority }) => `  <url>
     <loc>${url}</loc>
-    <changefreq>${changefreq}</changefreq>
+    <changefreq>monthly</changefreq>
     <priority>${priority}</priority>
-  </url>`;
-}).join('\n')}
+  </url>`).join('\n')}
 </urlset>`;
 
   await writeFile('sitemap.xml', sitemapContent);
